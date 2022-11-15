@@ -6,6 +6,7 @@ import Colors from "../../../helpers/colors";
 import Button from "../../../components/Button";
 import { ReactComponent as Eye } from "../../../assets/icon/Eye.svg";
 import InputText from "../../../components/InputText";
+import Notification from "../../../components/Notification";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import PopUp from "../../../components/PopUp";
@@ -172,6 +173,57 @@ function DesignSystem() {
           </Button>
         </div>
       </div>
+      <div>
+        <h2>Button Contained</h2>
+        <Button variant="contained">Click Me!</Button>
+      </div>
+      <div>
+        <h2>Button Outlined</h2>
+        <Button variant="outlined">Click Me!</Button>
+      </div>
+      <div>
+        <h2>Button Full</h2>
+        <Button variant="contained" full>
+          Click Me!
+        </Button>
+      </div>
+      <div>
+        <h2>Button Loading</h2>
+        <Button variant="contained" isLoading>
+          Click Me!
+        </Button>
+      </div>
+      <div>
+        <h2>Button Rounded</h2>
+        <Button variant="contained" rounded>
+          Click Me!
+        </Button>
+      </div>
+      <div>
+        <h2>Button Custom Rounded</h2>
+        <Button variant="contained" borderRadius="5px">
+          Click Me!
+        </Button>
+      </div>
+      <div>
+        <h2>Button With Icon</h2>
+        <Button
+          variant="contained"
+          borderRadius="5px"
+          padding="0px 7px 0px 9px"
+        >
+          Detail
+          <Eye />
+        </Button>
+      </div>
+      <div>
+        <h2>Notification</h2>
+
+        <div>
+          <Notification />
+        </div>
+      </div>
+    </div>
     </>
   );
 }

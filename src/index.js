@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ThemeProvider, createTheme, ScopedCssBaseline } from "@mui/material";
 import reportWebVitals from "./reportWebVitals";
+import "./index.css";
 
 // Font
 // import FuturaMedium from "./assets/fonts/futura-medium-bt.ttf";
@@ -14,7 +15,7 @@ import App from "./container/app";
 
 const theme = createTheme({
   typography: {
-    fontFamily: ["Futura", "sans-serif"].join(","),
+    fontFamily: ["Inter", "sans-serif"].join(","),
   },
   palette: {
     primary: {
