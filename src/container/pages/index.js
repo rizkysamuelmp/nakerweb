@@ -3,5 +3,7 @@
 // -------------------------
 
 import DesignSystem from "./DesignSystem";
+import Login from "./Login";
+import ForgotPassword from "./ForgotPassword";
 
-export { DesignSystem };
+export { DesignSystem, Login, ForgotPassword };

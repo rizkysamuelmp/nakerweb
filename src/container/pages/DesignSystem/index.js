@@ -7,6 +7,7 @@ import Colors from "../../../helpers/colors";
 import Button from "../../../components/Button";
 import { ReactComponent as Eye } from "../../../assets/icon/Eye.svg";
 import InputText from "../../../components/InputText";
+import Notification from "../../../components/Notification";
 
 function DesignSystem() {
   const [first, setFirst] = useState("");
@@ -66,6 +67,13 @@ function DesignSystem() {
           Detail
           <Eye />
         </Button>
+      </div>
+      <div>
+        <h2>Notification</h2>
+
+        <div>
+          <Notification />
+        </div>
       </div>
     </div>
   );

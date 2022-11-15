@@ -1,4 +1,4 @@
-import { DesignSystem } from "../container/pages";
+import { DesignSystem, Login, ForgotPassword } from "../container/pages";
 
 export const DesignSystemRoutes = [
   {
@@ -13,13 +13,13 @@ export const BeforeLogin = [
   {
     id: 319,
     path: "/nakerweb/log-in",
-    // component: Login,
+    component: Login,
     exact: true,
   },
   {
     id: 320,
     path: "/nakerweb/forgot-password",
-    // component: ForgotPassword,
+    component: ForgotPassword,
     exact: true,
   },
 ];

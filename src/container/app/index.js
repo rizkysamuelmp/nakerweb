@@ -5,7 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { DesignSystemRoutes } from "../../config/routes";
+import { BeforeLogin, DesignSystemRoutes } from "../../config/routes";
 
 const App = () => (
   <Router>
@@ -13,9 +13,9 @@ const App = () => (
       {DesignSystemRoutes.map((route) => (
         <Route key={route.id} {...route} />
       ))}
-      {/* {BeforeLogin.map((route) => (
+      {BeforeLogin.map((route) => (
         <Route key={route.id} {...route} />
-      ))} */}
+      ))}
       {/* <PageContainer
         usingHeader
         usingSidebar
