@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -8,45 +7,38 @@ import {
 } from "react-router-dom";
 import { DesignSystemRoutes } from "../../config/routes";
 
-function App() {
-  return (
-    <Router>
-      <Switch>
-        {DesignSystemRoutes.map((route) => (
-          <Route key={route.id} exact={route.exact} path={route.path}>
-            {route.component}
-          </Route>
+const App = () => (
+  <Router>
+    <Switch>
+      {DesignSystemRoutes.map((route) => (
+        <Route key={route.id} {...route} />
+      ))}
+      {/* {BeforeLogin.map((route) => (
+        <Route key={route.id} {...route} />
+      ))} */}
+      {/* <PageContainer
+        usingHeader
+        usingSidebar
+        // isShowChangeAuth={false}
+        // profilePhoto={ProfilePicture}
+        isLoggedIn
+        typeSideBar={"userSingle"}
+        userName={"Muhammad Nur Hidayat"}
+        headerImage={btnLong}
+        type="block"
+        handleProfile={() => {
+          console.warn("click profile");
+        }}
+        // listPrivilage={listPrivilage}
+      >
+        {AppRoutes.map((route) => (
+          <Route key={route.id} {...route} />
         ))}
-        {/* {BeforeLogin.map((route) => (
-          <Route key={route.id} exact={route.exact} path={route.path}>
-            {route.component}
-          </Route>
-        ))} */}
-        {/* <PageContainer
-          usingHeader
-          usingSidebar
-          isLoggedIn
-          typeSideBar={"userSingle"}
-          userName={"Muhammad Nur Hidayat"}
-          // headerImage={btnLong}
-          type="block"
-          handleProfile={() => {
-            console.warn("click profile");
-          }}
-        >
-          {AppRoutes.map((route) => (
-            <Route key={route.id} exact={route.exact} path={route.path}>
-              {route.component}
-            </Route>
-          ))}
-        </PageContainer> */}
-        <Route exact path="/">
-          <Redirect to="/design-system" />
-        </Route>
-        <Redirect from="*" to="/error-404" />
-      </Switch>
-    </Router>
-  );
-}
+      </PageContainer> */}
+      <Redirect from="/" to="/design-system" />
+      <Redirect from="*" to="/error-404" />
+    </Switch>
+  </Router>
+);
 
 export default App;

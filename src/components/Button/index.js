@@ -1,7 +1,7 @@
 // Button Component
 // --------------------------------------------------------
 
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ButtonMUI from "@mui/material/Button";
 import { CircularProgress } from "@mui/material";
@@ -25,6 +25,7 @@ const Button = ({
   padding,
   ...others
 }) => {
+  const [inpust, setInpust] = useState("");
   return (
     <ButtonMUI
       type={type}
@@ -40,6 +41,7 @@ const Button = ({
         outline: 0,
         textTransform: "unset",
         width: full ? "100%" : "fit-content",
+        height: "fit-content",
         backgroundColor:
           variant === "contained"
             ? Colors.primary.hard

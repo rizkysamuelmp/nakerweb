@@ -1,4 +1,4 @@
-import DesignSystem from "../container/pages/DesignSystem";
+import { DesignSystem } from "../container/pages";
 
 export const DesignSystemRoutes = [
   {

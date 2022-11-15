@@ -2,13 +2,14 @@
 // DesignSystem Component
 // --------------------------------------------------------
 
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState } from "react";
 import Colors from "../../../helpers/colors";
 import Button from "../../../components/Button";
 import { ReactComponent as Eye } from "../../../assets/icon/Eye.svg";
+import InputText from "../../../components/InputText";
 
-const DesignSystem = ({ propsName }) => {
+function DesignSystem() {
+  const [first, setFirst] = useState("");
   return (
     <div
       style={{
@@ -20,46 +21,38 @@ const DesignSystem = ({ propsName }) => {
       }}
     >
       <div>
+        <h2>Input</h2>
+        <InputText value={first} onChange={(e) => setFirst(e.target.value)} />
+      </div>
+      <div>
         <h2>Button Contained</h2>
-        <Button variant="contained" style={{ textTransform: "unset" }}>
-          Click Me!
-        </Button>
+        <Button variant="contained">Click Me!</Button>
       </div>
       <div>
         <h2>Button Outlined</h2>
-        <Button variant="outlined" style={{ textTransform: "unset" }}>
-          Click Me!
-        </Button>
+        <Button variant="outlined">Click Me!</Button>
       </div>
       <div>
         <h2>Button Full</h2>
-        <Button variant="contained" full style={{ textTransform: "unset" }}>
+        <Button variant="contained" full>
           Click Me!
         </Button>
       </div>
       <div>
         <h2>Button Loading</h2>
-        <Button
-          variant="contained"
-          isLoading
-          style={{ textTransform: "unset" }}
-        >
+        <Button variant="contained" isLoading>
           Click Me!
         </Button>
       </div>
       <div>
         <h2>Button Rounded</h2>
-        <Button variant="contained" rounded style={{ textTransform: "unset" }}>
+        <Button variant="contained" rounded>
           Click Me!
         </Button>
       </div>
       <div>
         <h2>Button Custom Rounded</h2>
-        <Button
-          variant="contained"
-          borderRadius="5px"
-          style={{ textTransform: "unset" }}
-        >
+        <Button variant="contained" borderRadius="5px">
           Click Me!
         </Button>
       </div>
@@ -68,7 +61,6 @@ const DesignSystem = ({ propsName }) => {
         <Button
           variant="contained"
           borderRadius="5px"
-          style={{ textTransform: "unset" }}
           padding="0px 7px 0px 9px"
         >
           Detail
@@ -77,14 +69,6 @@ const DesignSystem = ({ propsName }) => {
       </div>
     </div>
   );
-};
-
-DesignSystem.propTypes = {
-  propsName: PropTypes.string,
-};
-
-DesignSystem.defaultProps = {
-  propsName: "",
-};
+}
 
 export default DesignSystem;
