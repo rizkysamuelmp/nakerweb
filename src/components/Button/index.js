@@ -1,7 +1,7 @@
 // Button Component
 // --------------------------------------------------------
 
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import ButtonMUI from "@mui/material/Button";
 import { CircularProgress } from "@mui/material";
@@ -23,9 +23,9 @@ const Button = ({
   rounded,
   borderRadius,
   padding,
+  width,
   ...others
 }) => {
-  const [inpust, setInpust] = useState("");
   return (
     <ButtonMUI
       type={type}
@@ -40,14 +40,12 @@ const Button = ({
         display: "inline-block",
         outline: 0,
         textTransform: "unset",
-        width: full ? "100%" : "fit-content",
+        width: full ? "100%" : width !== "" ? width : "fit-content",
         height: "fit-content",
-        backgroundColor:
-          variant === "contained"
-            ? Colors.primary.hard
-            : color !== ""
-            ? color
-            : "",
+        backgroundColor: color !== "" ? color : Colors.primary.hard,
+        ":hover": {
+          bgcolor: color !== "" ? color : Colors.primary.hard,
+        },
         padding: padding,
         fontFamily: "Inter",
         borderRadius:
@@ -95,6 +93,7 @@ Button.propTypes = {
   rounded: PropTypes.bool,
   borderRadius: PropTypes.string,
   padding: PropTypes.string,
+  width: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -113,6 +112,7 @@ Button.defaultProps = {
   rounded: false,
   borderRadius: "",
   padding: "13px 38px",
+  width: "",
 };
 
 export default Button;

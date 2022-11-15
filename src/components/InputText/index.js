@@ -6,10 +6,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
+import Colors from "../../helpers/colors";
 
 const InputText = ({
-  color,
-  size,
   id,
   type,
   name,
@@ -17,8 +16,6 @@ const InputText = ({
   placeholder,
   maxLength,
   autoComplete,
-  tabIndex,
-  weight,
   onChange,
   onBlur,
   onFocus,
@@ -26,27 +23,20 @@ const InputText = ({
   disabled,
   spellCheck,
   variant,
-  className,
-  iconComponents,
-  iconEndComponents,
-  isPhoneNumber,
   isEndAndornment,
   isTransparentBorder,
   isTextArea,
-  isCurrent,
-  isBrowse,
-  isCurs,
-  isSelectDrodpown,
   sx,
   isError,
-  dataSelect,
-  handleSelect,
-  selectedValue,
+  iconAdornment,
+  endIcon,
+  key,
   ...input
 }) => {
   return (
     <TextField
       id={id}
+      key={key}
       type={type}
       name={name}
       value={value}
@@ -61,67 +51,42 @@ const InputText = ({
       onKeyDown={onKeyDown}
       spellCheck={spellCheck}
       sx={{
-        padding: "0px",
         margin: "2.5px 0px",
         width: "100%",
-        backgroundColor: "white",
-        borderRadius: "10px",
+        "& .MuiInputBase-root": {
+          fontFamily: "Inter",
+          fontWeight: 500,
+          borderRadius: "10px",
+          borderColor: "rgba(0, 0, 0, 0.25)",
+        },
+        "& .MuiInputBase-input": {
+          padding: endIcon ? "11px 10px 11px 50px" : "11px 10px",
+        },
         "& .MuiOutlinedInput-root": {
-          "&:hover fieldset": {
-            borderRadius: "10px",
-            border: `1px solid ${
-              !isTransparentBorder ? "#0061A7" : "transparent"
-            }`,
+          "& .Mui-focused": {
+            border: "1px solid #0061A7",
           },
-          "&.Mui-focused fieldset": {
-            borderRadius: "10px",
-            border: `1px solid ${
-              !isTransparentBorder ? "#0061A7" : "transparent"
-            }`,
-          },
-          "&.Mui-focused input": {
+          "& .Mui-focused input": {
             "&::placeholder": {
-              color: "#0061A7",
+              color: Colors.warning.medium,
             },
           },
-        },
-        "&.lg": {
-          minHeight: "82px",
-          ".MuiOutlinedInput-root": {
-            minHeight: "82px",
-            alignItems: !isTextArea ? "center" : "flex-start",
+          "& fieldset": {
+            borderRadius: "10px",
+            borderColor: "rgba(0, 0, 0, 0.25)",
           },
-          ".inputAdorment": {
-            minHeight: "82px",
+          "&:hover fieldset": {
+            borderColor: "rgba(0, 0, 0, 0.25)",
           },
-        },
-        ".MuiOutlinedInput-notchedOutline": {
-          borderRadius: "10px",
-          border: `1px solid ${
-            !isTransparentBorder ? "#BCC8E7" : "transparent"
-          }`,
-          legend: {
-            width: "inherit !important",
-            maxWidth: "inherit !important",
-          },
-        },
-        ".MuiInputBase-input": {
-          color: !isError ? "#374062" : "#D14848",
-          fontSize: "0.938rem",
-          fontWeight: "400",
-          lineHeight: "1.124rem",
-          "&::placeholder": {
-            color: "#BCC8E7",
-            fontSize: "0.938rem",
-            fontWeight: "400",
-            lineHeight: "1.124rem",
+          "&.Mui-focused fieldset input": {
+            borderColor: "rgba(0, 0, 0, 0.25)",
           },
         },
         ...sx,
       }}
       InputProps={{
-        startAdornment: iconComponents,
-        endAdornment: iconEndComponents,
+        startAdornment: !endIcon ? iconAdornment : null,
+        endAdornment: endIcon ? iconAdornment : null,
       }}
       {...input}
       inputProps={{
@@ -134,8 +99,6 @@ const InputText = ({
 };
 
 InputText.propTypes = {
-  color: PropTypes.string,
-  size: PropTypes.oneOf(["sm", "md", "lg"]),
   id: PropTypes.string,
   type: PropTypes.oneOf([
     "text",
@@ -146,12 +109,11 @@ InputText.propTypes = {
     "masking",
   ]),
   name: PropTypes.string,
+  key: PropTypes.string,
   value: PropTypes.string,
   placeholder: PropTypes.string,
   maxLength: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   autoComplete: PropTypes.oneOf(["on", "off"]),
-  tabIndex: PropTypes.string,
-  weight: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
@@ -159,37 +121,25 @@ InputText.propTypes = {
   disabled: PropTypes.bool,
   input: PropTypes.object,
   spellCheck: PropTypes.bool,
-  className: PropTypes.string,
   variant: PropTypes.string,
-  iconComponents: PropTypes.node,
-  iconEndComponents: PropTypes.node,
-  isPhoneNumber: PropTypes.bool,
-  isCurrent: PropTypes.bool,
-  isCurs: PropTypes.bool,
-  isBrowse: PropTypes.bool,
+  iconAdornment: PropTypes.node,
   isTransparentBorder: PropTypes.bool,
   isError: PropTypes.bool,
   isEndAndornment: PropTypes.bool,
   sx: PropTypes.object,
   isTextArea: PropTypes.bool,
-  isSelectDrodpown: PropTypes.bool,
-  handleSelect: PropTypes.func,
-  dataSelect: PropTypes.array,
-  selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  endIcon: PropTypes.bool,
 };
 
 InputText.defaultProps = {
-  color: "",
-  size: "md",
   id: "",
   type: "text",
+  key: "",
   name: "",
   value: "",
   placeholder: "",
   maxLength: "",
   autoComplete: "off",
-  tabIndex: "-1",
-  weight: "",
   onChange: () => {},
   onBlur: () => {},
   onFocus: () => {},
@@ -197,28 +147,13 @@ InputText.defaultProps = {
   input: {},
   disabled: false,
   spellCheck: false,
-  className: "",
   variant: "outlined",
-  iconComponents: "",
-  iconEndComponents: "",
-  isPhoneNumber: false,
-  isCurrent: false,
-  isCurs: false,
-  isBrowse: false,
   isTransparentBorder: false,
   isEndAndornment: false,
   isError: false,
   sx: {},
   isTextArea: false,
-  isSelectDrodpown: false,
-  handleSelect: () => {},
-  dataSelect: [
-    { label: "Rp", value: 0 },
-    { label: "USD", value: 1 },
-    { label: "CNY", value: 2 },
-    { label: "SGD", value: 3 },
-  ],
-  selectedValue: 0,
+  endIcon: false,
 };
 
 export default InputText;
