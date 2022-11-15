@@ -5,6 +5,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "@mui/material";
+import Colors from "../../../helpers/colors";
 
 const DesignSystem = ({ propsName }) => {
   return (
@@ -14,6 +15,7 @@ const DesignSystem = ({ propsName }) => {
         flexDirection: "column",
         gap: "20px",
         margin: "20px",
+        color: Colors.primary[10],
       }}
     >
       <div>
