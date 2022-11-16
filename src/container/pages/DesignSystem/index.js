@@ -19,6 +19,8 @@ import LockErrorBlack from "../../../assets/img/lock-error-black.png";
 import mailBlue from "../../../assets/img/mail-blue.png";
 import mailSuccess from "../../../assets/img/mail-success.png";
 import groupSuccess from "../../../assets/img/group-success.png";
+import Summary from "../../../components/Summary";
+import Table from "../../../components/Table";
 
 function DesignSystem() {
   const [input, setInput] = useState("");
@@ -28,16 +30,96 @@ function DesignSystem() {
   const [popUpEmailSuccess, setPopUpEmailSuccess] = useState(false);
   const [popUpConfirm, setPopUpConfirm] = useState(false);
 
+  const dataSummary = {
+    user: 250,
+    group: 230,
+    blueCoral: 230,
+    myTeam: 230,
+  };
+
+  const dataHeader = [
+    {
+      title: "No",
+      key: "no",
+      width: 30,
+    },
+    {
+      title: "Posisi",
+      key: "position",
+    },
+    {
+      title: "Perusahaan",
+      key: "company",
+    },
+    {
+      title: "Lokasi",
+      key: "location",
+    },
+    {
+      title: "Tanggal Buka",
+      key: "openingDate",
+    },
+    {
+      title: "Sektor",
+      key: "sector",
+    },
+    {
+      title: "Kategori",
+      key: "category",
+    },
+    {
+      title: "Status",
+      key: "status",
+      render: (rowData) => (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            alignItems: "center",
+          }}
+        >
+          <span>{rowData.status}</span>
+        </div>
+      ),
+    },
+  ];
+
+  const dataContent = [
+    {
+      no: 1,
+      position: "Operator penjahit baju",
+      company: "PT. MAJU MUNDUR JAYA",
+      location: "Depok",
+      openingDate: "20 September 2022",
+      sector: "Industri pakaian",
+      category: "Part Time",
+      status: " Aktif",
+    },
+  ];
+
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         gap: "20px",
-        margin: "20px",
-        color: Colors.primary[10],
+        padding: "20px",
+        backgroundColor: "#F4F7FB",
       }}
     >
+      <div>
+        <h2>Table</h2>
+        <div>
+          <Table headerContent={dataHeader} dataContent={dataContent} />
+        </div>
+      </div>
+      <div>
+        <h2>Summary</h2>
+        <div>
+          <Summary data={dataSummary} />
+        </div>
+      </div>
       <div>
         <h2>Notification</h2>
         <div>
@@ -175,10 +257,6 @@ function DesignSystem() {
       <div>
         <h2>Button Contained</h2>
         <Button variant="contained">Click Me!</Button>
-      </div>
-      <div>
-        <h2>Button Outlined</h2>
-        <Button variant="outlined">Click Me!</Button>
       </div>
       <div>
         <h2>Button Full</h2>
