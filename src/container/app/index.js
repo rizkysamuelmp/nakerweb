@@ -5,7 +5,11 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { BeforeLogin, DesignSystemRoutes } from "../../config/routes";
+import PageContainer from "../../components/PageContainer";
+import AppRoutes, {
+  BeforeLogin,
+  DesignSystemRoutes,
+} from "../../config/routes";
 
 const App = () => (
   <Router>
@@ -16,25 +20,11 @@ const App = () => (
       {BeforeLogin.map((route) => (
         <Route key={route.id} {...route} />
       ))}
-      {/* <PageContainer
-        usingHeader
-        usingSidebar
-        // isShowChangeAuth={false}
-        // profilePhoto={ProfilePicture}
-        isLoggedIn
-        typeSideBar={"userSingle"}
-        userName={"Muhammad Nur Hidayat"}
-        headerImage={btnLong}
-        type="block"
-        handleProfile={() => {
-          console.warn("click profile");
-        }}
-        // listPrivilage={listPrivilage}
-      >
+      <PageContainer>
         {AppRoutes.map((route) => (
           <Route key={route.id} {...route} />
         ))}
-      </PageContainer> */}
+      </PageContainer>
       <Redirect from="/" to="/design-system" />
       <Redirect from="*" to="/error-404" />
     </Switch>
