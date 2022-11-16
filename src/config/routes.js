@@ -1,4 +1,5 @@
 import { DesignSystem, Login, ForgotPassword } from "../container/pages";
+import Dashboard from "../container/pages/Dashboard";
 
 export const DesignSystemRoutes = [
   {
@@ -28,7 +29,7 @@ const AppRoutes = [
   {
     id: 319,
     path: "/nakerweb/dashboard",
-    // component: Dashboard,
+    component: Dashboard,
     exact: true,
   },
 ];

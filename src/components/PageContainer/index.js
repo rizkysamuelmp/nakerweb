@@ -1,21 +1,29 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-/* eslint-disable react/jsx-props-no-spreading */
-// InputText Component
-// --------------------------------------------------------
-
 import React from "react";
-import PropTypes from "prop-types";
+import Header from "../Header";
+import Sidebar from "../Sidebar";
 
-const InputText = ({ id }) => {
-  return <div></div>;
+const PageContainer = ({ children }) => {
+  return (
+    <>
+      <Header />
+      <div style={{ display: "flex" }}>
+        <Sidebar />
+        <div
+          style={{ padding: "17px", backgroundColor: "#F4F7FB", width: "100%" }}
+        >
+          {children}
+        </div>
+      </div>
+    </>
+  );
 };
 
-InputText.propTypes = {
-  id: PropTypes.string,
-};
+// PageContainer.propTypes = {
+//   id: PropTypes.string,
+// };
 
-InputText.defaultProps = {
-  id: "",
-};
+// PageContainer.defaultProps = {
+//   id: "",
+// };
 
-export default InputText;
+export default PageContainer;
