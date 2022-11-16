@@ -55,7 +55,7 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           justifyContent: "space-between",
           padding: "10px",
           backgroundColor: "white",
