@@ -9,12 +9,12 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
   return (
     <div
       style={{
-        minWidth: 37,
         border: 0,
         backgroundColor: "#115ABE",
         color: "white",
         width: "100%",
         borderRadius: "10px 10px 0px 0px",
+        minWidth: "fit-content",
       }}
     >
       <div
@@ -36,7 +36,7 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
                   : `calc(100% / ${headerContent.length})`,
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-start",
+                alignItems: headerItem.center ? "center" : "flex-start",
                 justifyContent: "center",
                 border: "none",
                 fontFamily: "Inter",
@@ -44,6 +44,8 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
                 fontSize: "16px",
                 lineHeight: "18px",
                 color: "#FFFFFF",
+                whiteSpace: "nowrap",
+                minWidth: "fit-content",
               }}
             >
               {headerItem.title}
@@ -72,6 +74,7 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
               display: "flex",
               justifyContent: "space-between",
               width: "100%",
+              gap: "10px",
             }}
             key={dataIindex}
           >
@@ -85,7 +88,7 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
                       : `calc(100% / ${headerContent.length})`,
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "flex-start",
+                    alignItems: headerItem.center ? "center" : "flex-start",
                     justifyContent: "center",
                     border: "none",
 

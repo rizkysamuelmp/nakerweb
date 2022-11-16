@@ -3,124 +3,79 @@ import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
 import Pagination from "../../../components/Pagination";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
 
-const dataHeader = [
-  {
-    title: "No",
-    key: "no",
-    width: 30,
-  },
-  {
-    title: "Posisi",
-    key: "position",
-  },
-  {
-    title: "Perusahaan",
-    key: "company",
-  },
-  {
-    title: "Lokasi",
-    key: "location",
-  },
-  {
-    title: "Tanggal Buka",
-    key: "openingDate",
-  },
-  {
-    title: "Sektor",
-    key: "sector",
-  },
-  {
-    title: "Kategori",
-    key: "category",
-  },
-  {
-    title: "Status",
-    key: "status",
-    render: (rowData) => (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
-          alignItems: "center",
-        }}
-      >
-        {rowData.status === "Aktif" ? (
-          <div
-            style={{
-              border: "1px solid #039C40",
-              backgroundColor: "#AEF8AC",
-              borderRadius: "30px",
-              padding: "4px 20px",
-            }}
-          >
-            {rowData.status}
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-    ),
-  },
-];
+// Asset
+import imagePerson from "../../../assets/img/image-person-trending.png";
+import iconArrowRight from "../../../assets/icon/icon-arrow-right.png";
 
-const dataContent = [
-  {
-    no: 1,
-    position: "Operator penjahit baju",
-    company: "PT. MAJU MUNDUR JAYA",
-    location: "Depok",
-    openingDate: "20 September 2022",
-    sector: "Industri pakaian",
-    category: "Part Time",
-    status: "Aktif",
-  },
-  {
-    no: 2,
-    position: "Supir 10 Roda",
-    company: "PT. USAHA MAKMUR",
-    location: "Jakarta Timur",
-    openingDate: "21 Oktober 2022",
-    sector: "Tambang Nikkel",
-    category: "Full time",
-    status: "Aktif",
-  },
-  {
-    no: 3,
-    position: "Supir Pribadi",
-    company: "CV. ABADI JAYA PRATAMA",
-    location: "Jakarta Barat",
-    openingDate: "29 Agustus 2022",
-    sector: "Pabrik Sepatu",
-    category: "Freelancer",
-    status: "Tidak Aktif",
-  },
-  {
-    no: 3,
-    position: "Operator Percetakan",
-    company: "UD. USAHAWAN BUMI",
-    location: "Jakarta Selatan",
-    openingDate: "29 Agustus 2022",
-    sector: "Pabrik Elektronik",
-    category: "Full time",
-    status: "Tidak Aktif",
-  },
-];
+// Dummy Data
+import {
+  dataContent,
+  dataHeader,
+  lokerTranding,
+  sektorTranding,
+} from "./DataDummy";
 
 const DataLoker = () => {
   return (
     <Container>
+      {/* Title */}
       <Title title="Data Loker" />
+
+      {/* Chart */}
       <RowWrapper>
-        <ContentWrapper style={{ width: "65%" }}>Chart Graph</ContentWrapper>
-        <ContentWrapper style={{ width: "35%" }}>Chart Pie</ContentWrapper>
+        <ContentWrapper style={{ width: "65%" }}>
+          <TitleBar>Chart Graph</TitleBar>
+        </ContentWrapper>
+        <ContentWrapper style={{ width: "35%" }}>
+          <TitleBar>Chart Pie</TitleBar>
+        </ContentWrapper>
       </RowWrapper>
+
       <RowWrapper>
-        <ContentWrapper style={{ width: "37%" }}>1</ContentWrapper>
-        <ContentWrapper style={{ width: "18%" }}>2</ContentWrapper>
-        <ContentWrapper style={{ width: "45%" }}>3</ContentWrapper>
+        {/* Lokasi trending */}
+        <ContentWrapper style={{ width: "37%" }}>
+          <TitleBar>Lokasi trending</TitleBar>
+        </ContentWrapper>
+
+        {/* Sektor trending */}
+        <ContentWrapper style={{ width: "18%" }}>
+          <TitleBar>Sektor trending</TitleBar>
+          <ScrollWrapper>
+            {sektorTranding.map((item) => (
+              <TextWrapper>
+                <TextName>{item.name}</TextName>
+                <TextDetail>{item.detail}</TextDetail>
+              </TextWrapper>
+            ))}
+          </ScrollWrapper>
+        </ContentWrapper>
+
+        {/* Loker trending */}
+        <ContentWrapper style={{ width: "45%" }}>
+          <TitleBar>Loker trending</TitleBar>
+          <ScrollWrapper style={{ gap: "5px", paddingRight: "15px" }}>
+            {lokerTranding.map((item) => (
+              <List aria-label="contacts" disablePadding>
+                <ItemCustom>
+                  <ContentWrap>
+                    <img alt="person-trending" src={imagePerson} />
+                    <TextWrapper>
+                      <TextName>{item.name}</TextName>
+                      <TextDetail>{item.detail}</TextDetail>
+                    </TextWrapper>
+                  </ContentWrap>
+                  <img alt="arrow-right" src={iconArrowRight} />
+                </ItemCustom>
+              </List>
+            ))}
+          </ScrollWrapper>
+        </ContentWrapper>
       </RowWrapper>
+
+      {/* Table */}
       <RowWrapper>
         <div
           style={{
@@ -157,6 +112,65 @@ const ContentWrapper = styled("div")(() => ({
   padding: "15px",
   borderRadius: "10px",
   height: "267px",
+  gap: "15px",
+  display: "flex",
+  flexDirection: "column",
+  whiteSpace: "nowrap",
+  minWidth: "fit-content",
+}));
+
+const TextWrapper = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "2px",
+  justifyContent: "center",
+}));
+
+const ScrollWrapper = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+  height: "100%",
+  overflowY: "scroll",
+  marginRight: "-10px",
+}));
+
+const TitleBar = styled("p")(() => ({
+  fontFamily: "Inter",
+  fontWeight: 500,
+  fontSize: "15px",
+  lineHeight: "18px",
+  letterSpacing: "0.01em",
+  color: "#000000",
+}));
+
+const ItemCustom = styled(ListItemButton)(() => ({
+  padding: 0,
+  display: "flex",
+  justifyContent: "space-between",
+}));
+
+const ContentWrap = styled("div")(() => ({
+  display: "flex",
+  gap: "20px",
+}));
+
+const TextName = styled("p")(() => ({
+  fontFamily: "Inter",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: "15px",
+  letterSpacing: "0.01em",
+  color: "#000000",
+}));
+
+const TextDetail = styled("p")(() => ({
+  fontFamily: "Inter",
+  fontWeight: 400,
+  fontSize: "10px",
+  lineHeight: "12px",
+  letterSpacing: "0.01em",
+  color: "#948F8F",
 }));
 
 export default DataLoker;
