@@ -21,6 +21,7 @@ import mailSuccess from "../../../assets/img/mail-success.png";
 import groupSuccess from "../../../assets/img/group-success.png";
 import Summary from "../../../components/Summary";
 import Table from "../../../components/Table";
+import Pagination from "../../../components/Pagination";
 
 function DesignSystem() {
   const [input, setInput] = useState("");
@@ -110,8 +111,9 @@ function DesignSystem() {
     >
       <div>
         <h2>Table</h2>
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <Table headerContent={dataHeader} dataContent={dataContent} />
+          <Pagination count={10} currentData={10} totalData={100} page={2} />
         </div>
       </div>
       <div>
