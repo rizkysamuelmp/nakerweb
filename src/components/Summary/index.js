@@ -79,6 +79,7 @@ const Summary = ({ data }) => {
 const Container = styled("div")(() => ({
   display: "flex",
   gap: "19px",
+  justifyContent: "space-between",
 }));
 
 const Content = styled("div")(() => ({
@@ -89,7 +90,7 @@ const Content = styled("div")(() => ({
   borderRadius: "5px",
   justifyContent: "space-between",
   boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.1)",
-  width: "242px",
+  width: "25%",
   alignItems: "center",
   cursor: "pointer",
 }));

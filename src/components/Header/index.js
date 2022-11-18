@@ -4,7 +4,7 @@ import profile from "../../assets/img/profile.png";
 
 const Header = () => {
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <header
         style={{
           display: "flex",
