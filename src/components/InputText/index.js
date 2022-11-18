@@ -31,6 +31,10 @@ const InputText = ({
   iconAdornment,
   endIcon,
   key,
+  noPadding,
+  width,
+  borderRadius,
+  borderColor,
   ...input
 }) => {
   return (
@@ -51,20 +55,24 @@ const InputText = ({
       onKeyDown={onKeyDown}
       spellCheck={spellCheck}
       sx={{
-        margin: "2.5px 0px",
-        width: "100%",
+        width: width ? width : "100%",
         "& .MuiInputBase-root": {
           fontFamily: "Inter",
           fontWeight: 500,
-          borderRadius: "10px",
-          borderColor: "rgba(0, 0, 0, 0.25)",
+          borderRadius: borderRadius ? borderRadius : "10px",
+          borderColor: borderColor,
+          paddingLeft: noPadding && "0px",
         },
         "& .MuiInputBase-input": {
-          padding: endIcon ? "11px 10px 11px 50px" : "11px 10px",
+          padding: noPadding
+            ? "0px"
+            : endIcon
+            ? "11px 10px 11px 50px"
+            : "11px 10px",
         },
         "& .MuiOutlinedInput-root": {
           "& .Mui-focused": {
-            border: "1px solid #0061A7",
+            border: `1px solid ${borderColor}`,
           },
           "& .Mui-focused input": {
             "&::placeholder": {
@@ -72,14 +80,14 @@ const InputText = ({
             },
           },
           "& fieldset": {
-            borderRadius: "10px",
-            borderColor: "rgba(0, 0, 0, 0.25)",
+            borderRadius: borderRadius ? borderRadius : "10px",
+            borderColor: borderColor,
           },
           "&:hover fieldset": {
-            borderColor: "rgba(0, 0, 0, 0.25)",
+            borderColor: borderColor,
           },
           "&.Mui-focused fieldset input": {
-            borderColor: "rgba(0, 0, 0, 0.25)",
+            borderColor: borderColor,
           },
         },
         ...sx,
@@ -129,6 +137,10 @@ InputText.propTypes = {
   sx: PropTypes.object,
   isTextArea: PropTypes.bool,
   endIcon: PropTypes.bool,
+  noPadding: PropTypes.bool,
+  width: PropTypes.string,
+  borderRadius: PropTypes.string,
+  borderColor: PropTypes.string,
 };
 
 InputText.defaultProps = {
@@ -154,6 +166,10 @@ InputText.defaultProps = {
   sx: {},
   isTextArea: false,
   endIcon: false,
+  noPadding: false,
+  width: "",
+  borderRadius: "",
+  borderColor: "rgba(0, 0, 0, 0.25)",
 };
 
 export default InputText;
