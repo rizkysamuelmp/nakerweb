@@ -48,6 +48,7 @@ const Button = ({
         },
         padding: padding,
         fontFamily: "Inter",
+        minWidth: "unset",
         borderRadius:
           borderRadius !== "" ? borderRadius : rounded ? "50px" : "10px",
         ...sx,
