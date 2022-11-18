@@ -1,7 +1,28 @@
+import { ListItem, styled } from "@mui/material";
 import React from "react";
-import { ReactComponent as Logout } from "../../assets/icon/Logout.svg";
+import { Link } from "react-router-dom";
+import AppRoutes from "../../config/routes";
+
+// Assets
+import arrowDown from "../../assets/icon/arrow-down.svg";
+
+// Style
+const LinkWrapper = styled(Link)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Overpass, san-serif;
+  color: #0e0000;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 19.5px;
+  cursor: pointer;
+  padding: 2px 8px;
+  text-decoration: none;
+`;
 
 const Sidebar = () => {
+  console.log(AppRoutes);
   return (
     <div
       style={{
@@ -13,147 +34,16 @@ const Sidebar = () => {
         padding: "16px 14px",
       }}
     >
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          color: "#0E0000",
-          fontWeightL: "600",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Dashboard
-      </div>
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          color: "#0E0000",
-          fontWeightL: "600",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Data Pengguna
-      </div>
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          fontWeightL: "600",
-          color: "#0E0000",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Data Grup
-      </div>
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          fontWeightL: "600",
-          color: "#0E0000",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Data Loker
-      </div>
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          color: "#0E0000",
-          fontWeightL: "600",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Data Proyek
-      </div>
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          color: "#0E0000",
-          fontWeightL: "600",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Data Postingan
-      </div>
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          fontWeightL: "600",
-          color: "#0E0000",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Data Tiket
-      </div>
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          fontWeightL: "600",
-          color: "#0E0000",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Notifikasi
-      </div>
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          fontWeightL: "600",
-          color: "#0E0000",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Download Data
-      </div>
-      <div
-        style={{
-          fontFamily: "Overpass, san-serif",
-          color: "#0E0000",
-          fontWeightL: "600",
-          fontSize: "15px",
-          lineHeight: "19.5px",
-          cursor: "pointer",
-          padding: "2px 8px",
-        }}
-      >
-        Pengaturan system
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "2px 8px",
-        }}
-      >
-        <span style={{ color: "#161515", fontSize: "12px" }}>Keluar</span>
-        <Logout style={{}} />
-      </div>
+      {AppRoutes.map((item) => (
+        <LinkWrapper to={item.path}>
+          <p>{item.nameComponent}</p>
+          <img
+            src={arrowDown}
+            style={{ width: "10px", height: "10px" }}
+            alt=""
+          />
+        </LinkWrapper>
+      ))}
     </div>
   );
 };
