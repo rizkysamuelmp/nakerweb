@@ -6,7 +6,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
-import Colors from "../../helpers/colors";
 
 const InputText = ({
   id,
@@ -35,6 +34,8 @@ const InputText = ({
   width,
   borderRadius,
   borderColor,
+  backgroundColor,
+  placeholderStyle,
   ...input
 }) => {
   return (
@@ -55,6 +56,11 @@ const InputText = ({
       onKeyDown={onKeyDown}
       spellCheck={spellCheck}
       sx={{
+        input: {
+          // color: "#DADCDF",
+          ...placeholderStyle,
+        },
+        backgroundColor: backgroundColor,
         width: width ? width : "100%",
         "& .MuiInputBase-root": {
           fontFamily: "Inter",
@@ -73,11 +79,6 @@ const InputText = ({
         "& .MuiOutlinedInput-root": {
           "& .Mui-focused": {
             border: `1px solid ${borderColor}`,
-          },
-          "& .Mui-focused input": {
-            "&::placeholder": {
-              color: Colors.warning.medium,
-            },
           },
           "& fieldset": {
             borderRadius: borderRadius ? borderRadius : "10px",
@@ -141,6 +142,8 @@ InputText.propTypes = {
   width: PropTypes.string,
   borderRadius: PropTypes.string,
   borderColor: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  placeholderStyle: PropTypes.object,
 };
 
 InputText.defaultProps = {
@@ -170,6 +173,8 @@ InputText.defaultProps = {
   width: "",
   borderRadius: "",
   borderColor: "rgba(0, 0, 0, 0.25)",
+  backgroundColor: "white",
+  placeholderStyle: {},
 };
 
 export default InputText;

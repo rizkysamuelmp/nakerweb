@@ -1,6 +1,7 @@
 import { DesignSystem, Login, ForgotPassword } from "../container/pages";
 import Dashboard from "../container/pages/Dashboard";
 import DataLoker from "../container/pages/DataLoker";
+import Notifikasi from "../container/pages/Notifikasi";
 
 export const DesignSystemRoutes = [
   {
@@ -80,7 +81,7 @@ const AppRoutes = [
     id: 8,
     nameComponent: "Notifikasi",
     path: "/nakerweb/notifikasi",
-    // component: DataLoker,
+    component: Notifikasi,
     exact: true,
   },
   {
