@@ -3,6 +3,7 @@ import Dashboard from "../container/pages/Dashboard";
 import DataLoker from "../container/pages/DataLoker";
 import Notifikasi from "../container/pages/Notifikasi";
 import DataPostingan from "../container/pages/DataPostingan";
+import DataTiket from "../container/pages/DataTiket";
 
 export const DesignSystemRoutes = [
   {
@@ -75,7 +76,7 @@ const AppRoutes = [
     id: 7,
     nameComponent: "Data Tiket",
     path: "/nakerweb/data-tiket",
-    // component: DataLoker,
+    component: DataTiket,
     exact: true,
   },
   {
