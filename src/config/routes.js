@@ -2,6 +2,7 @@ import { DesignSystem, Login, ForgotPassword } from "../container/pages";
 import Dashboard from "../container/pages/Dashboard";
 import DataLoker from "../container/pages/DataLoker";
 import Notifikasi from "../container/pages/Notifikasi";
+import DataPostingan from "../container/pages/DataPostingan";
 
 export const DesignSystemRoutes = [
   {
@@ -66,8 +67,8 @@ const AppRoutes = [
   {
     id: 6,
     nameComponent: "Data Postingan",
-    path: "/nakerweb/data-pstingan",
-    // component: DataLoker,
+    path: "/nakerweb/data-postingan",
+    component: DataPostingan,
     exact: true,
   },
   {

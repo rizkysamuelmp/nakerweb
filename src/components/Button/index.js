@@ -24,6 +24,7 @@ const Button = ({
   borderRadius,
   padding,
   width,
+  border,
   ...others
 }) => {
   return (
@@ -46,6 +47,7 @@ const Button = ({
         ":hover": {
           bgcolor: color !== "" ? color : Colors.primary.hard,
         },
+        border: border,
         padding: padding,
         fontFamily: "Inter",
         minWidth: "unset",
@@ -68,6 +70,7 @@ const Button = ({
             display: "flex",
             gap: "4px",
             justifyContent: "center",
+            alignItems: "center",
           }}
         >
           {children}
@@ -92,6 +95,7 @@ Button.propTypes = {
   sx: PropTypes.object,
   isLoading: PropTypes.bool,
   rounded: PropTypes.bool,
+  border: PropTypes.string,
   borderRadius: PropTypes.string,
   padding: PropTypes.string,
   width: PropTypes.string,
@@ -114,6 +118,7 @@ Button.defaultProps = {
   borderRadius: "",
   padding: "13px 38px",
   width: "",
+  border: "",
 };
 
 export default Button;
