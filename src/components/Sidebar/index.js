@@ -22,7 +22,6 @@ const LinkWrapper = styled(Link)`
 `;
 
 const Sidebar = () => {
-  console.log(AppRoutes);
   return (
     <div
       style={{
