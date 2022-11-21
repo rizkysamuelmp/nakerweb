@@ -4,7 +4,7 @@ import DetailDataTiket from "./DetailDataTiket";
 import MasalahTiket from "./MasalahTiket";
 
 const DataTiket = () => {
-  const [activeStep, setActiveStep] = useState("masalah");
+  const [activeStep, setActiveStep] = useState("page");
 
   return (
     <>
