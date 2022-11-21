@@ -5,5 +5,6 @@
 import DesignSystem from "./DesignSystem";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
+import DataGrup from "./DataGrup";
 
-export { DesignSystem, Login, ForgotPassword };
+export { DesignSystem, Login, ForgotPassword, DataGrup };

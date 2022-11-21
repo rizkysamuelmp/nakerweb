@@ -34,6 +34,7 @@ const PopUp = ({
   width,
   maxWidth,
   padding,
+  buttonWord,
 }) => {
   return (
     <PopUpDialog
@@ -70,8 +71,8 @@ const PopUp = ({
               alt="img-popup"
               loading="lazy"
               style={{
-                width: "120px",
-                height: "120px",
+                width: "80px",
+                height: "80px",
                 objectFit: "contain",
               }}
             />
@@ -122,7 +123,7 @@ const PopUp = ({
                 color: "#FFFFFF",
               }}
             >
-              OK
+              {buttonWord}
             </p>
           </Button>
         </DialogActions>
@@ -186,6 +187,7 @@ PopUp.propTypes = {
   width: PropTypes.string,
   maxWidth: PropTypes.string,
   padding: PropTypes.string,
+  buttonWord: PropTypes.string,
 };
 PopUp.defaultProps = {
   imgSrc: "",
@@ -196,6 +198,7 @@ PopUp.defaultProps = {
   width: "480px",
   maxWidth: "480px",
   padding: "30px 20px 20px 20px",
+  buttonWord: "OK",
 };
 
 export default PopUp;
