@@ -1,4 +1,9 @@
-import { DesignSystem, Login, ForgotPassword } from "../container/pages";
+import {
+  DesignSystem,
+  Login,
+  ForgotPassword,
+  DataGrup,
+} from "../container/pages";
 import Dashboard from "../container/pages/Dashboard";
 import DataLoker from "../container/pages/DataLoker";
 import Notifikasi from "../container/pages/Notifikasi";
@@ -47,7 +52,7 @@ const AppRoutes = [
     id: 3,
     nameComponent: "Data Grup",
     path: "/nakerweb/data-grup",
-    // component: DataLoker,
+    component: DataGrup,
     exact: true,
   },
   {

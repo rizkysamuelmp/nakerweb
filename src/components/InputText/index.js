@@ -57,7 +57,6 @@ const InputText = ({
       spellCheck={spellCheck}
       sx={{
         input: {
-          // color: "#DADCDF",
           ...placeholderStyle,
         },
         backgroundColor: backgroundColor,
