@@ -11,6 +11,7 @@ import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg
 // Dummy Data
 import { dataContent } from "./DataDummy";
 import Button from "../../../components/Button";
+import Chart from "../../../components/Chart";
 
 const DataLoker = ({ setActiveStep }) => {
   const dataHeader = [
@@ -87,6 +88,29 @@ const DataLoker = ({ setActiveStep }) => {
     },
   ];
 
+  const dataChart = [
+    {
+      data: [45, 25, 35],
+      backgroundColor: ["#115ABE", "#FFBF0B", "#FA3E3E"],
+      borderColor: ["#115ABE", "#FFBF0B", "#FA3E3E"],
+      borderWidth: 1,
+      label: [
+        {
+          title: "Aktif",
+          color: "#115ABE",
+        },
+        {
+          title: "Menunggu",
+          color: "#FFBF0B",
+        },
+        {
+          title: "Ditolak",
+          color: "#FA3E3E",
+        },
+      ],
+    },
+  ];
+
   return (
     <Container>
       {/* Title */}
@@ -98,6 +122,7 @@ const DataLoker = ({ setActiveStep }) => {
         </ContentWrapper>
         <ContentWrapper style={{ width: "35%" }}>
           <TitleBar>Jumlah Status Grup</TitleBar>
+          <Chart data={dataChart} description="230 Pengguna" />
         </ContentWrapper>
       </RowWrapper>
 

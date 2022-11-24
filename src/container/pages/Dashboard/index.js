@@ -136,6 +136,58 @@ const DescProject = styled("p")`
 `;
 
 const Dashboard = () => {
+  const dataChart1 = [
+    {
+      data: [20, 40, 40],
+      backgroundColor: ["#FFBF0B", "#03B74B", "#FE4747"],
+      borderColor: ["#FFBF0B", "#03B74B", "#FE4747"],
+      borderWidth: 1,
+      label: [
+        {
+          title: "Pengguna Diblokir",
+          detail: "10 Pengguna",
+          color: "#FFBF0B",
+        },
+        {
+          title: "Penggun Belum verifikasi",
+          detail: "150 Pengguna",
+          color: "#03B74B",
+        },
+        {
+          title: "Penggun terverifikasi",
+          detail: "30 Pengguna",
+          color: "#FE4747",
+        },
+      ],
+    },
+  ];
+
+  const dataChart2 = [
+    {
+      data: [20, 40, 40],
+      backgroundColor: ["#FF710B", "#03B74B", "#6147FE"],
+      borderColor: ["#FF710B", "#03B74B", "#6147FE"],
+      borderWidth: 1,
+      label: [
+        {
+          title: "Grup Disetujui",
+          detail: "10 Pengguna",
+          color: "#FF710B",
+        },
+        {
+          title: "Grup Belum verifikasi",
+          detail: "150 Pengguna",
+          color: "#03B74B",
+        },
+        {
+          title: "Grup Ditolak",
+          detail: "30 Pengguna",
+          color: "#6147FE",
+        },
+      ],
+    },
+  ];
+
   return (
     <Container>
       {/* Title Page */}
@@ -148,7 +200,17 @@ const Dashboard = () => {
           {/* Chart Component */}
           <ChartComponent>
             <TitleBar>Statistik Data Loker dan Grup</TitleBar>
-            <Chart />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                height: "100%",
+                alignItems: "center",
+              }}
+            >
+              <Chart data={dataChart1} description="230 Pengguna" />
+              <Chart data={dataChart2} description="230 Grup" />
+            </div>
           </ChartComponent>
           {/* Notification latest activity*/}
           <LatestActivity>

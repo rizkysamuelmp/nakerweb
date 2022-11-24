@@ -5,7 +5,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Table from "../../../components/Table";
-import { TextareaAutosize } from "@mui/material";
+import { CircularProgress, TextareaAutosize } from "@mui/material";
 
 // Asset
 import { ReactComponent as IconArrowRight } from "../../../assets/icon/icon-arrow-right.svg";
@@ -19,6 +19,7 @@ import profilePict from "../../../assets/img/profile-chat.png";
 // Dummy
 import { dataTask } from "./DataDummy";
 import InputText from "../../../components/InputText";
+import Progress from "../../../components/Progress";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -53,6 +54,7 @@ function LinearProgressWithLabel(props) {
 
 const DetailProyek = ({ setActiveStep }) => {
   const [tabSelect, setTabSelect] = useState(1);
+  const progress = 0;
 
   const dataHeader = [
     {
@@ -262,61 +264,64 @@ const DetailProyek = ({ setActiveStep }) => {
                 #Ringkasan
               </p>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  fontSize: "13px",
-                  lineHeight: "16px",
-                  color: "#434242",
-                }}
-              >
-                <div style={{ display: "flex", fontWeight: 500 }}>
-                  <p style={{ width: "150px" }}>Pembuat Proyek</p>
-                  <p>: Muh Arifandi</p>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                    fontSize: "13px",
+                    lineHeight: "16px",
+                    color: "#434242",
+                  }}
+                >
+                  <div style={{ display: "flex", fontWeight: 500 }}>
+                    <p style={{ width: "150px" }}>Pembuat Proyek</p>
+                    <p>: Muh Arifandi</p>
+                  </div>
+                  <div style={{ display: "flex", fontWeight: 500 }}>
+                    <p style={{ width: "150px" }}>Step Proyek</p>
+                    <p>: Planing</p>
+                  </div>
+                  <div style={{ display: "flex", fontWeight: 500 }}>
+                    <p style={{ width: "150px" }}>Jenis Proyek</p>
+                    <p>: Publik</p>
+                  </div>
+                  <div style={{ display: "flex", fontWeight: 500 }}>
+                    <p style={{ width: "150px" }}>Tanggal Mulai</p>
+                    <p>: 20 September 2022</p>
+                  </div>
+                  <div style={{ display: "flex", fontWeight: 500 }}>
+                    <p style={{ minWidth: "150px" }}>Tanggal Selesai</p>
+                    <p>: 20 September 2023</p>
+                  </div>
+                  <div style={{ display: "flex", fontWeight: 500 }}>
+                    <p style={{ minWidth: "150px" }}>Lokasi Proyek</p>
+                    <p>: Yogyakarta</p>
+                  </div>
                 </div>
-                <div style={{ display: "flex", fontWeight: 500 }}>
-                  <p style={{ width: "150px" }}>Step Proyek</p>
-                  <p>: Planing</p>
-                </div>
-                <div style={{ display: "flex", fontWeight: 500 }}>
-                  <p style={{ width: "150px" }}>Jenis Proyek</p>
-                  <p>: Publik</p>
-                </div>
-                <div style={{ display: "flex", fontWeight: 500 }}>
-                  <p style={{ width: "150px" }}>Tanggal Mulai</p>
-                  <p>: 20 September 2022</p>
-                </div>
-                <div style={{ display: "flex", fontWeight: 500 }}>
-                  <p style={{ minWidth: "150px" }}>Tanggal Selesai</p>
-                  <p>: 20 September 2023</p>
-                </div>
-                <div style={{ display: "flex", fontWeight: 500 }}>
-                  <p style={{ minWidth: "150px" }}>Lokasi Proyek</p>
-                  <p>: Yogyakarta</p>
-                </div>
-                <div style={{ display: "flex", fontWeight: 500 }}>
-                  <p style={{ minWidth: "150px" }}>Deskripsi Proyek</p>
-                  <TextareaAutosize
-                    aria-label="minimum height"
-                    value="Dalam proses Proyek pembangunan dan proyek lainnya yang terdiri dari berbagai langkah yang rumit dan banyak sebuah pengawasan baik kepada stakeholder dan sub-kontraktor merupakan hal yang penting. Dalam pengawasan tersebut, Presentasi yang terbaik dalam menggambarkan tahap / fase terkini dalam proyek yaitu melalui video. Dalam Video proyek, dapat digambarkan secara baik pada tahap dan kendala-kendala yang sedang dihadapi."
-                    minRows={10}
-                    spellCheck={false}
-                    style={{
-                      width: "100%",
-                      marginLeft: "3px",
-                      backgroundColor: "rgba(217, 217, 217, 0.2)",
-                      border: "1px solid #E5E5E5",
-                      borderRadius: "10px",
-                      padding: "10px",
-                      fontFamily: "Inter",
-                      fontSize: "13px",
-                      lineHeight: "16px",
-                      color: "#434242",
-                    }}
-                  />
-                </div>
+                <Progress />
+              </div>
+              <div style={{ display: "flex", fontWeight: 500 }}>
+                <p style={{ minWidth: "150px" }}>Deskripsi Proyek</p>
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  value="Dalam proses Proyek pembangunan dan proyek lainnya yang terdiri dari berbagai langkah yang rumit dan banyak sebuah pengawasan baik kepada stakeholder dan sub-kontraktor merupakan hal yang penting. Dalam pengawasan tersebut, Presentasi yang terbaik dalam menggambarkan tahap / fase terkini dalam proyek yaitu melalui video. Dalam Video proyek, dapat digambarkan secara baik pada tahap dan kendala-kendala yang sedang dihadapi."
+                  minRows={10}
+                  spellCheck={false}
+                  style={{
+                    width: "100%",
+                    marginLeft: "3px",
+                    backgroundColor: "rgba(217, 217, 217, 0.2)",
+                    border: "1px solid #E5E5E5",
+                    borderRadius: "10px",
+                    padding: "10px",
+                    fontFamily: "Inter",
+                    fontSize: "13px",
+                    lineHeight: "16px",
+                    color: "#434242",
+                  }}
+                />
               </div>
             </div>
             <div style={{ border: "1px solid #F1F1F1" }} />
