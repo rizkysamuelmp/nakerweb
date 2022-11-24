@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
@@ -9,20 +9,12 @@ import { ReactComponent as IconGroup } from "../../../assets/icon/icon_grup.svg"
 import { ReactComponent as IconUser } from "../../../assets/icon/icon_user.svg";
 import profilePost from "../../../assets/img/profile-post.png";
 import Button from "../../../components/Button";
-import PopUp from "../../../components/PopUp";
-import deleteGroup from "../../../assets/img/group-delete.png";
-import groupSuccess from "../../../assets/img/group-success.png";
 
-const DetailGrup = ({ setActiveStep }) => {
-  const [poupKonfSetuju, setPopUpKonfSetuju] = useState(false);
-  const [poUpSetuju, setPopUpSetuju] = useState(false);
-  const [popUpKonfTolak, setPopKonfTolak] = useState(false);
-  const [popUpTolak, setPopUpTolak] = useState(false);
-
+const InfoProyek = ({ setActiveStep }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Data Grup" />
+      <Title title="Data Proyek" />
 
       <RowWrapper>
         <div
@@ -60,7 +52,7 @@ const DetailGrup = ({ setActiveStep }) => {
               lineHeight: "18px",
             }}
           >
-            <p>Grup di buat oleh @arifandi</p>
+            <p>Proyek di buat oleh @arifandi</p>
           </div>
         </div>
       </RowWrapper>
@@ -69,7 +61,7 @@ const DetailGrup = ({ setActiveStep }) => {
         <ContentWrapper style={{ width: "60%" }}>
           <TitleBar>
             <IconGroup height={24} width={24} />
-            Info Grup
+            Info Projek
           </TitleBar>
           <div
             style={{
@@ -80,15 +72,11 @@ const DetailGrup = ({ setActiveStep }) => {
             }}
           >
             <div style={{ display: "flex", fontWeight: 500 }}>
-              <p style={{ width: "150px" }}>Nama grup</p>
-              <p>: Syarikat Indonesia</p>
+              <p style={{ width: "150px" }}>Nama projek</p>
+              <p>: MONITORING PENYALURAN BLT BBM TAHAP 1</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
-              <p style={{ width: "150px" }}>Kategori grup</p>
-              <p>: Syarikat pekerja</p>
-            </div>
-            <div style={{ display: "flex", fontWeight: 500 }}>
-              <p style={{ width: "150px" }}>Jenis grup</p>
+              <p style={{ width: "150px" }}>Jenis projek</p>
               <p>: Publik</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
@@ -116,7 +104,7 @@ const DetailGrup = ({ setActiveStep }) => {
         <ContentWrapper style={{ width: "40%" }}>
           <TitleBar>
             <IconUser height={24} width={24} />
-            Info pembuat grup
+            Info pembuat projek
           </TitleBar>
 
           <div
@@ -221,93 +209,17 @@ const DetailGrup = ({ setActiveStep }) => {
           </div>
         </ContentWrapper>
       </RowWrapper>
-      <RowWrapper>
-        <div
-          style={{
-            width: "60%",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Button onClick={() => setPopUpKonfSetuju(true)}>
-            <p
-              style={{ fontWeight: 600, fontSize: "18px", lineHeight: "22px" }}
-            >
-              Setujui
-            </p>
-          </Button>
-          <Button color="#E20000" onClick={() => setPopKonfTolak(true)}>
-            <p
-              style={{ fontWeight: 600, fontSize: "18px", lineHeight: "22px" }}
-            >
-              Tolak
-            </p>
-          </Button>
-        </div>
+      <RowWrapper style={{ justifyContent: "end" }}>
         <div style={{ width: "40%" }}>
-          <Button full color="#039C40" onClick={() => setActiveStep("grup")}>
+          <Button full color="#039C40" onClick={() => setActiveStep("proyek")}>
             <p
               style={{ fontWeight: 600, fontSize: "18px", lineHeight: "22px" }}
             >
-              Tampilakan profile lengkap
+              Tampilkan proyek lengkap
             </p>
           </Button>
         </div>
       </RowWrapper>
-
-      {/* Konfirmasi Persetujuan */}
-      <PopUp
-        open={poupKonfSetuju}
-        width="350px"
-        padding="60px 30px 25px 30px"
-        imgSrc={groupSuccess}
-        type="choice"
-        onClose={() => setPopUpKonfSetuju(false)}
-        onClickAction={() => {
-          setPopUpKonfSetuju(false);
-          setPopUpSetuju(true);
-        }}
-        title="Konfirmasi Persetujuan"
-        info="Apakah anda yakin ingin setujui permintaan ini ?"
-        buttonWord="Setujui"
-      />
-      {/* Disetujui */}
-      <PopUp
-        open={poUpSetuju}
-        width="350px"
-        padding="60px 30px 25px 30px"
-        imgSrc={groupSuccess}
-        onClose={() => setPopUpSetuju(false)}
-        onClickAction={() => setPopUpSetuju(false)}
-        title="Permintaan Disetujui"
-        info="Permintaan pembuatan grup berhasil disetujui."
-      />
-      {/* Konfirmasi Tolak */}
-      <PopUp
-        open={popUpKonfTolak}
-        type="choice"
-        width="350px"
-        padding="60px 30px 25px 30px"
-        imgSrc={deleteGroup}
-        onClose={() => setPopKonfTolak(false)}
-        onClickAction={() => {
-          setPopKonfTolak(false);
-          setPopUpTolak(true);
-        }}
-        title="Konfirmasi"
-        info="Apakah anda yakin inigin hapus grup ini ?"
-      />
-      {/* Ditolak */}
-      <PopUp
-        open={popUpTolak}
-        width="350px"
-        padding="60px 30px 25px 30px"
-        imgSrc={deleteGroup}
-        onClose={() => setPopUpTolak(false)}
-        onClickAction={() => setPopUpTolak(false)}
-        title="Berhasil tolak"
-        info="Berhasil menolak pembuatan grup."
-      />
     </Container>
   );
 };
@@ -351,4 +263,4 @@ const TitleBar = styled("p")(() => ({
   alignItems: "center",
 }));
 
-export default DetailGrup;
+export default InfoProyek;

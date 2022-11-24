@@ -3,6 +3,8 @@ import {
   Login,
   ForgotPassword,
   DataGrup,
+  DataProyek,
+  DataMyTeam,
 } from "../container/pages";
 import Dashboard from "../container/pages/Dashboard";
 import DataLoker from "../container/pages/DataLoker";
@@ -68,7 +70,7 @@ const AppRoutes = [
     id: 5,
     nameComponent: "Data Proyek",
     path: "/nakerweb/data-proyek",
-    // component: DataLoker,
+    component: DataProyek,
     exact: true,
   },
   {
@@ -104,6 +106,13 @@ const AppRoutes = [
     nameComponent: "Pengaturan System",
     path: "/nakerweb/pengaturan",
     // component: DataLoker,
+    exact: true,
+  },
+  {
+    id: 11,
+    nameComponent: "Data My Team",
+    path: "/nakerweb/my-team",
+    component: DataMyTeam,
     exact: true,
   },
 ];

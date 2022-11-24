@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import IconButton from "@mui/material/IconButton";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import PopUp from "../../../components/PopUp";
 
 // Asset
 import bannerImage from "../../../assets/img/banner-image.png";
@@ -13,6 +16,7 @@ import iconComment from "../../../assets/icon/icon-comment.png";
 import iconThumb from "../../../assets/icon/icon-thumb-fill-blue.png";
 import imagePerson from "../../../assets/img/image-person-trending.png";
 import iconArrowRight from "../../../assets/icon/icon-arrow-right.png";
+import groupSuccess from "../../../assets/img/group-success.png";
 
 const ProfilGrup = ({ setActiveStep }) => {
   const lokerTranding = [
@@ -33,6 +37,11 @@ const ProfilGrup = ({ setActiveStep }) => {
       detail: "100 Pelamar",
     },
   ];
+
+  const [menuEdit, setMenuEdit] = useState(null);
+  const [popupConfirm, setPopupConfirm] = useState(false);
+  const [popupDelete, setPopupDelete] = useState(false);
+  const [popupUpdate, setPopupUpdate] = useState(false);
 
   return (
     <Container>
@@ -109,10 +118,63 @@ const ProfilGrup = ({ setActiveStep }) => {
             </p>
           </div>
           <div>
-            <IconButton aria-label="delete">
+            <IconButton
+              aria-label="delete"
+              onClick={(event) => setMenuEdit(event.currentTarget)}
+            >
               <img alt="icon-edit" src={iconEdit} height={32} width={32} />
             </IconButton>
           </div>
+          <Menu
+            id="menu-appbar"
+            anchorEl={menuEdit}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            sx={{
+              top: "40px",
+              left: "10px",
+              fontFamily: "Inter",
+              fontWeight: 500,
+              fontSize: "13px",
+              lineHeight: "16px",
+              color: "#000000",
+              "& .MuiPaper-root": {
+                borderRadius: "10px",
+              },
+              "& .MuiList-root": {
+                padding: "0px",
+              },
+            }}
+            open={Boolean(menuEdit)}
+            onClose={() => setMenuEdit(null)}
+          >
+            <MenuItem
+              onClick={() => setPopupUpdate(true)}
+              sx={{ padding: "11px 18px" }}
+            >
+              Perbarui Grup
+            </MenuItem>
+            <div style={{ border: "1px solid #E5E5E5" }} />
+            <MenuItem
+              onClick={() => setMenuEdit(null)}
+              sx={{ padding: "11px 18px" }}
+            >
+              Nonaktifkan Grup
+            </MenuItem>
+            <MenuItem
+              onClick={() => setPopupConfirm(true)}
+              sx={{ padding: "11px 18px" }}
+            >
+              Hapus Grup
+            </MenuItem>
+          </Menu>
         </div>
       </div>
 
@@ -249,6 +311,44 @@ const ProfilGrup = ({ setActiveStep }) => {
           </BoxWrapper>
         </ContentWrapper>
       </RowWrapper>
+
+      <PopUp
+        open={popupConfirm}
+        width="350px"
+        padding="60px 30px 25px 30px"
+        imgSrc={groupSuccess}
+        type="choice"
+        onClose={() => setPopupConfirm(false)}
+        onClickAction={() => {
+          setPopupConfirm(false);
+          setPopupDelete(true);
+        }}
+        title="Konfirmasi"
+        info="Apakah anda yakin inigin hapus grup ini ?"
+        buttonWord="Setujui"
+      />
+
+      <PopUp
+        open={popupDelete}
+        width="350px"
+        padding="60px 30px 25px 30px"
+        imgSrc={groupSuccess}
+        onClose={() => setPopupDelete(false)}
+        onClickAction={() => setPopupDelete(false)}
+        title="Berhasil hapus"
+        info="Berhasil menghapus grup."
+      />
+
+      <PopUp
+        open={popupUpdate}
+        width="350px"
+        padding="60px 30px 25px 30px"
+        imgSrc={groupSuccess}
+        onClose={() => setPopupUpdate(false)}
+        onClickAction={() => setPopupUpdate(false)}
+        title="Berhasil"
+        info="Grup berhasil diperbaharui"
+      />
     </Container>
   );
 };
