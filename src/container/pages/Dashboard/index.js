@@ -12,6 +12,7 @@ import survey from "../../../assets/icon/survey.svg";
 
 // Dummy Data
 import { notification } from "./DataDummy";
+import Chart from "../../../components/Chart";
 
 // Style
 const Container = styled("div")``;
@@ -147,6 +148,7 @@ const Dashboard = () => {
           {/* Chart Component */}
           <ChartComponent>
             <TitleBar>Statistik Data Loker dan Grup</TitleBar>
+            <Chart />
           </ChartComponent>
           {/* Notification latest activity*/}
           <LatestActivity>

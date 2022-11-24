@@ -10,6 +10,7 @@ import Button from "../../../components/Button";
 import { ReactComponent as BlueThumb } from "../../../assets/icon/icon-blue-thumb.svg";
 import { ReactComponent as ShareGray } from "../../../assets/icon/icon-share-gray.svg";
 import profilePict from "../../../assets/img/profile-chat.png";
+import { ReactComponent as IconSendChat } from "../../../assets/icon/icon-send-chat.svg";
 
 const DetailPostingan = ({ setActiveStep }) => {
   return (
@@ -230,7 +231,21 @@ const DetailPostingan = ({ setActiveStep }) => {
           </div>
         </div>
 
-        <div style={{ padding: "12px 54px", backgroundColor: "white" }}>
+        <div
+          style={{
+            padding: "12px 54px",
+            backgroundColor: "white",
+            display: "flex",
+          }}
+        >
+          <IconSendChat
+            style={{
+              marginLeft: "20px",
+              position: "absolute",
+              zIndex: "50",
+              marginTop: "13px",
+            }}
+          />
           <InputText
             borderRadius="50px"
             placeholder="Berikan masukan pada anggota tim mu"
