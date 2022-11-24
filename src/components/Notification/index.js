@@ -1,3 +1,4 @@
+import { MenuItem } from "@mui/material";
 import React from "react";
 import alarm from "../../assets/icon/Alarm.svg";
 import profile from "../../assets/img/profile.png";
@@ -53,6 +54,62 @@ const Notification = () => {
       time: "50 menit yang lalu",
       read: false,
     },
+    {
+      img: profile,
+      name: "Muh. Arifandi",
+      message: "telah membuat grup baru dan memerlukan persetujuan dari admin.",
+      time: "50 menit yang lalu",
+      read: false,
+    },
+    {
+      img: profile,
+      name: "Muh. Arifandi",
+      message: "telah membuat grup baru dan memerlukan persetujuan dari admin.",
+      time: "50 menit yang lalu",
+      read: false,
+    },
+    {
+      img: profile,
+      name: "Muh. Arifandi",
+      message: "telah membuat grup baru dan memerlukan persetujuan dari admin.",
+      time: "50 menit yang lalu",
+      read: false,
+    },
+    {
+      img: profile,
+      name: "Muh. Arifandi",
+      message: "telah membuat grup baru dan memerlukan persetujuan dari admin.",
+      time: "50 menit yang lalu",
+      read: false,
+    },
+    {
+      img: profile,
+      name: "Muh. Arifandi",
+      message: "telah membuat grup baru dan memerlukan persetujuan dari admin.",
+      time: "50 menit yang lalu",
+      read: false,
+    },
+    {
+      img: profile,
+      name: "Muh. Arifandi",
+      message: "telah membuat grup baru dan memerlukan persetujuan dari admin.",
+      time: "50 menit yang lalu",
+      read: false,
+    },
+    {
+      img: profile,
+      name: "Muh. Arifandi",
+      message: "telah membuat grup baru dan memerlukan persetujuan dari admin.",
+      time: "50 menit yang lalu",
+      read: false,
+    },
+    {
+      img: profile,
+      name: "Muh. Arifandi",
+      message: "telah membuat grup baru dan memerlukan persetujuan dari admin.",
+      time: "50 menit yang lalu",
+      read: false,
+    },
   ];
 
   return (
@@ -83,9 +140,9 @@ const Notification = () => {
           Notifikasi
         </span>
       </div>
-      <div>
-        {myNotif.map((notif) => (
-          <div
+      <div style={{ height: "680px", overflow: "scroll" }}>
+        {myNotif.map((notif, index) => (
+          <MenuItem
             style={{
               display: "flex",
               gap: "10px",
@@ -94,7 +151,7 @@ const Notification = () => {
             }}
           >
             <img src={notif.img} alt="profileImage" />
-            <div>
+            <div style={{ whiteSpace: "pre-wrap" }}>
               <span
                 style={{
                   fontWeight: "700",
@@ -108,9 +165,23 @@ const Notification = () => {
                 {notif.time}
               </span>
             </div>
-          </div>
+          </MenuItem>
         ))}
       </div>
+      <MenuItem
+        style={{
+          padding: "6px 0px",
+          fontWeight: 700,
+          fontSize: "15px",
+          lineHeight: "18px",
+          color: "#3B9CF1",
+          backgroundColor: "white",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        Lihat semua notifikasi
+      </MenuItem>
     </div>
   );
 };

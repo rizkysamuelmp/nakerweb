@@ -1,19 +1,26 @@
 import React, { useState } from "react";
-// import logo from "../../../assets/img/logo.png";
-// import socialMedia from "../../../assets/img/social.webp";
 import Button from "../../../components/Button";
 import { logo, social } from "../../../assets/img";
+import InputText from "../../../components/InputText";
+import PopUp from "../../../components/PopUp";
+
+// Asset
+import iconEmail from "../../../assets/icon/icon-email.svg";
+import mailSuccess from "../../../assets/img/mail-success.png";
 
 const ForgotPassword = () => {
-  // const [input, setInput] = useState("");
+  const [email, setEmail] = useState("");
+  const [popUpEmailSuccess, setPopUpEmailSuccess] = useState(false);
+
   return (
     <div
       style={{
         display: "flex",
         height: "100vh",
-        justifyContent: "center",
         alignItems: "center",
         gap: "75px",
+        padding: "80px",
+        justifyContent: "space-evenly",
       }}
     >
       <div
@@ -23,33 +30,42 @@ const ForgotPassword = () => {
           flexDirection: "column",
           alignItems: "center",
           padding: "10px",
-
-          width: "30%",
+          width: "400px",
+          marginBottom: "80px",
+          gap: "10px",
         }}
       >
-        <img src={logo} alt="logo" style={{}} />
+        <img src={logo} alt="logo" height={250} width={250} />
         <h1
           style={{
-            margin: "10px 0",
-            fontWeight: "700",
+            fontWeight: 700,
+            fontSize: "20px",
+            lineHeight: "18px",
           }}
         >
-          Lupa Kata sandi
+          Masuk
         </h1>
         <p
           style={{
             fontSize: "13px",
             fontWeight: "500",
             lineHeight: "18px",
-            marginBottom: "10px",
             letterSpacing: "0.01em",
             color: "#7E7474",
           }}
         >
-          Silahkan masukkan email yang sudah terdaftar
+          Silahkan masukkan email dan kata sandi anda
         </p>
-        <form action="#" style={{ width: "100%" }}>
-          <div style={{ marginBottom: "10px" }}>
+        <form
+          action="#"
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
+        >
+          <div>
             <label
               for="email"
               style={{
@@ -61,10 +77,32 @@ const ForgotPassword = () => {
               Email :
             </label>
             <br />
-            <input type="email" style={{ width: "100%" }} /> <br />
+            <img
+              alt="icon-email"
+              src={iconEmail}
+              style={{
+                position: "absolute",
+                zIndex: "50",
+                padding: "13px 0px 0px 13px",
+              }}
+            />
+            <InputText
+              key="email"
+              endIcon
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Masukkan email"
+              placeholderStyle={{ color: "#D2D0D0" }}
+            />
           </div>
-          <Button variant="contained" full>
-            Masuk
+          <Button
+            variant="contained"
+            full
+            onClick={() => setPopUpEmailSuccess(true)}
+            disabled={email === ""}
+          >
+            Kirim link verifikasi
           </Button>
         </form>
       </div>
@@ -72,6 +110,7 @@ const ForgotPassword = () => {
         className="img-right"
         style={{
           width: "60%",
+          maxWidth: "672px",
         }}
       >
         <img
@@ -82,6 +121,14 @@ const ForgotPassword = () => {
           }}
         />
       </div>
+
+      <PopUp
+        open={popUpEmailSuccess}
+        imgSrc={mailSuccess}
+        onClose={() => setPopUpEmailSuccess(false)}
+        title="Berhasil kirim email"
+        info="Link  reset kata sandi  telah dikirim ke email anda."
+      />
     </div>
   );
 };

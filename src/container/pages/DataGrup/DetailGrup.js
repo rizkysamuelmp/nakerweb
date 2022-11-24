@@ -249,7 +249,7 @@ const DetailGrup = ({ setActiveStep }) => {
             <p
               style={{ fontWeight: 600, fontSize: "18px", lineHeight: "22px" }}
             >
-              Tampilakan profile lengkap
+              Tampilkan profile lengkap
             </p>
           </Button>
         </div>

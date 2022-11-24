@@ -6,12 +6,12 @@ import SemuaPengguna from "./SemuaPengguna";
 const Container = styled("div")``;
 
 const Page = () => {
-  const [activeStep, setActiveStep] = useState("all");
+  const [activeStep, setActiveStep] = useState("home");
 
   return (
     <Container>
       {activeStep === "home" && <DataPengguna setActiveStep={setActiveStep} />}
-      {activeStep === "all" && <SemuaPengguna />}
+      {activeStep === "all" && <SemuaPengguna setActiveStep={setActiveStep} />}
     </Container>
   );
 };
