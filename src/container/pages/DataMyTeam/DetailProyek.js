@@ -5,7 +5,14 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Table from "../../../components/Table";
-import { CircularProgress, TextareaAutosize } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  TextareaAutosize,
+} from "@mui/material";
+import InputText from "../../../components/InputText";
+import Progress from "../../../components/Progress";
 
 // Asset
 import { ReactComponent as IconArrowRight } from "../../../assets/icon/icon-arrow-right.svg";
@@ -15,11 +22,10 @@ import { ReactComponent as IconSuccessCheck } from "../../../assets/icon/icon-su
 import { ReactComponent as IconSendChat } from "../../../assets/icon/icon-send-chat.svg";
 import eye from "../../../assets/icon/Eye.svg";
 import profilePict from "../../../assets/img/profile-chat.png";
+import profile from "../../../assets/icon/profile.png";
 
 // Dummy
 import { dataTask } from "./DataDummy";
-import InputText from "../../../components/InputText";
-import Progress from "../../../components/Progress";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -54,7 +60,6 @@ function LinearProgressWithLabel(props) {
 
 const DetailProyek = ({ setActiveStep }) => {
   const [tabSelect, setTabSelect] = useState(1);
-  const progress = 0;
 
   const dataHeader = [
     {
@@ -152,13 +157,14 @@ const DetailProyek = ({ setActiveStep }) => {
             display: "flex",
             width: "100%",
             alignItems: "center",
-            justifyContent: "center",
+            whiteSpace: "nowrap",
           }}
         >
           <Button
             variant="contained"
             borderRadius="5px"
             padding="0px 7px 0px 9px"
+            onClick={() => setPopUpTask(true)}
           >
             Detail
             <img src={eye} alt="eye" />
@@ -169,12 +175,30 @@ const DetailProyek = ({ setActiveStep }) => {
     },
   ];
 
+  const [popUpAdd, setPopUpAdd] = useState(false);
+  const [popUpTask, setPopUpTask] = useState(false);
+
   return (
     <React.Fragment>
       <Title>
-        Usaha Studio Foto dan video..
-        <IconArrowRight />
-        <StatusWrap>Planing</StatusWrap>
+        <div
+          style={{
+            display: "flex",
+            height: "fit-content",
+            alignItems: "center",
+          }}
+        >
+          Usaha Studio Foto dan video..
+          <IconArrowRight />
+          <StatusWrap>Planing</StatusWrap>
+        </div>
+        <Button
+          padding="5px 8px"
+          borderRadius="3px"
+          onClick={() => setPopUpAdd(true)}
+        >
+          Tambah Tugas
+        </Button>
       </Title>
       <Container>
         <Tab>
@@ -601,9 +625,194 @@ const DetailProyek = ({ setActiveStep }) => {
           </RowWrapper>
         )}
       </Container>
+
+      {/* Popup Detail */}
+      <PopUpDialog
+        open={popUpTask}
+        onClose={() => setPopUpTask(false)}
+        aria-labelledby="popup-dialog-title"
+      >
+        <TextWrap>
+          <TextTitle>Judul</TextTitle>
+          <TextDetail>
+            Presentasikan Project Anda melalui Video yang informatif dan tidak
+            membosankan
+          </TextDetail>
+        </TextWrap>
+        <TextWrap>
+          <TextTitle>Deskripsi</TextTitle>
+          <TextDetail>
+            Dalam proses Proyek pembangunan dan proyek lainnya yang terdiri dari
+            berbagai langkah yang rumit dan banyak sebuah pengawasan baik kepada
+            stakeholder dan sub-kontraktor merupakan hal yang penting. Dalam
+            pengawasan tersebut, Presentasi yang terbaik dalam menggambarkan
+            tahap / fase terkini dalam proyek yaitu melalui video. Dalam Video
+            proyek, dapat digambarkan secara baik pada tahap dan kendala-kendala
+            yang sedang dihadapi.
+          </TextDetail>
+        </TextWrap>
+        <TextWrap>
+          <TextTitle>Petugas Task</TextTitle>
+          <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+            <img alt="profile-pict" src={profile} height={24} width={24} />
+            <p
+              style={{
+                fontWeight: 500,
+                fontSize: "10px",
+                lineHeight: "12px",
+              }}
+            >
+              Muh Arifandi
+            </p>
+          </div>
+        </TextWrap>
+        <TextWrap>
+          <TextTitle>Status</TextTitle>
+          <TextDetail>Belum dikerjakan</TextDetail>
+        </TextWrap>
+        <div style={{ display: "flex", gap: "20px" }}>
+          <Button padding="13px 0px" full onClick={() => setPopUpTask(false)}>
+            Tandai Sedang dikerjakan
+          </Button>
+          <Button padding="13px 0px" full onClick={() => setPopUpTask(false)}>
+            Tandai sudah dikerjakan
+          </Button>
+        </div>
+      </PopUpDialog>
+
+      {/* Popup Tambah Task */}
+      <PopUpDialog
+        open={popUpAdd}
+        onClose={() => setPopUpAdd(false)}
+        aria-labelledby="popup-dialog-title"
+      >
+        <DialogContentCustom>
+          <InputWrap>
+            <InpuTitle>Judul Task</InpuTitle>
+            <InputText
+              borderRadius="0px"
+              borderColor="#E4E4E4"
+              backgroundColor="rgba(217, 217, 217, 0.1)"
+              placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
+            />
+          </InputWrap>
+          <InputWrap>
+            <InpuTitle>Tandai Seseorang</InpuTitle>
+            <InputText
+              borderRadius="0px"
+              borderColor="#E4E4E4"
+              backgroundColor="rgba(217, 217, 217, 0.1)"
+              placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
+            />
+          </InputWrap>
+          <InputWrap>
+            <InpuTitle>Deskripsi Task</InpuTitle>
+            <TextareaAutosize
+              aria-label="minimum height"
+              minRows={8}
+              style={{
+                width: "100%",
+                marginLeft: "3px",
+                backgroundColor: "rgba(217, 217, 217, 0.2)",
+                border: "1px solid #E5E5E5",
+                padding: "10px",
+              }}
+            />
+          </InputWrap>
+        </DialogContentCustom>
+
+        <DialogActionsCustom>
+          <Button
+            variant="contained"
+            width="217px"
+            borderRadius="5px"
+            padding="13px"
+            onClick={() => setPopUpAdd(false)}
+          >
+            <ButtonText>Buat Task Baru</ButtonText>
+          </Button>
+        </DialogActionsCustom>
+      </PopUpDialog>
     </React.Fragment>
   );
 };
+
+const ButtonText = styled("p")(() => ({
+  fontFamily: "Inter",
+  fontWeight: 500,
+  fontSize: "15px",
+  lineHeight: "18px",
+  letterSpacing: "0.01em",
+  color: "#FFFFFF",
+}));
+
+const TextTitle = styled("p")(() => ({
+  fontWeight: 500,
+  fontSize: "13px",
+  lineHeight: "16px",
+  color: "#A7A3A3",
+}));
+
+const TextDetail = styled("p")(() => ({
+  fontWeight: 400,
+  fontSize: "13px",
+  lineHeight: "16px",
+}));
+
+const InpuTitle = styled("p")(() => ({
+  fontFamily: "Inter",
+  fontWeight: 500,
+  letterSpacing: "0.01em",
+  fontSize: "12px",
+  lineHeight: "15px",
+  color: "#000000",
+}));
+
+const InputWrap = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "6px",
+}));
+
+const TextWrap = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "5px",
+}));
+
+const DialogActionsCustom = styled(DialogActions)(() => ({
+  padding: "0px",
+  display: "flex",
+  justifyContent: "end",
+}));
+
+const DialogContentCustom = styled(DialogContent)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "16px",
+  padding: "50px",
+  backgroundColor: "white",
+  borderRadius: "10px",
+}));
+
+const PopUpDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuDialogContent-root": {
+    padding: theme.spacing(2),
+  },
+  "& .MuDialogActions-root": {
+    padding: theme.spacing(1),
+  },
+  "& .MuiPaper-root": {
+    width: "674px",
+    borderRadius: "10px",
+    height: "fit-content",
+    padding: "30px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px",
+    backgroundColor: "#F4F7FB",
+  },
+}));
 
 const Title = styled("div")(() => ({
   display: "flex",
@@ -612,6 +821,7 @@ const Title = styled("div")(() => ({
   boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
   backgroundColor: "white",
   margin: "-17px -17px 10px -17px",
+  justifyContent: "space-between",
 }));
 
 const Container = styled("div")(() => ({

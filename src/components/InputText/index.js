@@ -36,6 +36,7 @@ const InputText = ({
   borderColor,
   backgroundColor,
   placeholderStyle,
+  height,
   ...input
 }) => {
   return (
@@ -64,6 +65,7 @@ const InputText = ({
         "& .MuiInputBase-root": {
           fontFamily: "Inter",
           fontWeight: 500,
+          height: height,
           borderRadius: borderRadius ? borderRadius : "10px",
           borderColor: borderColor,
           paddingLeft: noPadding && "0px",
@@ -143,6 +145,7 @@ InputText.propTypes = {
   borderColor: PropTypes.string,
   backgroundColor: PropTypes.string,
   placeholderStyle: PropTypes.object,
+  height: PropTypes.string,
 };
 
 InputText.defaultProps = {
@@ -174,6 +177,7 @@ InputText.defaultProps = {
   borderColor: "rgba(0, 0, 0, 0.25)",
   backgroundColor: "white",
   placeholderStyle: {},
+  height: "auto",
 };
 
 export default InputText;

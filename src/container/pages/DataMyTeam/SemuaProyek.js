@@ -7,22 +7,18 @@ import Button from "../../../components/Button";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputText from "../../../components/InputText";
 import Colors from "../../../helpers/colors";
-import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import DropDown from "../../../components/DropDown";
 
 // Asset
-import eye from "../../../assets/icon/Eye.svg";
 import iconSlider from "../../../assets/icon/icon-slider.png";
-import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
-import iconXls from "../../../assets/icon/icon-xls.png";
-import iconPdf from "../../../assets/icon/icon-pdf.png";
+import eye from "../../../assets/icon/Eye.svg";
+import profilePost from "../../../assets/img/profile-post.png";
+import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
 
 // Dummy Data
 import { dataContent } from "./DataDummy";
-import profilePost from "../../../assets/img/profile-post.png";
-import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
 
 const SemuaProyek = ({ setActiveStep }) => {
   const dataHeader = [
@@ -34,7 +30,7 @@ const SemuaProyek = ({ setActiveStep }) => {
     },
     {
       title: "Profile",
-      width: 50,
+      width: 80,
       center: true,
       render: () => (
         <img alt="profile-chat" src={profilePost} height={24} width={24} />
@@ -46,12 +42,12 @@ const SemuaProyek = ({ setActiveStep }) => {
       key: "projectName",
     },
     {
-      title: "Jenis Proyek",
-      key: "projectType",
+      title: "Step",
+      key: "step",
     },
     {
-      title: "Pembuat Proyek",
-      key: "projectCreator",
+      title: "Lokasi",
+      key: "location",
     },
     {
       title: "Member",
@@ -64,96 +60,30 @@ const SemuaProyek = ({ setActiveStep }) => {
       ),
     },
     {
+      title: "Task",
+      key: "task",
+    },
+    {
+      title: "Progress",
+      key: "progress",
+    },
+    {
       title: "Tanggal Dibuat",
       key: "dateCreated",
     },
     {
-      title: "Status",
-      width: 160,
-      center: true,
-      render: (rowData) => (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {rowData.status === "Sudah Dikerjakan" ? (
-            <div
-              style={{
-                border: "1px solid #039C40",
-                backgroundColor: "#AEF8AC",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#039C40",
-              }}
-            >
-              {rowData.status}
-            </div>
-          ) : rowData.status === "Sedang Berjalan" ? (
-            <div
-              style={{
-                border: "1px solid #C80707",
-                backgroundColor: "#F5969633",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#C80707",
-              }}
-            >
-              {rowData.status}
-            </div>
-          ) : (
-            <div
-              style={{
-                border: "1px solid #2C4AE9",
-                backgroundColor: "#B5BEE94A",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#2C4AE9",
-              }}
-            >
-              {rowData.status}
-            </div>
-          )}
-        </div>
-      ),
-    },
-    {
       title: "Aksi",
-      width: 100,
-      render: () => (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+      key: "action",
+      render: (rowData) => (
+        <Button
+          variant="contained"
+          borderRadius="5px"
+          padding="0px 7px 0px 9px"
+          onClick={() => console.log("la")}
         >
-          <Button
-            variant="contained"
-            borderRadius="5px"
-            padding="0px 7px 0px 9px"
-            onClick={() => setActiveStep("detail")}
-          >
-            Detail
-            <img src={eye} alt="eye" />
-          </Button>
-        </div>
+          Detail
+          <img src={eye} alt="eye" />
+        </Button>
       ),
       center: true,
     },
@@ -161,14 +91,13 @@ const SemuaProyek = ({ setActiveStep }) => {
 
   const [search, setSearch] = useState("");
 
-  const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
 
   return (
     <Container>
       {/* Title */}
-      <Title title="Semua Grup">
+      <Title title="Semua Proyek">
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText
@@ -204,75 +133,6 @@ const SemuaProyek = ({ setActiveStep }) => {
               </InputAdornment>
             }
           />
-          {/* Tombol Export */}
-          <div
-            style={{ display: "flex", gap: "2px" }}
-            onClick={(event) => setMenuExport(event.currentTarget)}
-          >
-            <Button
-              padding="8px"
-              width="fit-content"
-              onlyIcon
-              borderRadius="5px 0px 0px 5px"
-            >
-              Export
-            </Button>
-            <Button
-              padding="8px"
-              width="fit-content"
-              onlyIcon
-              borderRadius="0px 5px 5px 0px"
-            >
-              <img src={iconExport} alt="icon-slider" />
-            </Button>
-          </div>
-          {/* List Menu Exoprt */}
-          <Menu
-            id="menu-appbar"
-            anchorEl={menuExport}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            sx={{
-              top: "40px",
-              left: "10px",
-              fontFamily: "Inter",
-              fontWeight: 500,
-              fontSize: "13px",
-              lineHeight: "16px",
-              color: "#000000",
-              "& .MuiPaper-root": {
-                borderRadius: "10px",
-              },
-              "& .MuiList-root": {
-                padding: "0px",
-              },
-            }}
-            open={Boolean(menuExport)}
-            onClose={() => setMenuExport(null)}
-          >
-            <MenuItem
-              onClick={() => setMenuExport(null)}
-              sx={{ padding: "8px 12px 3px 0px" }}
-            >
-              <img src={iconXls} alt="icon-xls" />
-              Export Excel
-            </MenuItem>
-            <div style={{ border: "1px solid #E5E5E5" }} />
-            <MenuItem
-              onClick={() => setMenuExport(null)}
-              sx={{ padding: "3px 12px 8px 0px" }}
-            >
-              <img src={iconPdf} alt="icon-pdf" />
-              Export Pdf
-            </MenuItem>
-          </Menu>
           {/* Tombol Filter */}
           <Button
             padding="8px"

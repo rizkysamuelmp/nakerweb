@@ -71,6 +71,7 @@ const SeeOther = styled("div")`
   font-size: 10px;
   line-height: 11px;
   color: #0061a7;
+  cursor: pointer;
 `;
 
 const ScrollView = styled("div")`
