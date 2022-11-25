@@ -36,6 +36,7 @@ const InputText = ({
   borderColor,
   backgroundColor,
   placeholderStyle,
+  height,
   ...input
 }) => {
   return (
