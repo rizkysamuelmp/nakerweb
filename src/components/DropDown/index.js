@@ -21,6 +21,7 @@ const DropDown = ({
   placeHolder,
   placeHolderInside,
   backgroundColor,
+  width,
 }) => {
   return (
     <FormControl
@@ -106,7 +107,7 @@ const DropDown = ({
             backgroundColor,
             height: "40px",
             "&.md": {
-              width: "255px",
+              width: width,
               padding: "0px",
               borderRadius: "5px",
             },
@@ -156,6 +157,7 @@ DropDown.propTypes = {
   placeHolderInside: PropTypes.bool,
   searchPlaceHolderEn: PropTypes.string,
   backgroundColor: PropTypes.string,
+  width: PropTypes.string,
 };
 
 DropDown.defaultProps = {
@@ -176,6 +178,7 @@ DropDown.defaultProps = {
   placeHolder: "",
   placeHolderInside: true,
   backgroundColor: "transparent",
+  width: "255px",
 };
 
 const CustomMenuItem = styled(MenuItem)(() => ({

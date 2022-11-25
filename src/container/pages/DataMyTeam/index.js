@@ -6,10 +6,10 @@ import { styled } from "@mui/material/styles";
 
 // Page
 import DataProyek from "./DataProyek";
-import InfoProyek from "./InfoProyek";
 import SemuaProyek from "./SemuaProyek";
 import DetailProyek from "./DetailProyek";
 import LoginQr from "./LoginQr";
+import TambahProyek from "./TambahProyek";
 
 const Container = styled("div")(() => ({
   width: "100%",
@@ -17,17 +17,17 @@ const Container = styled("div")(() => ({
 }));
 
 const Page = () => {
-  const [activeStep, setActiveStep] = useState("login");
+  const [activeStep, setActiveStep] = useState("page");
 
   return (
     <Container>
       {activeStep === "login" && <LoginQr setActiveStep={setActiveStep} />}
       {activeStep === "page" && <DataProyek setActiveStep={setActiveStep} />}
-      {activeStep === "info" && <InfoProyek setActiveStep={setActiveStep} />}
       {activeStep === "all" && <SemuaProyek setActiveStep={setActiveStep} />}
       {activeStep === "proyek" && (
         <DetailProyek setActiveStep={setActiveStep} />
       )}
+      {activeStep === "add" && <TambahProyek setActiveStep={setActiveStep} />}
     </Container>
   );
 };

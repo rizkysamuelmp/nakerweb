@@ -2,92 +2,52 @@ export const dataContent = [
   {
     no: 1,
     projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
+    step: "Planing",
+    location: "Jakarta",
     member: "1000",
+    task: "10",
+    progress: "70%",
     dateCreated: "24 Sep 2022",
-    status: "Sudah Dikerjakan",
   },
   {
     no: 2,
     projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
+    step: "Planing",
+    location: "Jakarta",
     member: "1000",
+    task: "10",
+    progress: "70%",
     dateCreated: "24 Sep 2022",
-    status: "Sedang Berjalan",
   },
   {
     no: 3,
     projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
+    step: "Planing",
+    location: "Jakarta",
     member: "1000",
+    task: "10",
+    progress: "70%",
     dateCreated: "24 Sep 2022",
-    status: "Selesai",
   },
   {
     no: 4,
     projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
+    step: "Planing",
+    location: "Jakarta",
     member: "1000",
+    task: "10",
+    progress: "70%",
     dateCreated: "24 Sep 2022",
-    status: "Sudah Dikerjakan",
   },
   {
     no: 5,
     projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
+    step: "Planing",
+    location: "Jakarta",
     member: "1000",
+    task: "10",
+    progress: "70%",
     dateCreated: "24 Sep 2022",
-    status: "Sudah Dikerjakan",
-  },
-  {
-    no: 6,
-    projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
-    member: "1000",
-    dateCreated: "24 Sep 2022",
-    status: "Selesai",
-  },
-  {
-    no: 7,
-    projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
-    member: "1000",
-    dateCreated: "24 Sep 2022",
-    status: "Sedang Berjalan",
-  },
-  {
-    no: 8,
-    projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
-    member: "1000",
-    dateCreated: "24 Sep 2022",
-    status: "Selesai",
-  },
-  {
-    no: 9,
-    projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
-    member: "1000",
-    dateCreated: "24 Sep 2022",
-    status: "Sudah Dikerjakan",
-  },
-  {
-    no: 10,
-    projectName: "MONITORING PENYALURAN BLT BBM TAHAP 1",
-    projectType: "Publik",
-    projectCreator: "Muh. Arifandi",
-    member: "1000",
-    dateCreated: "24 Sep 2022",
-    status: "Sedang Berjalan",
   },
 ];
 
@@ -112,5 +72,96 @@ export const dataTask = [
     description: "Membuat halaman utama grup",
     officer: "Muh Arifandi",
     status: "Selesai",
+  },
+];
+
+export const notification = [
+  {
+    name: "Muh. Arifandi",
+    text: "Menyelesaikan Task membuat UI",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
+  },
+  {
+    name: "Muh. Arifandi",
+    text: "telah memposting sesuatu di social media.",
   },
 ];

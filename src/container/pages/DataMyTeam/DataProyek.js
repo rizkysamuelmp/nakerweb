@@ -1,16 +1,27 @@
-import React from "react";
-import Title from "../../../components/Title";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputText from "../../../components/InputText";
+import Colors from "../../../helpers/colors";
+import Button from "../../../components/Button";
+import Menu from "@mui/material/Menu";
 
 // Asset
-import eye from "../../../assets/icon/Eye.svg";
 import profilePost from "../../../assets/img/profile-post.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
+import { ReactComponent as IconPlus } from "../../../assets/icon/icon-plus.svg";
+import { ReactComponent as IconSurvey } from "../../../assets/icon/survey.svg";
+import profile from "../../../assets/img/profile.png";
+import iconSearch from "../../../assets/icon/icon-search.png";
+import iconSlider from "../../../assets/icon/icon-slider.png";
+import eye from "../../../assets/icon/Eye.svg";
 
 // Dummy Data
-import { dataContent } from "./DataDummy";
-import Button from "../../../components/Button";
+import { dataContent, notification } from "./DataDummy";
+import DropDown from "../../../components/DropDown";
 
 const DataProyek = ({ setActiveStep }) => {
   const dataHeader = [
@@ -22,7 +33,7 @@ const DataProyek = ({ setActiveStep }) => {
     },
     {
       title: "Profile",
-      width: 50,
+      width: 80,
       center: true,
       render: () => (
         <img alt="profile-chat" src={profilePost} height={24} width={24} />
@@ -34,12 +45,12 @@ const DataProyek = ({ setActiveStep }) => {
       key: "projectName",
     },
     {
-      title: "Jenis Proyek",
-      key: "projectType",
+      title: "Step",
+      key: "step",
     },
     {
-      title: "Pembuat Proyek",
-      key: "projectCreator",
+      title: "Lokasi",
+      key: "location",
     },
     {
       title: "Member",
@@ -52,91 +63,29 @@ const DataProyek = ({ setActiveStep }) => {
       ),
     },
     {
+      title: "Task",
+      key: "task",
+    },
+    {
+      title: "Progress",
+      key: "progress",
+    },
+    {
       title: "Tanggal Dibuat",
       key: "dateCreated",
+      width: 150,
     },
-    {
-      title: "Status",
-      width: 160,
-      center: true,
-      render: (rowData) => (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {rowData.status === "Sudah Dikerjakan" ? (
-            <div
-              style={{
-                border: "1px solid #039C40",
-                backgroundColor: "#AEF8AC",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#039C40",
-              }}
-            >
-              {rowData.status}
-            </div>
-          ) : rowData.status === "Sedang Berjalan" ? (
-            <div
-              style={{
-                border: "1px solid #C80707",
-                backgroundColor: "#F5969633",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#C80707",
-              }}
-            >
-              {rowData.status}
-            </div>
-          ) : (
-            <div
-              style={{
-                border: "1px solid #2C4AE9",
-                backgroundColor: "#B5BEE94A",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#2C4AE9",
-              }}
-            >
-              {rowData.status}
-            </div>
-          )}
-        </div>
-      ),
-    },
+
     {
       title: "Aksi",
-      width: 100,
+      width: 120,
       render: () => (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <div style={{ whiteSpace: "nowrap" }}>
           <Button
             variant="contained"
             borderRadius="5px"
             padding="0px 7px 0px 9px"
-            onClick={() => setActiveStep("info")}
+            onClick={() => setActiveStep("proyek")}
           >
             Detail
             <img src={eye} alt="eye" />
@@ -147,52 +96,385 @@ const DataProyek = ({ setActiveStep }) => {
     },
   ];
 
+  const [search, setSearch] = useState("");
+  const [menuFilter, setMenuFilter] = useState(null);
+  const [dropDown, setDropDown] = useState(0);
+
   return (
     <Container>
-      {/* Title */}
-      <Title title="Data Proyek" />
-
-      <RowWrapper>
-        <ContentWrapper style={{ width: "65%" }}>
-          <TitleBar>Total Proyek</TitleBar>
-        </ContentWrapper>
-        <ContentWrapper style={{ width: "35%" }}>
-          <TitleBar>Jumlah Status Proyek</TitleBar>
-        </ContentWrapper>
-      </RowWrapper>
-
-      {/* Table */}
       <RowWrapper>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "10px",
-            width: "100%",
+            gap: "20px",
+            width: "70%",
           }}
         >
-          <Table headerContent={dataHeader} dataContent={dataContent} />
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
-            <p
+          <ContentWrapper>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <TitleBar>Daftar Proyek</TitleBar>
+              <p
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontWeight: 500,
+                  fontSize: "17px",
+                  lineHeight: "21px",
+                  color: "#115ABE",
+                  gap: "5px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setActiveStep("add")}
+              >
+                <IconPlus />
+                Buat Proyek
+              </p>
+            </div>
+            <div
               style={{
+                display: "flex",
+                gap: "30px",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <div
+                style={{ display: "flex", gap: "10px", alignItems: "center" }}
+              >
+                <div
+                  style={{
+                    padding: "12px",
+                    borderRadius: "10px",
+                    backgroundColor: "#3B9CF1",
+                    widht: "60px",
+                    height: "60px",
+                  }}
+                >
+                  <IconSurvey />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "2px",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "17px",
+                      lineHeight: "21px",
+                    }}
+                  >
+                    123 Project
+                  </p>
+                  <p
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "13px",
+                      lineHeight: "16px",
+                      color: "#979494",
+                    }}
+                  >
+                    Planing
+                  </p>
+                </div>
+              </div>
+              <div
+                style={{ display: "flex", gap: "10px", alignItems: "center" }}
+              >
+                <div
+                  style={{
+                    padding: "12px",
+                    borderRadius: "10px",
+                    backgroundColor: "#F13B3BD4",
+                    widht: "60px",
+                    height: "60px",
+                  }}
+                >
+                  <IconSurvey />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "2px",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "17px",
+                      lineHeight: "21px",
+                    }}
+                  >
+                    150 Project
+                  </p>
+                  <p
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "13px",
+                      lineHeight: "16px",
+                      color: "#979494",
+                    }}
+                  >
+                    Organizer
+                  </p>
+                </div>
+              </div>
+              <div
+                style={{ display: "flex", gap: "10px", alignItems: "center" }}
+              >
+                <div
+                  style={{
+                    padding: "12px",
+                    borderRadius: "10px",
+                    backgroundColor: "#2ADB0DD4",
+                    widht: "60px",
+                    height: "60px",
+                  }}
+                >
+                  <IconSurvey />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "2px",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "17px",
+                      lineHeight: "21px",
+                    }}
+                  >
+                    200 Project
+                  </p>
+                  <p
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "13px",
+                      lineHeight: "16px",
+                      color: "#979494",
+                    }}
+                  >
+                    Mentoring
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ContentWrapper>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              width: "100%",
+            }}
+          >
+            <Table headerContent={dataHeader} dataContent={dataContent} />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
+              <p
+                style={{
+                  fontFamily: "Inter",
+                  fontWeight: 600,
+                  fontSize: "15px",
+                  lineHeight: "18px",
+                  color: "#115AAA",
+                  cursor: "pointer",
+                }}
+                onClick={() => setActiveStep("all")}
+              >
+                Lihat Semua
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+            width: "30%",
+          }}
+        >
+          <div style={{ display: "flex", gap: "16px" }}>
+            <InputText
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="pencarian"
+              noPadding
+              borderRadius="5px"
+              borderColor="#115AAA"
+              iconAdornment={
+                <InputAdornment
+                  position="start"
+                  className="inputAdorment"
+                  sx={{
+                    zIndex: 200,
+                    height: "40px",
+                    justifyContent: "center",
+                    width: "67px",
+                    maxHeight: "56px",
+                    borderRadius: "5px 0px 0px 5px",
+                    backgroundColor: Colors.primary.hard,
+                    ".MuiTypography-root": {
+                      color: "white",
+                      fontSize: "0.938rem",
+                      fontWeight: "400",
+                      lineHeight: "1.124rem",
+                    },
+                  }}
+                >
+                  <img src={iconSearch} alt="icon-search" />
+                </InputAdornment>
+              }
+            />
+
+            <Button
+              padding="8px"
+              width="fit-content"
+              onlyIcon
+              onClick={(event) => {
+                setMenuFilter(event.currentTarget);
+              }}
+            >
+              <img src={iconSlider} alt="icon-slider" />
+            </Button>
+            <Menu
+              id="menu-appbar"
+              anchorEl={menuFilter}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              sx={{
+                top: "40px",
+                left: "10px",
                 fontFamily: "Inter",
-                fontWeight: 600,
+                fontWeight: 400,
                 fontSize: "15px",
                 lineHeight: "18px",
-                color: "#115AAA",
-                cursor: "pointer",
+                color: "#000000",
+                "& .MuiPaper-root": {
+                  borderRadius: "10px",
+                },
+                "& .MuiList-root": {
+                  padding: "16px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "16px",
+                },
               }}
-              onClick={() => setActiveStep("all")}
+              open={Boolean(menuFilter)}
+              onClose={() => setMenuFilter(null)}
             >
-              Lihat Semua
-            </p>
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: "4px" }}
+              >
+                <p>Pilih jenis grup :</p>
+                <DropDown
+                  dropdownValue={dropDown}
+                  handleChange={(e) => setDropDown(e.target.value)}
+                  listDropDown={[
+                    {
+                      label: "Publik",
+                      value: 0,
+                    },
+                    { label: "Private", value: 1 },
+                  ]}
+                />
+              </div>
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: "4px" }}
+              >
+                <p>Pilih Kategori grup :</p>
+                <DropDown
+                  dropdownValue={dropDown}
+                  handleChange={(e) => setDropDown(e.target.value)}
+                  listDropDown={[
+                    {
+                      label: "Perusahaan",
+                      value: 0,
+                    },
+                    { label: "Organisasi", value: 1 },
+                    { label: "Komunitas", value: 2 },
+                  ]}
+                />
+              </div>
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: "4px" }}
+              >
+                <p>Pilih status grup :</p>
+                <DropDown
+                  dropdownValue={dropDown}
+                  handleChange={(e) => setDropDown(e.target.value)}
+                  listDropDown={[
+                    {
+                      label: "Aktif",
+                      value: 0,
+                    },
+                    { label: "Tidak Aktif", value: 1 },
+                    { label: "Menunggu", value: 2 },
+                  ]}
+                />
+              </div>
+            </Menu>
           </div>
+          <TitleBar>Recent Activity</TitleBar>
+          <ContentWrapper>
+            <ScrollView>
+              {notification.map((item) => (
+                <List aria-label="contacts" disablePadding>
+                  <ItemCustom>
+                    <img alt="person-trending" src={profile} />
+                    <TextWrapper>
+                      <p
+                        style={{
+                          fontWeight: 600,
+                          fontSize: "15px",
+                          lineHeight: "18px",
+                        }}
+                      >
+                        {item.name}
+                      </p>
+                      <p
+                        style={{
+                          fontWeight: 400,
+                          fontSize: "13px",
+                          lineHeight: "16px",
+                        }}
+                      >
+                        {item.text}
+                      </p>
+                    </TextWrapper>
+                  </ItemCustom>
+                </List>
+              ))}
+            </ScrollView>
+          </ContentWrapper>
         </div>
       </RowWrapper>
     </Container>
   );
 };
+
+const TextWrapper = styled("div")(() => ({
+  fontWeight: 500,
+  fontSize: "10px",
+  lineHeight: "12px",
+  display: "flex",
+  flexDirection: "column",
+}));
 
 const Container = styled("div")(() => ({
   display: "flex",
@@ -212,7 +494,6 @@ const ContentWrapper = styled("div")(() => ({
   boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.1)",
   padding: "15px",
   borderRadius: "10px",
-  height: "267px",
   gap: "15px",
   display: "flex",
   flexDirection: "column",
@@ -227,6 +508,20 @@ const TitleBar = styled("p")(() => ({
   lineHeight: "18px",
   letterSpacing: "0.01em",
   color: "#000000",
+}));
+
+const ScrollView = styled("p")(() => ({
+  overflow: "scroll",
+  height: "538px",
+  display: "flex",
+  gap: "10px",
+  flexDirection: "column",
+}));
+
+const ItemCustom = styled(ListItemButton)(() => ({
+  padding: 0,
+  display: "flex",
+  gap: "10px",
 }));
 
 export default DataProyek;
