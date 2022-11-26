@@ -183,7 +183,6 @@ const SemuaTask = ({ setActiveStep }) => {
           <Button
             padding="8px"
             width="fit-content"
-            onlyIcon
             onClick={(event) => {
               setMenuFilter(event.currentTarget);
             }}

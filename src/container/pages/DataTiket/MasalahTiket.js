@@ -31,8 +31,8 @@ const MasalahTiket = () => {
 
         <BodyWrapper>
           <ChatContainer>
-            {message.map((item) => (
-              <ChatWrapper>
+            {message.map((item, index) => (
+              <ChatWrapper key={index}>
                 <div
                   style={{
                     display: "flex",

@@ -341,7 +341,6 @@ const DataProyek = ({ setActiveStep }) => {
             <Button
               padding="8px"
               width="fit-content"
-              onlyIcon
               onClick={(event) => {
                 setMenuFilter(event.currentTarget);
               }}
@@ -431,8 +430,8 @@ const DataProyek = ({ setActiveStep }) => {
           <TitleBar>Recent Activity</TitleBar>
           <ContentWrapper>
             <ScrollView>
-              {notification.map((item) => (
-                <List aria-label="contacts" disablePadding>
+              {notification.map((item, index) => (
+                <List aria-label="contacts" disablePadding key={index}>
                   <ItemCustom>
                     <img alt="person-trending" src={profile} />
                     <TextWrapper>

@@ -64,7 +64,7 @@ const Button = ({
           style={{ display: "flex" }}
         />
       ) : (
-        <p
+        <div
           style={{
             margin: 0,
             display: "flex",
@@ -74,7 +74,7 @@ const Button = ({
           }}
         >
           {children}
-        </p>
+        </div>
       )}
     </ButtonMUI>
   );

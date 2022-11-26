@@ -204,8 +204,8 @@ const ProfilGrup = ({ setActiveStep }) => {
           <BoxWrapper>
             <TitleBar>Postingan terpopuler</TitleBar>
             <ScrollWrapper style={{ gap: "5px", paddingRight: "15px" }}>
-              {lokerTranding.map((item) => (
-                <List aria-label="contacts" disablePadding>
+              {lokerTranding.map((item, index) => (
+                <List aria-label="contacts" disablePadding key={index}>
                   <ItemCustom onClick={() => setActiveStep("all")}>
                     <ContentWrap>
                       <img alt="person-trending" src={imagePerson} />
