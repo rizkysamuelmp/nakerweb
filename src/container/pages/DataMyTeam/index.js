@@ -18,7 +18,7 @@ const Container = styled("div")(() => ({
 }));
 
 const Page = () => {
-  const [activeStep, setActiveStep] = useState("page");
+  const [activeStep, setActiveStep] = useState("add");
 
   return (
     <Container>
