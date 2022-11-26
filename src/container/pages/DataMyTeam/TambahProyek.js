@@ -362,6 +362,7 @@ const TambahProyek = ({ setActiveStep }) => {
             color="#115ABE"
             padding="10px"
             style={{ fontWeight: 600, fontSize: "16px", lineHeight: "19px" }}
+            onClick={() => setActiveStep("page")}
           >
             Buat Project Baru
           </Button>
@@ -370,10 +371,6 @@ const TambahProyek = ({ setActiveStep }) => {
     </Container>
   );
 };
-const CustomMenuItem = styled(MenuItem)(() => ({
-  fontSize: "15px",
-  fontWeight: 400,
-}));
 
 const InputWrap = styled("div")(() => ({
   display: "flex",

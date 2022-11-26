@@ -1,6 +1,5 @@
 import { styled } from "@mui/material/styles";
 import React from "react";
-import Pagination from "../../../components/Pagination";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
 import { dataContent, dataHeader } from "./dataDummy";
@@ -12,13 +11,27 @@ const Container = styled("div")`
   gap: 20px;
 `;
 
-const DataPengguna = () => {
+const DataPengguna = ({ setActiveStep }) => {
   return (
     <Container>
       <Title title={"Data Pengguna"} />
       <Table dataContent={dataContent} headerContent={dataHeader} />
-      {/* Pagination */}
-      <Pagination count={10} currentData={10} totalData={100} page={2} />
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
+        <p
+          style={{
+            fontFamily: "Inter",
+            fontWeight: 600,
+            fontSize: "15px",
+            lineHeight: "18px",
+            color: "#115AAA",
+            cursor: "pointer",
+          }}
+          onClick={() => setActiveStep("all")}
+        >
+          Lihat Semua
+        </p>
+      </div>
     </Container>
   );
 };

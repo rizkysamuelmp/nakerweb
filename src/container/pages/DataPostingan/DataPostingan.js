@@ -12,6 +12,7 @@ import { ReactComponent as IconThumb } from "../../../assets/icon/icon-thumb.svg
 import { ReactComponent as IconComment } from "../../../assets/icon/icon-comment.svg";
 import { ReactComponent as IconShare } from "../../../assets/icon/icon-share.svg";
 import profilePost from "../../../assets/img/profile-post.png";
+import ChartLine from "../../../components/ChartLine";
 
 const DataPostingan = ({ setActiveStep }) => {
   const dataHeader = [
@@ -114,6 +115,88 @@ const DataPostingan = ({ setActiveStep }) => {
     },
   ];
 
+  const dataSet = [
+    {
+      label: "Pribadi",
+      data: [
+        82, 15, 34, 95, 28, 3, 48, 76, 65, 29, 50, 36, 7, 4, 67, 15, 83, 21, 94,
+        70, 77, 57, 55, 22, 80, 5, 95, 32, 94, 39,
+      ],
+      borderColor: "#FC720E",
+      backgroundColor: "#FC720E",
+      tension: 0.3,
+      pointStyle: "rectRounded",
+    },
+    {
+      label: "Publik",
+      data: [
+        94, 100, 28, 42, 14, 49, 1, 95, 81, 63, 20, 28, 55, 73, 71, 58, 12, 44,
+        66, 50, 68, 20, 93, 25, 30, 28, 74, 69, 93, 77,
+      ],
+      borderColor: "#FF4F79",
+      backgroundColor: "#FF4F79",
+      tension: 0.3,
+      pointStyle: "rectRounded",
+      borderDash: [4, 5],
+    },
+  ];
+
+  const labels = [
+    "1 Jul",
+    "3 Jul",
+    "5 Jul",
+    "7 Jul",
+    "9 Jul",
+    "11 Jul",
+    "14 Jul",
+    "16 Jul",
+    "18 Jul",
+    "21 Jul",
+  ];
+
+  const chartLineOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: "bottom",
+        labels: {
+          font: {
+            size: 14,
+          },
+          usePointStyle: true,
+        },
+      },
+      title: {
+        display: false,
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          font: {
+            size: 13,
+          },
+          autoSkip: true,
+          maxTicksLimit: 4,
+        },
+        position: "right",
+      },
+      y: {
+        position: "right",
+      },
+    },
+  };
+
   return (
     <Container>
       {/* Title */}
@@ -123,6 +206,11 @@ const DataPostingan = ({ setActiveStep }) => {
       <RowWrapper>
         <ContentWrapper style={{ width: "65%" }}>
           <TitleBar>Pertumbuhan postingan</TitleBar>
+          <ChartLine
+            datasets={dataSet}
+            options={chartLineOptions}
+            labels={labels}
+          />
         </ContentWrapper>
         <ContentWrapper style={{ width: "35%", gap: "8px" }}>
           <TitleBar>Postingan Terpopler</TitleBar>

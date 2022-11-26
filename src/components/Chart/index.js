@@ -19,6 +19,9 @@ const Chart = ({ data, isLoading, description, title }) => {
         formatter: (value) =>
           value === 0 || value === -1 ? null : `${Math.round(value * 1)}%`,
       },
+      tooltips: {
+        enabled: false,
+      },
       legend: {
         display: false,
       },
@@ -179,7 +182,6 @@ const WrapperChartLabel = styled("div")(() => ({
   gap: "20px",
   alignItems: "center",
   height: "150px",
-  width: "315px",
 }));
 
 const LabelContainer = styled("div")(() => ({

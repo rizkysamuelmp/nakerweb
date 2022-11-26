@@ -8,9 +8,13 @@ const DataTiket = () => {
 
   return (
     <>
-      {activeStep === "page" && <DataLoker />}
-      {activeStep === "detail" && <DetailDataTiket />}
-      {activeStep === "masalah" && <MasalahTiket />}
+      {activeStep === "page" && <DataLoker setActiveStep={setActiveStep} />}
+      {activeStep === "detail" && (
+        <DetailDataTiket setActiveStep={setActiveStep} />
+      )}
+      {activeStep === "masalah" && (
+        <MasalahTiket setActiveStep={setActiveStep} />
+      )}
       {}
     </>
   );

@@ -435,6 +435,7 @@ const DetailProyek = ({ setActiveStep }) => {
                   color: "#115AAA",
                   cursor: "pointer",
                 }}
+                onClick={() => setActiveStep("allTask")}
               >
                 Lihat Semua
               </p>

@@ -1,156 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
+import Button from "../../../components/Button";
+import PopUp from "../../../components/PopUp";
 
 // Assets
 import back from "../../../assets/icon/Back.svg";
 import organization from "../../../assets/icon/Organization.svg";
 import business from "../../../assets/icon/Business.svg";
+import iconBusiness from "../../../assets/icon/bussiness-icon.png";
+import iconBusinessSuccess from "../../../assets/icon/business-icon-success.png";
+import iconBusinessDecline from "../../../assets/icon/business-icon-decline.png";
 
 // Data Dummy
 import { infoPerusahaan } from "./DataDummy";
-import Button from "../../../components/Button";
-
-const Container = styled("div")``;
-
-const HeadContainer = styled("div")`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const Back = styled("div")`
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 18px;
-  display: flex;
-  align-items: center;
-  color: #000000;
-`;
-
-const RightHead = styled("span")`
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  display: flex;
-  align-items: center;
-  color: #000000;
-`;
-
-const Body = styled("div")`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 27px 35px;
-  background: #f4f7fb;
-  border-radius: 10px 10px 0px 0px;
-  min-height: 70vh;
-`;
-
-const InfoCard = styled("div")`
-  background: #ffffff;
-  border-radius: 10px 10px 0px 0px;
-  padding: 13px 11px;
-`;
-
-const InfoHead = styled("div")`
-  display: flex;
-  align-items: center;
-  gap: 9px;
-
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-`;
-
-const DetailPerusahaan = styled("div")`
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  margin: 13px 0;
-`;
-
-const Line = styled("div")`
-  display: flex;
-  align-items: center;
-`;
-
-const Left = styled("div")`
-  width: 50%;
-  gap: 10px;
-  display: flex;
-`;
-
-const Right = styled("div")`
-  width: 50%;
-  gap: 10px;
-  display: flex;
-`;
-
-const TextLeft = styled("div")`
-  width: 30%;
-  text-align: right;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  color: #000000;
-`;
-
-const TextRight = styled("div")`
-  width: 70%;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  display: flex;
-  align-items: center;
-
-  color: #000000;
-`;
-
-const Detail = styled("div")``;
-
-const WrapperContainer = styled("div")`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const WrapperRight = styled("div")``;
-
-const Title = styled("h1")`
-  font-weight: 600;
-  width: fit-content;
-  font-size: 15px;
-  line-height: 18px;
-  display: flex;
-  align-items: center;
-  color: #000000;
-  border-bottom: 1px solid #d4e3f6;
-  margin-bottom: 10px;
-`;
-
-const DetailBody = styled("div")`
-  padding-left: 10px;
-`;
-
-const DetailText = styled("p")`
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 15px;
-  margin-bottom: 10px;
-`;
-
-const Wrapper = styled("div")`
-  width: 50%;
-`;
-
-const FooterContainer = styled("div")`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
 
 const DetailLoker = ({ setActiveStep }) => {
+  const [confAccept, setConfAccept] = useState(false);
+  const [accept, setAccept] = useState(false);
+  const [confDecline, setConfDecline] = useState(false);
+  const [decline, setDecline] = useState(false);
+
   return (
     <Container>
       <HeadContainer>
@@ -295,16 +164,207 @@ const DetailLoker = ({ setActiveStep }) => {
                 </Wrapper>
               </Line>
             </WrapperContainer>
-            <WrapperRight></WrapperRight>
           </Detail>
         </InfoCard>
       </Body>
       <FooterContainer>
-        <Button>Setujui</Button>
-        <Button color="#FA3E3E">Tolak</Button>
+        <Button onClick={() => setConfAccept(true)}>Setujui</Button>
+        <Button color="#FA3E3E" onClick={() => setConfDecline(true)}>
+          Tolak
+        </Button>
       </FooterContainer>
+
+      <PopUp
+        open={confAccept}
+        buttonWord="Setujui"
+        imgSrc={iconBusiness}
+        onClose={() => setConfAccept(false)}
+        onClickAction={() => {
+          setConfAccept(false);
+          setAccept(true);
+        }}
+        title="Konfirmasi Loker"
+        info="Apakah anda ingin menyetujui loker ini ?"
+      />
+
+      <PopUp
+        open={accept}
+        buttonWord="Ok"
+        imgSrc={iconBusinessSuccess}
+        onClose={() => setAccept(false)}
+        onClickAction={() => {
+          setAccept(false);
+        }}
+        title="Permintaan Disetujui"
+        info="Permintaan publikasi loker berhasil disetujui."
+      />
+
+      <PopUp
+        open={confDecline}
+        buttonWord="Tolak"
+        imgSrc={iconBusiness}
+        onClose={() => setConfDecline(false)}
+        onClickAction={() => {
+          setConfDecline(false);
+          setDecline(true);
+        }}
+        title="Konfirmasi Loker"
+        info="Apakah anda ingin menolak loker ini ?"
+      />
+
+      <PopUp
+        open={decline}
+        buttonWord="Ok"
+        imgSrc={iconBusinessDecline}
+        onClose={() => setDecline(false)}
+        onClickAction={() => {
+          setDecline(false);
+        }}
+        title="Permintaan Ditolak"
+        info="Permintaan publikasi loker berhasil ditolak."
+      />
     </Container>
   );
 };
+
+const Container = styled("div")``;
+
+const HeadContainer = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Back = styled("div")`
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+`;
+
+const RightHead = styled("span")`
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+`;
+
+const Body = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 27px 35px;
+  background: #f4f7fb;
+  border-radius: 10px 10px 0px 0px;
+`;
+
+const InfoCard = styled("div")`
+  background: #ffffff;
+  border-radius: 10px 10px 0px 0px;
+  padding: 13px 11px;
+`;
+
+const InfoHead = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+`;
+
+const DetailPerusahaan = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 13px 0;
+`;
+
+const Line = styled("div")`
+  display: flex;
+  align-items: center;
+`;
+
+const Left = styled("div")`
+  width: 50%;
+  gap: 10px;
+  display: flex;
+`;
+
+const Right = styled("div")`
+  width: 50%;
+  gap: 10px;
+  display: flex;
+`;
+
+const TextLeft = styled("div")`
+  width: 30%;
+  text-align: right;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #000000;
+`;
+
+const TextRight = styled("div")`
+  width: 70%;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+`;
+
+const Detail = styled("div")``;
+
+const WrapperContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const WrapperRight = styled("div")``;
+
+const Title = styled("h1")`
+  font-weight: 600;
+  width: fit-content;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+  border-bottom: 1px solid #d4e3f6;
+  margin-bottom: 10px;
+`;
+
+const DetailBody = styled("div")`
+  padding-left: 10px;
+`;
+
+const DetailText = styled("p")`
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 15px;
+  margin-bottom: 10px;
+`;
+
+const Wrapper = styled("div")`
+  width: 50%;
+`;
+
+const FooterContainer = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 35px;
+`;
 
 export default DetailLoker;

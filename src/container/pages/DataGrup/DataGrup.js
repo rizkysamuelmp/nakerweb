@@ -2,16 +2,18 @@ import React from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
+import Button from "../../../components/Button";
+import Chart from "../../../components/Chart";
+import ChartBar from "../../../components/ChartBar";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
 import profilePost from "../../../assets/img/profile-post.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
+import iconCalendar from "../../../assets/icon/icon-calendar.png";
 
 // Dummy Data
 import { dataContent } from "./DataDummy";
-import Button from "../../../components/Button";
-import Chart from "../../../components/Chart";
 
 const DataLoker = ({ setActiveStep }) => {
   const dataHeader = [
@@ -118,7 +120,57 @@ const DataLoker = ({ setActiveStep }) => {
 
       <RowWrapper>
         <ContentWrapper style={{ width: "65%" }}>
-          <TitleBar>Total Grup</TitleBar>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <p
+                style={{
+                  fontWeight: 400,
+                  fontSize: "15px",
+                  lineHeight: "18px",
+                }}
+              >
+                Total Grup
+              </p>
+              <p
+                style={{
+                  fontWeight: 700,
+                  fontSize: "20px",
+                  lineHeight: "24px",
+                }}
+              >
+                150
+              </p>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                gap: "3px",
+                backgroundColor: "#DEE5EF",
+                boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.1)",
+                padding: "4px 6px",
+                height: "fit-content",
+                borderRadius: "3px",
+                alignItems: "center",
+              }}
+            >
+              <img
+                alt="img-calendar"
+                src={iconCalendar}
+                width={18}
+                height={18}
+              />
+              <p
+                style={{
+                  fontWeight: 400,
+                  fontSize: "10px",
+                  lineHeight: "12px",
+                }}
+              >
+                2022
+              </p>
+            </div>
+          </div>
+          <ChartBar />
         </ContentWrapper>
         <ContentWrapper style={{ width: "35%" }}>
           <TitleBar>Jumlah Status Grup</TitleBar>
