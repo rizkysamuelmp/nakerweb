@@ -237,8 +237,8 @@ const Dashboard = () => {
 
             {/* Scroll view for see activity */}
             <ScrollView>
-              {notification.map((item) => (
-                <List aria-label="contacts" disablePadding>
+              {notification.map((item, index) => (
+                <List aria-label="contacts" disablePadding key={index}>
                   <ItemCustom>
                     <ContentWrap>
                       <img alt="person-trending" src={profile} />

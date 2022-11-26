@@ -102,7 +102,7 @@ const InputText = ({
       inputProps={{
         ...input.inputProps,
         maxLength,
-        autocomplete: "new-password",
+        autoComplete: "new-password",
       }}
     />
   );

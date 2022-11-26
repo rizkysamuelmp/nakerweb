@@ -217,7 +217,6 @@ const SemuaLoker = ({ setActiveStep }) => {
             <Button
               padding="8px"
               width="fit-content"
-              onlyIcon
               borderRadius="5px 0px 0px 5px"
             >
               Export
@@ -225,7 +224,6 @@ const SemuaLoker = ({ setActiveStep }) => {
             <Button
               padding="8px"
               width="fit-content"
-              onlyIcon
               borderRadius="0px 5px 5px 0px"
             >
               <img src={iconExport} alt="icon-slider" />
@@ -284,7 +282,6 @@ const SemuaLoker = ({ setActiveStep }) => {
           <Button
             padding="8px"
             width="fit-content"
-            onlyIcon
             onClick={(event) => {
               setMenuFilter(event.currentTarget);
             }}

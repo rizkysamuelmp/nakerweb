@@ -199,8 +199,10 @@ const TambahProyek = ({ setActiveStep }) => {
                 borderColor: "#E4E4E4",
               }}
             >
-              {listCategory.map((item) => (
-                <MenuItem value={item.value}>{item.label}</MenuItem>
+              {listCategory.map((item, index) => (
+                <MenuItem value={item.value} key={index}>
+                  {item.label}
+                </MenuItem>
               ))}
             </Select>
           </InputWrap>
@@ -319,8 +321,10 @@ const TambahProyek = ({ setActiveStep }) => {
                 borderColor: "#E4E4E4",
               }}
             >
-              {listLokasi.map((item) => (
-                <MenuItem value={item.value}>{item.label}</MenuItem>
+              {listLokasi.map((item, index) => (
+                <MenuItem key={index} value={item.value}>
+                  {item.label}
+                </MenuItem>
               ))}
             </Select>
           </InputWrap>

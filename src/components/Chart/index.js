@@ -75,8 +75,8 @@ const Chart = ({ data, isLoading, description, title }) => {
               </p>
             </WrapperChart>
             <LabelContainer>
-              {data[0].label.map((item) => (
-                <ContentWrap>
+              {data[0].label.map((item, index) => (
+                <ContentWrap key={index}>
                   <div
                     style={{
                       height: "15px",

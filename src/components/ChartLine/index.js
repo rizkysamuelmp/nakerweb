@@ -34,24 +34,6 @@ const ChartLine = ({
     Legend
   );
 
-  // const daaaa = [
-  //   "January",
-  //   "February",
-  //   "March",
-  //   "April",
-  //   "May",
-  //   "June",
-  //   "July",
-  //   "January",
-  //   "February",
-  //   "March",
-  // ];
-
-  // console.warn(
-  //   "Isi data : ",
-  //   daaaa.map(() => faker.datatype.number({ min: 0, max: 300 }))
-  // );
-
   return (
     <Container>
       <Line

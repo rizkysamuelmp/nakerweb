@@ -71,8 +71,8 @@ const DataLoker = ({ setActiveStep }) => {
         <ContentWrapper style={{ width: "18%" }}>
           <TitleBar>Sektor trending</TitleBar>
           <ScrollWrapper>
-            {sektorTrending.map((item) => (
-              <TextWrapper>
+            {sektorTrending.map((item, index) => (
+              <TextWrapper key={index}>
                 <TextName>{item.name}</TextName>
                 <TextDetail>{item.detail}</TextDetail>
               </TextWrapper>
@@ -84,8 +84,8 @@ const DataLoker = ({ setActiveStep }) => {
         <ContentWrapper style={{ width: "45%" }}>
           <TitleBar>Loker trending</TitleBar>
           <ScrollWrapper style={{ gap: "5px", paddingRight: "15px" }}>
-            {lokerTranding.map((item) => (
-              <List aria-label="contacts" disablePadding>
+            {lokerTranding.map((item, index) => (
+              <List aria-label="contacts" disablePadding key={index}>
                 <ItemCustom>
                   <ContentWrap>
                     <img alt="person-trending" src={imagePerson} />

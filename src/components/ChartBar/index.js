@@ -33,11 +33,6 @@ const ChartBar = ({
     Legend
   );
 
-  // console.warn(
-  //   "Isi data : ",
-  //   labels.map(() => faker.datatype.number({ min: 0, max: 10 }))
-  // );
-
   return (
     <Container>
       <Bar options={options} data={{ labels: labels, datasets: datasets }} />
@@ -50,7 +45,7 @@ ChartBar.propTypes = {
   description: PropTypes.string,
   title: PropTypes.string,
   options: PropTypes.object,
-  datasets: PropTypes.object,
+  datasets: PropTypes.array,
   labels: PropTypes.array,
 };
 

@@ -36,7 +36,6 @@ const DropDown = ({
         defaultValue=""
         className={`select-dropdown ${size}`}
         displayEmpty
-        IconComponent={null}
         endAdornment={
           <InputAdornment
             position="start"
