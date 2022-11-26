@@ -81,7 +81,7 @@ const FooterWrapper = styled("div")`
 `;
 
 // Style stepTwo
-const HeadContainer = styled("div")``;
+// const HeadContainer = styled("div")``;
 
 const BodyStepTwo = styled("div")`
   width: 50%;
@@ -259,6 +259,21 @@ const StepTwo = () => {
           <BodyStepTwo>
             <Wrapper>
               <TitleDesc>Kualifikasi</TitleDesc>
+              <TextareaAutosize
+                // aria-label="minimum height"
+                placeholder="Jelaskan secara rinci seperti apa pekerja yang anda ingin kan ....."
+                minRows={6}
+                style={{
+                  resize: "none",
+                  marginLeft: "3px",
+                  backgroundColor: "rgba(217, 217, 217, 0.2)",
+                  border: "1px solid #E5E5E5",
+                  padding: "10px",
+                  height: "72px",
+                }}
+                value={deskrisi}
+                onChange={(e) => setDeskrisi(e.target.value)}
+              />
             </Wrapper>
           </BodyStepTwo>
         </CardBody>
