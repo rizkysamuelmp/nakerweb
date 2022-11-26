@@ -137,6 +137,7 @@ const DescProject = styled("p")`
 `;
 
 const Dashboard = () => {
+  // Data Dummy untuk chart
   const dataChart1 = [
     {
       data: [20, 40, 40],
@@ -197,6 +198,8 @@ const Dashboard = () => {
       <div style={{ marginTop: "20px" }}>
         {/* Summary */}
         <Summary />
+
+        {/* Grid Container */}
         <GridContainer>
           {/* Chart Component */}
           <ChartComponent>
@@ -213,6 +216,7 @@ const Dashboard = () => {
               <Chart data={dataChart2} description="230 Grup" />
             </div>
           </ChartComponent>
+
           {/* Notification latest activity*/}
           <LatestActivity>
             <div
@@ -223,12 +227,17 @@ const Dashboard = () => {
                 marginBottom: "10px",
               }}
             >
+              {/* Title header latest activity */}
               <TitleBar>Aktivitas Terakhir</TitleBar>
+
+              {/* Button to see other all activity */}
               <SeeOther>
                 <p>Lihat lainnya</p>
                 <img src={arrowRight} alt="" width={"15px"} />
               </SeeOther>
             </div>
+
+            {/* Scroll view for see activity */}
             <ScrollView>
               {notification.map((item) => (
                 <List aria-label="contacts" disablePadding>
@@ -245,9 +254,12 @@ const Dashboard = () => {
               ))}
             </ScrollView>
           </LatestActivity>
+
           {/* List Project */}
           <ListProject>
             <TitleBar>Daftar Project</TitleBar>
+
+            {/* Project Content */}
             <ProjectContent>
               <ProjectSection>
                 <ImageContainer color="#3b9cf1">
