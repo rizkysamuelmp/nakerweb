@@ -17,7 +17,7 @@ const LinkWrapper = styled(Link)`
   font-size: 15px;
   line-height: 19.5px;
   cursor: pointer;
-  padding: 2px 8px;
+  padding: 10px 8px;
   text-decoration: none;
 `;
 
@@ -29,7 +29,6 @@ const Sidebar = () => {
         width: "228px",
         display: "flex",
         flexDirection: "column",
-        gap: "10px",
         padding: "16px 14px",
       }}
     >

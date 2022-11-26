@@ -141,7 +141,7 @@ const SemuaPengguna = ({ setActiveStep }) => {
 
   return (
     <Container>
-      <Title title="Semua Loker">
+      <Title title="Semua Pengguna">
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText

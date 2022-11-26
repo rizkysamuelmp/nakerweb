@@ -294,3 +294,13 @@ export const dataContentAll = [
     status: "Tidak Aktif",
   },
 ];
+
+export const infoPerusahaan = {
+  namaPerusahaan: "PT. Indo Syarikat pekerja",
+  alamat:
+    "Jl. Loker Desain RT001 RW001, Kel. Loker, Kec. Loker, Kab. Loker, Prov. Loker-Loker",
+  telepon: "+621234567890",
+  kategori: "Pabrik Pakaian",
+  namaPic: "Muh. Arifandi",
+  email: "loker@syarikat.com",
+};
