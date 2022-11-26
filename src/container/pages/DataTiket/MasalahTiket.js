@@ -1,15 +1,84 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Title from "../../../components/Title";
-
-// Data Dummy
-import { message } from "./dataDummy";
+import Button from "../../../components/Button";
+import PopUp from "../../../components/PopUp";
 
 // Assets
 import ticket from "../../../assets/icon/Ticket.svg";
 import profile from "../../../assets/img/profile-post.png";
+import iconSend from "../../../assets/icon/icon-send.png";
 
-// Style
+// Data Dummy
+import { message } from "./dataDummy";
+
+const MasalahTiket = () => {
+  const [popupSend, setPopupSend] = useState(false);
+  return (
+    <Container>
+      {/* Tittle */}
+      <Title title="Detail Tiket" />
+
+      {/* Wrapper  */}
+      <Wrapper>
+        <HeaderWrapper>
+          <SectionLeft>
+            <img src={ticket} alt="" style={{ width: "30px" }} />
+            <span>Masalah Login</span>
+          </SectionLeft>
+          <SectionRight>Dibalas</SectionRight>
+        </HeaderWrapper>
+        <BodyWrapper>
+          <ChatContainer>
+            {message.map((item) => (
+              <ChatWrapper>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "15px",
+                  }}
+                >
+                  <img src={profile} alt="profile" width={"50px"} />
+                  <MessageWrapper>
+                    <NickName>{item.nickName}</NickName>
+                    <Message>{item.message}</Message>
+                  </MessageWrapper>
+                </div>
+                <Time>{item.time}</Time>
+              </ChatWrapper>
+            ))}
+          </ChatContainer>
+          <ReplayWrapper>
+            <ReplyHeader> Replay Tiket</ReplyHeader>
+            <ReplyBody placeholder="Balas komentar di sini....." />
+            <div style={{ display: "flex", justifyContent: "end" }}>
+              <Button
+                padding="8px 33px"
+                borderRadius="5px"
+                onClick={() => setPopupSend(true)}
+              >
+                Kirim
+              </Button>
+            </div>
+          </ReplayWrapper>
+        </BodyWrapper>
+      </Wrapper>
+
+      <PopUp
+        open={popupSend}
+        width="350px"
+        padding="60px 30px 25px 30px"
+        imgSrc={iconSend}
+        onClose={() => setPopupSend(false)}
+        onClickAction={() => setPopupSend(false)}
+        title="Berhasil dikirim"
+        info="Balasan anda berhasil dikirim."
+      />
+    </Container>
+  );
+};
+
 const Container = styled("div")`
   height: 100%;
 `;
@@ -112,51 +181,5 @@ const ReplyBody = styled("textarea")`
   border: 1px solid rgba(138, 136, 136, 0.3);
   border-radius: 0 0 10px 10px;
 `;
-
-const MasalahTiket = () => {
-  return (
-    <Container>
-      {/* Tittle */}
-      <Title title="Detail Tiket" />
-
-      {/* Wrapper  */}
-      <Wrapper>
-        <HeaderWrapper>
-          <SectionLeft>
-            <img src={ticket} alt="" style={{ width: "30px" }} />
-            <span>Masalah Login</span>
-          </SectionLeft>
-          <SectionRight>Dibalas</SectionRight>
-        </HeaderWrapper>
-        <BodyWrapper>
-          <ChatContainer>
-            {message.map((item) => (
-              <ChatWrapper>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "15px",
-                  }}
-                >
-                  <img src={profile} alt="profile" width={"50px"} />
-                  <MessageWrapper>
-                    <NickName>{item.nickName}</NickName>
-                    <Message>{item.message}</Message>
-                  </MessageWrapper>
-                </div>
-                <Time>{item.time}</Time>
-              </ChatWrapper>
-            ))}
-          </ChatContainer>
-          <ReplayWrapper>
-            <ReplyHeader> Replay Tiket</ReplyHeader>
-            <ReplyBody placeholder="Balas komentar di sini....." />
-          </ReplayWrapper>
-        </BodyWrapper>
-      </Wrapper>
-    </Container>
-  );
-};
 
 export default MasalahTiket;

@@ -2,7 +2,6 @@ import React from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
-import Pagination from "../../../components/Pagination";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 
@@ -19,6 +18,7 @@ import {
   sektorTrending,
 } from "./DataDummy";
 import Chart from "../../../components/Chart";
+import ChartLine from "../../../components/ChartLine";
 
 const DataLoker = ({ setActiveStep }) => {
   const dataChart = [
@@ -53,6 +53,7 @@ const DataLoker = ({ setActiveStep }) => {
       <RowWrapper>
         <ContentWrapper style={{ width: "65%" }}>
           <TitleBar>Statistik Loker</TitleBar>
+          <ChartLine />
         </ContentWrapper>
         <ContentWrapper style={{ width: "35%" }}>
           <TitleBar>Jumlah Loker</TitleBar>
@@ -104,7 +105,7 @@ const DataLoker = ({ setActiveStep }) => {
           <ScrollWrapper style={{ gap: "5px", paddingRight: "15px" }}>
             {lokerTranding.map((item) => (
               <List aria-label="contacts" disablePadding>
-                <ItemCustom onClick={() => setActiveStep("all")}>
+                <ItemCustom>
                   <ContentWrap>
                     <img alt="person-trending" src={imagePerson} />
                     <TextWrapper>
@@ -131,7 +132,22 @@ const DataLoker = ({ setActiveStep }) => {
           }}
         >
           <Table headerContent={dataHeader} dataContent={dataContent} />
-          <Pagination count={10} currentData={10} totalData={100} page={2} />
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
+            <p
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 600,
+                fontSize: "15px",
+                lineHeight: "18px",
+                color: "#115AAA",
+                cursor: "pointer",
+              }}
+              onClick={() => setActiveStep("all")}
+            >
+              Lihat Semua
+            </p>
+          </div>
         </div>
       </RowWrapper>
     </Container>

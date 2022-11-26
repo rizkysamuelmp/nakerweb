@@ -112,7 +112,7 @@ const PopUp = ({
             padding: "0px",
           }}
         >
-          <Button variant="contained" full onClick={onClose}>
+          <Button variant="contained" full onClick={onClickAction}>
             <p
               style={{
                 fontFamily: "Inter",

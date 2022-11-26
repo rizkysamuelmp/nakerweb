@@ -101,123 +101,143 @@ const InfoProyek = ({ setActiveStep }) => {
           </div>
         </ContentWrapper>
 
-        <ContentWrapper style={{ width: "40%" }}>
-          <TitleBar>
-            <IconUser height={24} width={24} />
-            Info pembuat projek
-          </TitleBar>
+        <div
+          style={{
+            width: "40%",
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+          }}
+        >
+          <ContentWrapper>
+            <TitleBar>
+              <IconUser height={24} width={24} />
+              Info pembuat projek
+            </TitleBar>
 
-          <div
-            style={{
-              display: "flex",
-              gap: "15px",
-              alignItems: "center",
-              fontWeight: 500,
-            }}
-          >
-            <img alt="profile-post" src={profilePost} height={70} width={70} />
             <div
-              style={{ display: "flex", gap: "4px", flexDirection: "column" }}
+              style={{
+                display: "flex",
+                gap: "15px",
+                alignItems: "center",
+                fontWeight: 500,
+              }}
             >
-              <p
-                style={{
-                  fontWeight: 400,
-                  fontSize: "13px",
-                  lineHeight: "16px",
-                  color: "#A1BDE3",
-                  fontStyle: "italic",
-                }}
+              <img
+                alt="profile-post"
+                src={profilePost}
+                height={70}
+                width={70}
+              />
+              <div
+                style={{ display: "flex", gap: "4px", flexDirection: "column" }}
               >
-                Username
-              </p>
-              <p>@arifandi</p>
+                <p
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "13px",
+                    lineHeight: "16px",
+                    color: "#A1BDE3",
+                    fontStyle: "italic",
+                  }}
+                >
+                  Username
+                </p>
+                <p>@arifandi</p>
+              </div>
             </div>
-          </div>
 
-          <div
-            style={{
-              marginLeft: "15px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "4px",
-            }}
-          >
             <div
-              style={{ display: "flex", gap: "4px", flexDirection: "column" }}
+              style={{
+                marginLeft: "15px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "4px",
+              }}
+            >
+              <div
+                style={{ display: "flex", gap: "4px", flexDirection: "column" }}
+              >
+                <p
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "13px",
+                    lineHeight: "16px",
+                    color: "#A1BDE3",
+                    fontStyle: "italic",
+                  }}
+                >
+                  Nama Lengkap
+                </p>
+                <p>Muh. Arifandi</p>
+              </div>
+              <div
+                style={{ display: "flex", gap: "4px", flexDirection: "column" }}
+              >
+                <p
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "13px",
+                    lineHeight: "16px",
+                    color: "#A1BDE3",
+                    fontStyle: "italic",
+                  }}
+                >
+                  Email
+                </p>
+                <p>arif76440@gmail.com</p>
+              </div>
+              <div
+                style={{ display: "flex", gap: "4px", flexDirection: "column" }}
+              >
+                <p
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "13px",
+                    lineHeight: "16px",
+                    color: "#A1BDE3",
+                    fontStyle: "italic",
+                  }}
+                >
+                  Tanggal bergabung
+                </p>
+                <p>06 Agustus 2021</p>
+              </div>
+              <div
+                style={{ display: "flex", gap: "4px", flexDirection: "column" }}
+              >
+                <p
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "13px",
+                    lineHeight: "16px",
+                    color: "#A1BDE3",
+                    fontStyle: "italic",
+                  }}
+                >
+                  Warga negara
+                </p>
+                <p>Indonesia</p>
+              </div>
+            </div>
+          </ContentWrapper>
+          <RowWrapper style={{ justifyContent: "end" }}>
+            <Button
+              full
+              color="#039C40"
+              onClick={() => setActiveStep("proyek")}
             >
               <p
                 style={{
-                  fontWeight: 400,
-                  fontSize: "13px",
-                  lineHeight: "16px",
-                  color: "#A1BDE3",
-                  fontStyle: "italic",
+                  fontWeight: 600,
+                  fontSize: "18px",
+                  lineHeight: "22px",
                 }}
               >
-                Nama Lengkap
+                Tampilkan proyek lengkap
               </p>
-              <p>Muh. Arifandi</p>
-            </div>
-            <div
-              style={{ display: "flex", gap: "4px", flexDirection: "column" }}
-            >
-              <p
-                style={{
-                  fontWeight: 400,
-                  fontSize: "13px",
-                  lineHeight: "16px",
-                  color: "#A1BDE3",
-                  fontStyle: "italic",
-                }}
-              >
-                Email
-              </p>
-              <p>arif76440@gmail.com</p>
-            </div>
-            <div
-              style={{ display: "flex", gap: "4px", flexDirection: "column" }}
-            >
-              <p
-                style={{
-                  fontWeight: 400,
-                  fontSize: "13px",
-                  lineHeight: "16px",
-                  color: "#A1BDE3",
-                  fontStyle: "italic",
-                }}
-              >
-                Tanggal bergabung
-              </p>
-              <p>06 Agustus 2021</p>
-            </div>
-            <div
-              style={{ display: "flex", gap: "4px", flexDirection: "column" }}
-            >
-              <p
-                style={{
-                  fontWeight: 400,
-                  fontSize: "13px",
-                  lineHeight: "16px",
-                  color: "#A1BDE3",
-                  fontStyle: "italic",
-                }}
-              >
-                Warga negara
-              </p>
-              <p>Indonesia</p>
-            </div>
-          </div>
-        </ContentWrapper>
-      </RowWrapper>
-      <RowWrapper style={{ justifyContent: "end" }}>
-        <div style={{ width: "40%" }}>
-          <Button full color="#039C40" onClick={() => setActiveStep("proyek")}>
-            <p
-              style={{ fontWeight: 600, fontSize: "18px", lineHeight: "22px" }}
-            >
-              Tampilkan proyek lengkap
-            </p>
-          </Button>
+            </Button>
+          </RowWrapper>
         </div>
       </RowWrapper>
     </Container>

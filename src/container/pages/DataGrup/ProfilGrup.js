@@ -18,6 +18,7 @@ import iconThumb from "../../../assets/icon/icon-thumb-fill-blue.png";
 import imagePerson from "../../../assets/img/image-person-trending.png";
 import iconArrowRight from "../../../assets/icon/icon-arrow-right.png";
 import groupSuccess from "../../../assets/img/group-success.png";
+import ChartLine from "../../../components/ChartLine";
 
 const ProfilGrup = ({ setActiveStep }) => {
   const lokerTranding = [
@@ -375,6 +376,7 @@ const ProfilGrup = ({ setActiveStep }) => {
         <ContentWrapper style={{ width: "65%" }}>
           <BoxWrapper style={{ height: "267px" }}>
             <TitleBar>Pertumbuhan Anggota</TitleBar>
+            <ChartLine />
           </BoxWrapper>
           <BoxWrapper>
             <TitleBar>Jumlah Anggota</TitleBar>
