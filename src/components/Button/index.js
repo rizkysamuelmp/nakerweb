@@ -116,7 +116,7 @@ Button.defaultProps = {
   isLoading: false,
   rounded: false,
   borderRadius: "",
-  padding: "13px 38px",
+  padding: "10px 28px",
   width: "",
   border: "",
 };

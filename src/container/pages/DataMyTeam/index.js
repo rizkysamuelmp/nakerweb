@@ -13,7 +13,7 @@ import TambahProyek from "./TambahProyek";
 import SemuaTask from "./SemuaTask";
 
 const Page = () => {
-  const [activeStep, setActiveStep] = useState("page");
+  const [activeStep, setActiveStep] = useState("add");
 
   return (
     <Container>
