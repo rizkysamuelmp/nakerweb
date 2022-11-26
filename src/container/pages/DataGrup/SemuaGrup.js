@@ -164,8 +164,8 @@ const SemuaLoker = ({ setActiveStep }) => {
     },
   ];
 
+  // useState
   const [search, setSearch] = useState("");
-
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
@@ -231,6 +231,7 @@ const SemuaLoker = ({ setActiveStep }) => {
               <img src={iconExport} alt="icon-slider" />
             </Button>
           </div>
+
           {/* List Menu Exoprt */}
           <Menu
             id="menu-appbar"
@@ -278,6 +279,7 @@ const SemuaLoker = ({ setActiveStep }) => {
               Export Pdf
             </MenuItem>
           </Menu>
+
           {/* Tombol Filter */}
           <Button
             padding="8px"
@@ -322,9 +324,7 @@ const SemuaLoker = ({ setActiveStep }) => {
             open={Boolean(menuFilter)}
             onClose={() => setMenuFilter(null)}
           >
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-            >
+            <DropdownWrap>
               <p>Pilih jenis grup :</p>
               <DropDown
                 dropdownValue={dropDown}
@@ -337,10 +337,8 @@ const SemuaLoker = ({ setActiveStep }) => {
                   { label: "Private", value: 1 },
                 ]}
               />
-            </div>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-            >
+            </DropdownWrap>
+            <DropdownWrap>
               <p>Pilih Kategori grup :</p>
               <DropDown
                 dropdownValue={dropDown}
@@ -354,10 +352,8 @@ const SemuaLoker = ({ setActiveStep }) => {
                   { label: "Komunitas", value: 2 },
                 ]}
               />
-            </div>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-            >
+            </DropdownWrap>
+            <DropdownWrap>
               <p>Pilih status grup :</p>
               <DropDown
                 dropdownValue={dropDown}
@@ -371,7 +367,7 @@ const SemuaLoker = ({ setActiveStep }) => {
                   { label: "Menunggu", value: 2 },
                 ]}
               />
-            </div>
+            </DropdownWrap>
           </Menu>
         </div>
       </Title>
@@ -398,6 +394,12 @@ const Container = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   gap: "20px",
+}));
+
+const DropdownWrap = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "4px",
 }));
 
 const RowWrapper = styled("div")(() => ({

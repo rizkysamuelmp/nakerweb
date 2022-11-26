@@ -127,6 +127,29 @@ export const lokerTranding = [
   },
 ];
 
+export const dataChart = [
+  {
+    data: [40, 25, 35],
+    backgroundColor: ["#115ABE", "#FA3E3E", "#03B74B"],
+    borderColor: ["#115ABE", "#FA3E3E", "#03B74B"],
+    borderWidth: 1,
+    label: [
+      {
+        title: "Diterima",
+        color: "#115ABE",
+      },
+      {
+        title: "Ditolak",
+        color: "#FA3E3E",
+      },
+      {
+        title: "Dilamar",
+        color: "#03B74B",
+      },
+    ],
+  },
+];
+
 export const dataHeader = [
   {
     title: "No",

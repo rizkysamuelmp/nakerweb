@@ -23,6 +23,7 @@ const DetailDataTiket = () => {
       <Button variant="contained">
         <img src={slider} alt="slider" style={{ width: "50%" }} />
       </Button>
+
       {/* Table */}
       <Table dataContent={dataContent} headerContent={dataHeader} />
 

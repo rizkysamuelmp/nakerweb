@@ -1,3 +1,6 @@
+// Page Info Proyek
+// --------------------------------------------------------
+
 import React from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";

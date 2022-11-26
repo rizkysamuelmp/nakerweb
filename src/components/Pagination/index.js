@@ -48,7 +48,7 @@ const Pagination = ({
 }) => (
   <Container>
     <Info>
-      {language === "id" ? "Menampilkan" : "Show"} {currentData}{" "}
+      {language === "id" ? "Menampilkan" : "Show"} {currentData}
       {language === "id" ? "dari " : "from "}
       {totalData} {language === "id" ? "Baris" : "Row"}
     </Info>
@@ -66,8 +66,8 @@ const Pagination = ({
 
 Pagination.propTypes = {
   count: PropTypes.number,
-  currentData: PropTypes.string,
-  totalData: PropTypes.string,
+  currentData: PropTypes.number,
+  totalData: PropTypes.number,
   onChange: PropTypes.func,
   page: PropTypes.number,
   language: PropTypes.string,
@@ -77,8 +77,8 @@ Pagination.propTypes = {
 
 Pagination.defaultProps = {
   count: 0,
-  currentData: "",
-  totalData: "",
+  currentData: 0,
+  totalData: 0,
   onChange: () => {},
   page: 1,
   language: "id",

@@ -1,3 +1,6 @@
+// Page Detail Proyek
+// --------------------------------------------------------
+
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "../../../components/Button";
@@ -60,6 +63,8 @@ function LinearProgressWithLabel(props) {
 
 const DetailProyek = ({ setActiveStep }) => {
   const [tabSelect, setTabSelect] = useState(1);
+  const [popUpAdd, setPopUpAdd] = useState(false);
+  const [popUpTask, setPopUpTask] = useState(false);
 
   const dataHeader = [
     {
@@ -174,9 +179,6 @@ const DetailProyek = ({ setActiveStep }) => {
       center: true,
     },
   ];
-
-  const [popUpAdd, setPopUpAdd] = useState(false);
-  const [popUpTask, setPopUpTask] = useState(false);
 
   return (
     <React.Fragment>

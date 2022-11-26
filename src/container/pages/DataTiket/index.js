@@ -7,7 +7,7 @@ const DataTiket = () => {
   const [activeStep, setActiveStep] = useState("page");
 
   return (
-    <>
+    <React.Fragment>
       {activeStep === "page" && <DataLoker setActiveStep={setActiveStep} />}
       {activeStep === "detail" && (
         <DetailDataTiket setActiveStep={setActiveStep} />
@@ -15,8 +15,7 @@ const DataTiket = () => {
       {activeStep === "masalah" && (
         <MasalahTiket setActiveStep={setActiveStep} />
       )}
-      {}
-    </>
+    </React.Fragment>
   );
 };
 

@@ -28,6 +28,7 @@ const MasalahTiket = () => {
           </SectionLeft>
           <SectionRight>Dibalas</SectionRight>
         </HeaderWrapper>
+
         <BodyWrapper>
           <ChatContainer>
             {message.map((item) => (
@@ -65,6 +66,7 @@ const MasalahTiket = () => {
         </BodyWrapper>
       </Wrapper>
 
+      {/* Popup Berhasi Kirim Balasan */}
       <PopUp
         open={popupSend}
         width="350px"

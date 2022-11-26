@@ -1,3 +1,6 @@
+// Page Detail Loker
+// --------------------------------------------------------
+
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "../../../components/Button";
@@ -174,6 +177,7 @@ const DetailLoker = ({ setActiveStep }) => {
         </Button>
       </FooterContainer>
 
+      {/* Popup Konfirmasi Setuju Loker */}
       <PopUp
         open={confAccept}
         buttonWord="Setujui"
@@ -187,6 +191,7 @@ const DetailLoker = ({ setActiveStep }) => {
         info="Apakah anda ingin menyetujui loker ini ?"
       />
 
+      {/* Popup Permintaan Disetujui */}
       <PopUp
         open={accept}
         buttonWord="Ok"
@@ -199,6 +204,7 @@ const DetailLoker = ({ setActiveStep }) => {
         info="Permintaan publikasi loker berhasil disetujui."
       />
 
+      {/* Popup Konfirmasi Tolak Loker */}
       <PopUp
         open={confDecline}
         buttonWord="Tolak"
@@ -212,6 +218,7 @@ const DetailLoker = ({ setActiveStep }) => {
         info="Apakah anda ingin menolak loker ini ?"
       />
 
+      {/* Popup Berhasil Ditolak */}
       <PopUp
         open={decline}
         buttonWord="Ok"
@@ -330,8 +337,6 @@ const WrapperContainer = styled("div")`
   flex-direction: column;
   gap: 20px;
 `;
-
-const WrapperRight = styled("div")``;
 
 const Title = styled("h1")`
   font-weight: 600;

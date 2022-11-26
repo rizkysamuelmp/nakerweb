@@ -1,3 +1,6 @@
+// Page Detail Proyek
+// --------------------------------------------------------
+
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "../../../components/Button";
@@ -5,7 +8,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Table from "../../../components/Table";
-import { CircularProgress, TextareaAutosize } from "@mui/material";
+import { TextareaAutosize } from "@mui/material";
 
 // Asset
 import { ReactComponent as IconArrowRight } from "../../../assets/icon/icon-arrow-right.svg";
@@ -54,7 +57,6 @@ function LinearProgressWithLabel(props) {
 
 const DetailProyek = ({ setActiveStep }) => {
   const [tabSelect, setTabSelect] = useState(1);
-  const progress = 0;
 
   const dataHeader = [
     {

@@ -1,5 +1,9 @@
+// Page Detail Pengguna
+// --------------------------------------------------------
+
 import React from "react";
 import { styled } from "@mui/material/styles";
+import { IconButton } from "@mui/material";
 
 // Assets
 import backroundUser from "../../../assets/img/backgroundUser.png";
@@ -7,11 +11,144 @@ import profilePhoto from "../../../assets/img/profilePhoto.png";
 import verifiedAccount from "../../../assets/icon/verifiedAccount.svg";
 import customer from "../../../assets/icon/customer.svg";
 import pencil from "../../../assets/icon/pencil.svg";
-import shape from "../../../assets/icon/shape1.svg";
+
+import barBlue from "../../../assets/img/bar-blue.png";
+import barYellow from "../../../assets/img/bar-yellow.png";
+import barRed from "../../../assets/img/bar-red.png";
+import barPurple from "../../../assets/img/bar-purple.png";
+import barGreen from "../../../assets/img/bar-green.png";
+
+const DetailPengguna = () => {
+  return (
+    <Container>
+      <Profile>
+        <img width="100%" height="225px" src={backroundUser} alt="" />
+        <DetailProfile>
+          <img src={profilePhoto} width="100px" alt="" />
+          <NickName>
+            <span>Muh. Arifandi</span>
+            <img src={verifiedAccount} alt="" width="23.91px" />
+          </NickName>
+        </DetailProfile>
+      </Profile>
+
+      {/* Card Info user */}
+      <CardContainer>
+        <SumaryWrap>
+          <Sumary>
+            <img
+              alt="adornment-green"
+              src={barBlue}
+              width="30%"
+              style={{ borderRadius: "10px 0px 0px 10px" }}
+            />
+            <ContentWrap>
+              <TitleSummary>300</TitleSummary>
+              <DetailSummary>Follower</DetailSummary>
+            </ContentWrap>
+          </Sumary>
+          <Sumary>
+            <img
+              alt="adornment-green"
+              src={barYellow}
+              width="30%"
+              style={{ borderRadius: "10px 0px 0px 10px" }}
+            />
+            <ContentWrap>
+              <TitleSummary>30</TitleSummary>
+              <DetailSummary>Follower</DetailSummary>
+            </ContentWrap>
+          </Sumary>
+          <Sumary>
+            <img
+              alt="adornment-green"
+              src={barRed}
+              width="30%"
+              style={{ borderRadius: "10px 0px 0px 10px" }}
+            />
+            <ContentWrap>
+              <TitleSummary>30</TitleSummary>
+              <DetailSummary>Follower</DetailSummary>
+            </ContentWrap>
+          </Sumary>
+          <Sumary>
+            <img
+              alt="adornment-green"
+              src={barPurple}
+              width="30%"
+              style={{ borderRadius: "10px 0px 0px 10px" }}
+            />
+            <ContentWrap>
+              <TitleSummary>30</TitleSummary>
+              <DetailSummary>Follower</DetailSummary>
+            </ContentWrap>
+          </Sumary>
+          <Sumary>
+            <img
+              alt="adornment-green"
+              src={barGreen}
+              width="30%"
+              style={{ borderRadius: "10px 0px 0px 10px" }}
+            />
+            <ContentWrap>
+              <TitleSummary>30</TitleSummary>
+              <DetailSummary>Follower</DetailSummary>
+            </ContentWrap>
+          </Sumary>
+        </SumaryWrap>
+      </CardContainer>
+
+      <BioData>
+        <HeaderBioData>
+          <Left>
+            <img src={customer} alt="" />
+            <LeftText>Data Diri</LeftText>
+          </Left>
+          <Right>
+            <IconButton style={{ width: "30px", height: "30px" }}>
+              <img src={pencil} alt="" width="30px" />
+            </IconButton>
+          </Right>
+        </HeaderBioData>
+        <DetailBioData>
+          <Line>
+            <InfoData>Nama Lengkap</InfoData>
+            <ValueData>Muh. Arifandi</ValueData>
+          </Line>
+          <Line>
+            <InfoData>Jenis Kelamin</InfoData>
+            <ValueData>Laki-Laki</ValueData>
+          </Line>
+          <Line>
+            <InfoData>Nomor Telepon</InfoData>
+            <ValueData>085316547777</ValueData>
+          </Line>
+          <Line>
+            <InfoData>Alamat</InfoData>
+            <ValueData>
+              Nambongan RT O1,/RW 30, Tlogoadi, Kec. Mlati, 55287, Kab Sleman,
+              Daerah Istimewa Yogyakarta, Indonesia
+            </ValueData>
+          </Line>
+          <Line>
+            <InfoData>Tangal Lahir</InfoData>
+            <ValueData>21-10-2022</ValueData>
+          </Line>
+          <Line>
+            <InfoData>Warga Negara</InfoData>
+            <ValueData>Indonesia</ValueData>
+          </Line>
+          <Line>
+            <InfoData>Email</InfoData>
+            <ValueData>arif76440@gmail.com</ValueData>
+          </Line>
+        </DetailBioData>
+      </BioData>
+    </Container>
+  );
+};
 
 const Container = styled("div")``;
-
-const ProfileWrapper = styled("div")``;
 
 const Profile = styled("div")`
   position: relative;
@@ -42,17 +179,7 @@ const CardContainer = styled("div")`
   justify-content: flex-end;
   gap: 19px;
   padding: 9px 0 16px 0;
-`;
-
-const Card = styled("div")`
-  width: 15%;
-  height: 61px;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-`;
-
-const CardLeft = styled("div")`
-  background-image: url();
+  padding-left: 150px;
 `;
 
 const BioData = styled("div")`
@@ -81,7 +208,6 @@ const LeftText = styled("span")`
 const Right = styled("div")`
   background-color: #d9d9d9;
   border-radius: 100%;
-  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,91 +240,43 @@ const ValueData = styled("div")`
   color: #444343;
 `;
 
-const DetailPengguna = () => {
-  return (
-    <Container>
-      <ProfileWrapper>
-        <Profile>
-          <img width="100%" height="225px" src={backroundUser} alt="" />
-          <DetailProfile>
-            <img src={profilePhoto} width="100px" alt="" />
-            <NickName>
-              <span>Muh. Arifandi</span>
-              <img src={verifiedAccount} alt="" width="23.91px" />
-            </NickName>
-          </DetailProfile>
-        </Profile>
+const SumaryWrap = styled("div")(() => ({
+  display: "flex",
+  gap: "20px",
+  width: "100%",
+}));
 
-        {/* Card Info user */}
-        <CardContainer>
-          <Card>
-            <Left></Left>
-            <Right></Right>
-          </Card>
-          <Card>
-            <Left></Left>
-            <Right></Right>
-          </Card>
-          <Card>
-            <Left></Left>
-            <Right></Right>
-          </Card>
-          <Card>
-            <Left></Left>
-            <Right></Right>
-          </Card>
-          <Card>
-            <Left></Left>
-            <Right></Right>
-          </Card>
-        </CardContainer>
-        <BioData>
-          <HeaderBioData>
-            <Left>
-              <img src={customer} alt="" />
-              <LeftText>Data Diri</LeftText>
-            </Left>
-            <Right>
-              <img src={pencil} alt="" width="30px" />
-            </Right>
-          </HeaderBioData>
-          <DetailBioData>
-            <Line>
-              <InfoData>Nama Lengkap</InfoData>
-              <ValueData>Muh. Arifandi</ValueData>
-            </Line>
-            <Line>
-              <InfoData>Jenis Kelamin</InfoData>
-              <ValueData>Laki-Laki</ValueData>
-            </Line>
-            <Line>
-              <InfoData>Nomor Telepon</InfoData>
-              <ValueData>085316547777</ValueData>
-            </Line>
-            <Line>
-              <InfoData>Alamat</InfoData>
-              <ValueData>
-                Nambongan RT O1,/RW 30, Tlogoadi, Kec. Mlati, 55287, Kab Sleman,
-                Daerah Istimewa Yogyakarta, Indonesia
-              </ValueData>
-            </Line>
-            <Line>
-              <InfoData>Tangal Lahir</InfoData>
-              <ValueData>21-10-2022</ValueData>
-            </Line>
-            <Line>
-              <InfoData>Warga Negara</InfoData>
-              <ValueData>Indonesia</ValueData>
-            </Line>
-            <Line>
-              <InfoData>Email</InfoData>
-              <ValueData>arif76440@gmail.com</ValueData>
-            </Line>
-          </DetailBioData>
-        </BioData>
-      </ProfileWrapper>
-    </Container>
-  );
-};
+const Sumary = styled("div")(() => ({
+  display: "flex",
+  backgroundColor: "white",
+  borderRadius: "10px",
+  justifyContent: "space-between",
+  boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.1)",
+  alignItems: "center",
+  cursor: "pointer",
+  width: "20%",
+  height: "fit-content",
+  minWidth: "130px",
+}));
+
+const ContentWrap = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  width: "60%",
+  gap: "5px",
+}));
+
+const TitleSummary = styled("p")(() => ({
+  fontWeight: 500,
+  fontSize: "20px",
+  lineHeight: "24px",
+}));
+
+const DetailSummary = styled("p")(() => ({
+  fontWeight: 500,
+  fontSize: "10px",
+  lineHeight: "12px",
+  color: "#888888",
+}));
 
 export default DetailPengguna;

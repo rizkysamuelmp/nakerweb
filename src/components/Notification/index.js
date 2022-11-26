@@ -149,6 +149,7 @@ const Notification = () => {
               padding: "10px",
               backgroundColor: notif.read ? "#fff" : "#D1E4F2",
             }}
+            key={index}
           >
             <img src={notif.img} alt="profileImage" />
             <div style={{ whiteSpace: "pre-wrap" }}>
