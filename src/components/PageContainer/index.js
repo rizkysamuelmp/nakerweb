@@ -9,17 +9,29 @@ const PageContainer = ({ children }) => {
   const isNotif = true;
 
   return (
-    <>
+    <React.Fragment>
       <Header
         onClick={(event) => setNotification(event.currentTarget)}
         isNotif={isNotif}
       />
-      <div style={{ display: "flex" }}>
-        <Sidebar />
+      <div style={{ display: "flex", backgroundColor: "F4F7FB" }}>
+        <Sidebar activePage={0} />
         <div
-          style={{ padding: "17px", backgroundColor: "#F4F7FB", width: "100%" }}
+          style={{
+            padding: "70px 0px 0px 232px",
+            width: "100%",
+            backgroundColor: "#F4F7FB",
+          }}
         >
-          {children}
+          <div
+            style={{
+              padding: "17px",
+              backgroundColor: "#F4F7FB",
+              width: "100%",
+            }}
+          >
+            {children}
+          </div>
         </div>
       </div>
       <Menu
@@ -50,7 +62,7 @@ const PageContainer = ({ children }) => {
       >
         <Notification />
       </Menu>
-    </>
+    </React.Fragment>
   );
 };
 

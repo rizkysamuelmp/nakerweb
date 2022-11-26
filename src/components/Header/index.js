@@ -18,6 +18,10 @@ const Header = ({ onClick, isNotif }) => {
           padding: "10px",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
           height: "70px",
+          position: "fixed",
+          backgroundColor: "white",
+          width: "100%",
+          zIndex: 1000,
         }}
       >
         <div>
