@@ -1,3 +1,6 @@
+// Page Data Grup
+// --------------------------------------------------------
+
 import React from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
@@ -170,8 +173,12 @@ const DataLoker = ({ setActiveStep }) => {
               </p>
             </div>
           </div>
+
+          {/* Chart Bar */}
           <ChartBar />
         </ContentWrapper>
+
+        {/* Chart Donat */}
         <ContentWrapper style={{ width: "35%" }}>
           <TitleBar>Jumlah Status Grup</TitleBar>
           <Chart data={dataChart} description="230 Pengguna" />

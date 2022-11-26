@@ -1,3 +1,6 @@
+// Page Semua Loker
+// --------------------------------------------------------
+
 import React, { useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
@@ -23,7 +26,7 @@ import iconPdf from "../../../assets/icon/icon-pdf.png";
 import { dataContentAll } from "./DataDummy";
 
 const SemuaLoker = ({ setActiveStep }) => {
-  const dataHeaderAll = [
+  const dataHeader = [
     {
       title: "No",
       key: "no",
@@ -130,8 +133,8 @@ const SemuaLoker = ({ setActiveStep }) => {
     },
   ];
 
+  // useState
   const [search, setSearch] = useState("");
-
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
@@ -175,6 +178,7 @@ const SemuaLoker = ({ setActiveStep }) => {
               </InputAdornment>
             }
           />
+
           {/* Tombol Export */}
           <div
             style={{ display: "flex", gap: "2px" }}
@@ -197,6 +201,7 @@ const SemuaLoker = ({ setActiveStep }) => {
               <img src={iconExport} alt="icon-slider" />
             </Button>
           </div>
+
           {/* List Menu Exoprt */}
           <Menu
             id="menu-appbar"
@@ -244,6 +249,7 @@ const SemuaLoker = ({ setActiveStep }) => {
               Export Pdf
             </MenuItem>
           </Menu>
+
           {/* Tombol Filter */}
           <Button
             padding="8px"
@@ -347,7 +353,7 @@ const SemuaLoker = ({ setActiveStep }) => {
             width: "100%",
           }}
         >
-          <Table headerContent={dataHeaderAll} dataContent={dataContentAll} />
+          <Table headerContent={dataHeader} dataContent={dataContentAll} />
           <Pagination count={10} currentData={10} totalData={100} page={2} />
         </div>
       </RowWrapper>

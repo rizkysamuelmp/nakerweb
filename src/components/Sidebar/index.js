@@ -1,4 +1,4 @@
-import { ListItem, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import AppRoutes from "../../config/routes";
@@ -32,8 +32,8 @@ const Sidebar = () => {
         padding: "16px 14px",
       }}
     >
-      {AppRoutes.map((item) => (
-        <LinkWrapper to={item.path}>
+      {AppRoutes.map((item, index) => (
+        <LinkWrapper to={item.path} key={index}>
           <p>{item.nameComponent}</p>
           <img
             src={arrowDown}

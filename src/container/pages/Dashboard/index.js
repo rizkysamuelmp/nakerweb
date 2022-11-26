@@ -99,8 +99,6 @@ const TextWrapper = styled("div")`
   line-height: 10.89px;
 `;
 
-const TextName = styled("p")``;
-
 const ProjectContent = styled("div")`
   display: flex;
   justify-content: space-around;

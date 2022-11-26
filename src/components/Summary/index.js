@@ -12,7 +12,6 @@ import profile from "../../assets/icon/icon-profile.png";
 import group from "../../assets/icon/icon-group.png";
 import curriculum from "../../assets/icon/icon-curriculum.png";
 import project from "../../assets/icon/icon-project.png";
-import shape from "../../assets/icon/gradient1.svg";
 
 const Summary = ({ data }) => {
   return (
@@ -96,7 +95,7 @@ const Content = styled("div")(() => ({
   cursor: "pointer",
 }));
 
-const ContentWrapper = styled("div")(({}) => ({
+const ContentWrapper = styled("div")(() => ({
   display: "flex",
   gap: "10px",
 }));

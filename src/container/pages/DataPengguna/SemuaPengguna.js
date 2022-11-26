@@ -1,3 +1,6 @@
+// Page Semua Pengguna
+// --------------------------------------------------------
+
 import { InputAdornment, Menu, MenuItem } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React, { useState } from "react";
@@ -8,7 +11,7 @@ import Pagination from "../../../components/Pagination";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
 import Colors from "../../../helpers/colors";
-import { dataContent, dataHeader } from "./dataDummy";
+import { dataContent } from "./dataDummy";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
@@ -17,6 +20,7 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
+import profile from "../../../assets/img/profile-post.png";
 
 // style
 const Container = styled("div")`
@@ -26,108 +30,73 @@ const Container = styled("div")`
 `;
 
 const SemuaPengguna = ({ setActiveStep }) => {
-  const dataHeaderAll = [
+  const dataHeader = [
     {
       title: "No",
       key: "no",
       width: 30,
+      center: true,
     },
     {
-      title: "Posisi",
-      key: "position",
+      title: "Profile",
+      key: "profile",
+      render: (rowData) => (
+        <img
+          src={profile}
+          alt="profile"
+          style={{
+            width: "24px",
+          }}
+        />
+      ),
+      width: 40,
+      center: true,
     },
     {
-      title: "Perusahaan",
-      key: "company",
+      title: "Nama Lengkap",
+      key: "fullName",
     },
     {
-      title: "Lokasi",
-      key: "location",
+      title: "Jenis Kelamin",
+      key: "gender",
+      center: true,
     },
     {
-      title: "Tanggal Buka",
-      key: "openingDate",
+      title: "Kota",
+      key: "city",
+      center: true,
+    },
+    {
+      title: "Telepon",
+      key: "numberPhone",
+      center: true,
+    },
+    {
+      title: "Email",
+      key: "email",
     },
     {
       title: "Sektor",
       key: "sector",
     },
     {
-      title: "Kategori",
-      key: "category",
-    },
-    {
-      title: "Status",
-      key: "status",
-      width: 120,
-      render: (rowData) => (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {rowData.status === "Aktif" ? (
-            <div
-              style={{
-                border: "1px solid #039C40",
-                backgroundColor: "#AEF8AC",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#039C40",
-              }}
-            >
-              {rowData.status}
-            </div>
-          ) : (
-            <div
-              style={{
-                border: "1px solid #C80707",
-                backgroundColor: "#F5969633",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#C80707",
-              }}
-            >
-              {rowData.status}
-            </div>
-          )}
-        </div>
-      ),
-      center: true,
+      title: "Usia",
+      key: "age",
+      width: 50,
     },
     {
       title: "Aksi",
-      width: 100,
+      key: "action",
       render: (rowData) => (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+        <Button
+          variant="contained"
+          borderRadius="5px"
+          padding="0px 7px 0px 9px"
+          onClick={() => setActiveStep("detail")}
         >
-          <Button
-            variant="contained"
-            borderRadius="5px"
-            padding="0px 7px 0px 9px"
-            onClick={() => setActiveStep("detail")}
-          >
-            Detail
-            <img src={eye} alt="eye" />
-          </Button>
-        </div>
+          {rowData.action}
+          <img src={eye} alt="eye" />
+        </Button>
       ),
       center: true,
     },

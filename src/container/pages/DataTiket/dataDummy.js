@@ -15,7 +15,7 @@ export const dataHeader = [
     key: "title",
   },
   {
-    title: "Perusahaan",
+    title: "Pengirim",
     key: "sender",
   },
   {

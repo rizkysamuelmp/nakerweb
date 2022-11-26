@@ -1,4 +1,4 @@
-// Page Component
+// Page Data Proyek
 // --------------------------------------------------------
 
 import React, { useState } from "react";
@@ -9,11 +9,6 @@ import DataProyek from "./DataProyek";
 import InfoProyek from "./InfoProyek";
 import SemuaProyek from "./SemuaProyek";
 import DetailProyek from "./DetailProyek";
-
-const Container = styled("div")(() => ({
-  width: "100%",
-  height: "100%",
-}));
 
 const Page = () => {
   const [activeStep, setActiveStep] = useState("page");
@@ -29,5 +24,10 @@ const Page = () => {
     </Container>
   );
 };
+
+const Container = styled("div")(() => ({
+  width: "100%",
+  height: "100%",
+}));
 
 export default Page;

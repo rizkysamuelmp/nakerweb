@@ -1,9 +1,14 @@
+// Page Data Loker
+// --------------------------------------------------------
+
 import React from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
+import Chart from "../../../components/Chart";
+import ChartLine from "../../../components/ChartLine";
 
 // Asset
 import imagePerson from "../../../assets/img/image-person-trending.png";
@@ -11,39 +16,15 @@ import iconArrowRight from "../../../assets/icon/icon-arrow-right.png";
 
 // Dummy Data
 import {
+  dataChart,
   dataContent,
   dataHeader,
   lokasiTrending,
   lokerTranding,
   sektorTrending,
 } from "./DataDummy";
-import Chart from "../../../components/Chart";
-import ChartLine from "../../../components/ChartLine";
 
 const DataLoker = ({ setActiveStep }) => {
-  const dataChart = [
-    {
-      data: [40, 25, 35],
-      backgroundColor: ["#115ABE", "#FA3E3E", "#03B74B"],
-      borderColor: ["#115ABE", "#FA3E3E", "#03B74B"],
-      borderWidth: 1,
-      label: [
-        {
-          title: "Diterima",
-          color: "#115ABE",
-        },
-        {
-          title: "Ditolak",
-          color: "#FA3E3E",
-        },
-        {
-          title: "Dilamar",
-          color: "#03B74B",
-        },
-      ],
-    },
-  ];
-
   return (
     <Container>
       {/* Title */}
@@ -134,19 +115,9 @@ const DataLoker = ({ setActiveStep }) => {
           <Table headerContent={dataHeader} dataContent={dataContent} />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
-            <p
-              style={{
-                fontFamily: "Inter",
-                fontWeight: 600,
-                fontSize: "15px",
-                lineHeight: "18px",
-                color: "#115AAA",
-                cursor: "pointer",
-              }}
-              onClick={() => setActiveStep("all")}
-            >
+            <TextSeeAll onClick={() => setActiveStep("all")}>
               Lihat Semua
-            </p>
+            </TextSeeAll>
           </div>
         </div>
       </RowWrapper>
@@ -158,6 +129,15 @@ const Container = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   gap: "20px",
+}));
+
+const TextSeeAll = styled("p")(() => ({
+  fontFamily: "Inter",
+  fontWeight: 600,
+  fontSize: "15px",
+  lineHeight: "18px",
+  color: "#115AAA",
+  cursor: "pointer",
 }));
 
 const RowWrapper = styled("div")(() => ({

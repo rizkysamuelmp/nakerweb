@@ -122,6 +122,7 @@ const ForgotPassword = () => {
         />
       </div>
 
+      {/* Popup Sukses Kirim Email */}
       <PopUp
         open={popUpEmailSuccess}
         imgSrc={mailSuccess}

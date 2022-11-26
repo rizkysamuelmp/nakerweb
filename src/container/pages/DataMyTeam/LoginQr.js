@@ -1,3 +1,6 @@
+// Page Login QR
+// --------------------------------------------------------
+
 import React from "react";
 import { styled } from "@mui/material/styles";
 
@@ -6,9 +9,7 @@ import ImageSocial from "../../../assets/img/social.webp";
 import Logo from "../../../assets/img/logo.png";
 import QrCode from "../../../assets/img/qr-code.png";
 
-// Dummy Data
-
-const LoginQr = ({ setActiveStep }) => {
+const LoginQr = () => {
   return (
     <Container>
       <ContentWrapper>

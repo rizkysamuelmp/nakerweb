@@ -1,3 +1,6 @@
+// Page Detail Grup
+// --------------------------------------------------------
+
 import React, { useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
@@ -24,6 +27,7 @@ const DetailGrup = ({ setActiveStep }) => {
       {/* Title */}
       <Title title="Data Grup" />
 
+      {/* Banner Image */}
       <RowWrapper>
         <div
           style={{
@@ -65,6 +69,7 @@ const DetailGrup = ({ setActiveStep }) => {
         </div>
       </RowWrapper>
 
+      {/* Info Grup */}
       <RowWrapper>
         <ContentWrapper style={{ width: "60%" }}>
           <TitleBar>

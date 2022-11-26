@@ -1,3 +1,6 @@
+// Page Profil Grup
+// --------------------------------------------------------
+
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import List from "@mui/material/List";
@@ -7,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import PopUp from "../../../components/PopUp";
 import Chart from "../../../components/Chart";
+import ChartLine from "../../../components/ChartLine";
 
 // Asset
 import bannerImage from "../../../assets/img/banner-image.png";
@@ -18,97 +22,9 @@ import iconThumb from "../../../assets/icon/icon-thumb-fill-blue.png";
 import imagePerson from "../../../assets/img/image-person-trending.png";
 import iconArrowRight from "../../../assets/icon/icon-arrow-right.png";
 import groupSuccess from "../../../assets/img/group-success.png";
-import ChartLine from "../../../components/ChartLine";
+import { dataChart1, dataChart2, dataChart3, lokerTranding } from "./DataDummy";
 
 const ProfilGrup = ({ setActiveStep }) => {
-  const lokerTranding = [
-    {
-      name: "Belum Disetujui",
-      detail: "100 Pelamar",
-    },
-    {
-      name: "Android developer",
-      detail: "100 Pelamar",
-    },
-    {
-      name: "Android developer",
-      detail: "100 Pelamar",
-    },
-    {
-      name: "Android developer",
-      detail: "100 Pelamar",
-    },
-  ];
-
-  const dataChart1 = [
-    {
-      data: [20, 40, 40],
-      backgroundColor: ["#FFBF0B", "#03B74B", "#FE4747"],
-      borderColor: ["#FFBF0B", "#03B74B", "#FE4747"],
-      borderWidth: 1,
-      label: [
-        {
-          title: "Belum Disetujui",
-          color: "#FFBF0B",
-        },
-        {
-          title: "Aktif",
-          color: "#03B74B",
-        },
-        {
-          title: "Ditolak/Diblokir",
-          color: "#FE4747",
-        },
-      ],
-    },
-  ];
-
-  const dataChart2 = [
-    {
-      data: [60, 40],
-      backgroundColor: ["#FFBF0B", "#FA3E3E"],
-      borderColor: ["#FFBF0B", "#FA3E3E"],
-      borderWidth: 1,
-      label: [
-        {
-          title: "Laki-Laki",
-          color: "#FFBF0B",
-        },
-        {
-          title: "Perempuan",
-          color: "#FA3E3E",
-        },
-      ],
-    },
-  ];
-
-  const dataChart3 = [
-    {
-      data: [25, 25, 25, 25],
-      backgroundColor: ["#115ABE", "#03B74B", "#FFBF0B", "#FA3E3E"],
-      borderColor: ["#115ABE", "#03B74B", "#FFBF0B", "#FA3E3E"],
-      borderWidth: 1,
-      label: [
-        {
-          title: "Dewasa",
-          color: "#115ABE",
-        },
-        {
-          title: "Muda",
-          color: "#03B74B",
-        },
-        {
-          title: "Anak-anak",
-          color: "#FFBF0B",
-        },
-        {
-          title: "Pensiun",
-          color: "#FA3E3E",
-        },
-      ],
-    },
-  ];
-
   const [menuEdit, setMenuEdit] = useState(null);
   const [popupConfirm, setPopupConfirm] = useState(false);
   const [popupDelete, setPopupDelete] = useState(false);
@@ -116,18 +32,8 @@ const ProfilGrup = ({ setActiveStep }) => {
 
   return (
     <Container>
-      <div
-        style={{
-          bottom: "0",
-          background: "rgba(0, 0, 0, 0.5)",
-          color: "#f1f1f1",
-          width: "100%",
-          position: "relative",
-          margin: "0 auto",
-          boxSizing: "border-box",
-          borderRadius: "10px",
-        }}
-      >
+      {/* Banner Image */}
+      <BannerWrap>
         <img
           src={bannerImage}
           alt="Notebook"
@@ -139,32 +45,8 @@ const ProfilGrup = ({ setActiveStep }) => {
           }}
           height={140}
         />
-        <div
-          style={{
-            position: "absolute",
-            bottom: "0",
-            background: "rgba(17, 90, 190, 0.7)",
-            color: "#f1f1f1",
-            width: "100%",
-            padding: "10px 10px 10px 30px",
-            fontFamily: "Inter",
-            fontWeight: 500,
-            fontSize: "15px",
-            lineHeight: "18px",
-            height: "140px",
-            display: "flex",
-            justifyContent: "space-between",
-            borderRadius: "10px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              alignSelf: "center",
-            }}
-          >
+        <InfoBannerWrap>
+          <TextBannerWrap>
             <p
               style={{
                 fontWeight: 500,
@@ -187,7 +69,7 @@ const ProfilGrup = ({ setActiveStep }) => {
             >
               Grup di buat oleh @arifandi
             </p>
-          </div>
+          </TextBannerWrap>
           <div>
             <IconButton
               aria-label="delete"
@@ -246,32 +128,17 @@ const ProfilGrup = ({ setActiveStep }) => {
               Hapus Grup
             </MenuItem>
           </Menu>
-        </div>
-      </div>
+        </InfoBannerWrap>
+      </BannerWrap>
 
       <RowWrapper>
         <ContentWrapper style={{ width: "35%" }}>
+          {/* Jumlah Interaksi */}
           <BoxWrapper>
             <TitleBar>Jumlah Interaksi</TitleBar>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "11px",
-              }}
-            >
-              <div
-                style={{
-                  backgroundColor: "#F4F7FB",
-                  borderRadius: "5px",
-                  padding: "12px 10px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div
-                  style={{ display: "flex", gap: "7px", alignItems: "center" }}
-                >
+            <InfoWrap>
+              <ItemWrap>
+                <ImageWrap>
                   <img
                     alt="icon-contract"
                     src={iconContract}
@@ -279,7 +146,7 @@ const ProfilGrup = ({ setActiveStep }) => {
                     width={24}
                   />
                   Postingan
-                </div>
+                </ImageWrap>
                 <p
                   style={{
                     fontWeight: 700,
@@ -289,19 +156,9 @@ const ProfilGrup = ({ setActiveStep }) => {
                 >
                   1000
                 </p>
-              </div>
-              <div
-                style={{
-                  backgroundColor: "#F4F7FB",
-                  borderRadius: "5px",
-                  padding: "12px 10px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div
-                  style={{ display: "flex", gap: "7px", alignItems: "center" }}
-                >
+              </ItemWrap>
+              <ItemWrap>
+                <ImageWrap>
                   <img
                     alt="icon-contract"
                     src={iconComment}
@@ -309,7 +166,7 @@ const ProfilGrup = ({ setActiveStep }) => {
                     width={24}
                   />
                   Komentar
-                </div>
+                </ImageWrap>
                 <p
                   style={{
                     fontWeight: 700,
@@ -319,19 +176,9 @@ const ProfilGrup = ({ setActiveStep }) => {
                 >
                   1000
                 </p>
-              </div>
-              <div
-                style={{
-                  backgroundColor: "#F4F7FB",
-                  borderRadius: "5px",
-                  padding: "12px 10px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div
-                  style={{ display: "flex", gap: "7px", alignItems: "center" }}
-                >
+              </ItemWrap>
+              <ItemWrap>
+                <ImageWrap>
                   <img
                     alt="icon-contract"
                     src={iconThumb}
@@ -339,7 +186,7 @@ const ProfilGrup = ({ setActiveStep }) => {
                     width={24}
                   />
                   Like
-                </div>
+                </ImageWrap>
                 <p
                   style={{
                     fontWeight: 700,
@@ -349,12 +196,13 @@ const ProfilGrup = ({ setActiveStep }) => {
                 >
                   1000
                 </p>
-              </div>
-            </div>
+              </ItemWrap>
+            </InfoWrap>
           </BoxWrapper>
+
+          {/* Postingan Terpopuler */}
           <BoxWrapper>
             <TitleBar>Postingan terpopuler</TitleBar>
-
             <ScrollWrapper style={{ gap: "5px", paddingRight: "15px" }}>
               {lokerTranding.map((item) => (
                 <List aria-label="contacts" disablePadding>
@@ -373,22 +221,18 @@ const ProfilGrup = ({ setActiveStep }) => {
             </ScrollWrapper>
           </BoxWrapper>
         </ContentWrapper>
+
         <ContentWrapper style={{ width: "65%" }}>
+          {/* Chart Line Pertumbuhan Anggota */}
           <BoxWrapper style={{ height: "267px" }}>
             <TitleBar>Pertumbuhan Anggota</TitleBar>
             <ChartLine />
           </BoxWrapper>
+
+          {/* Chart Donat Jumlah Anggota */}
           <BoxWrapper>
             <TitleBar>Jumlah Anggota</TitleBar>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                height: "100%",
-                alignItems: "center",
-                paddingBottom: "30px",
-              }}
-            >
+            <ChartWrap>
               <Chart
                 data={dataChart1}
                 description="Total : 100"
@@ -404,11 +248,12 @@ const ProfilGrup = ({ setActiveStep }) => {
                 description="Total : 100"
                 title="Rentang Usia"
               />
-            </div>
+            </ChartWrap>
           </BoxWrapper>
         </ContentWrapper>
       </RowWrapper>
 
+      {/* Popup Konfirmasi Hapus Grup */}
       <PopUp
         open={popupConfirm}
         width="350px"
@@ -425,6 +270,7 @@ const ProfilGrup = ({ setActiveStep }) => {
         buttonWord="Setujui"
       />
 
+      {/* Popup Hapus Grup */}
       <PopUp
         open={popupDelete}
         width="350px"
@@ -436,6 +282,7 @@ const ProfilGrup = ({ setActiveStep }) => {
         info="Berhasil menghapus grup."
       />
 
+      {/* Popup Berhasil Perbarui */}
       <PopUp
         open={popupUpdate}
         width="350px"
@@ -456,11 +303,57 @@ const Container = styled("div")(() => ({
   gap: "20px",
 }));
 
+const ItemWrap = styled("div")(() => ({
+  backgroundColor: "#F4F7FB",
+  borderRadius: "5px",
+  padding: "12px 10px",
+  display: "flex",
+  justifyContent: "space-between",
+}));
+
+const ImageWrap = styled("div")(() => ({
+  display: "flex",
+  gap: "7px",
+  alignItems: "center",
+}));
+
+const ChartWrap = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "space-around",
+  height: "100%",
+  alignItems: "center",
+  paddingBottom: "30px",
+}));
+
 const RowWrapper = styled("div")(() => ({
   display: "flex",
   flexDirection: "row",
   gap: "20px",
   width: "100%",
+}));
+
+const TextBannerWrap = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+  alignSelf: "center",
+}));
+
+const InfoBannerWrap = styled("div")(() => ({
+  position: "absolute",
+  bottom: "0",
+  background: "rgba(17, 90, 190, 0.7)",
+  color: "#f1f1f1",
+  width: "100%",
+  padding: "10px 10px 10px 30px",
+  fontFamily: "Inter",
+  fontWeight: 500,
+  fontSize: "15px",
+  lineHeight: "18px",
+  height: "140px",
+  display: "flex",
+  justifyContent: "space-between",
+  borderRadius: "10px",
 }));
 
 const ItemCustom = styled(ListItemButton)(() => ({
@@ -485,6 +378,12 @@ const TextDetail = styled("p")(() => ({
   lineHeight: "12px",
   letterSpacing: "0.01em",
   color: "#948F8F",
+}));
+
+const InfoWrap = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "11px",
 }));
 
 const ScrollWrapper = styled("div")(() => ({
@@ -525,6 +424,17 @@ const BoxWrapper = styled("div")(() => ({
   gap: "15px",
   display: "flex",
   flexDirection: "column",
+}));
+
+const BannerWrap = styled("p")(() => ({
+  bottom: "0",
+  background: "rgba(0, 0, 0, 0.5)",
+  color: "#f1f1f1",
+  width: "100%",
+  position: "relative",
+  margin: "0 auto",
+  boxSizing: "border-box",
+  borderRadius: "10px",
 }));
 
 const TitleBar = styled("p")(() => ({

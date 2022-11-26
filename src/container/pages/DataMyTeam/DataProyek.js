@@ -1,3 +1,6 @@
+// Page Data Proyek
+// --------------------------------------------------------
+
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
@@ -8,6 +11,7 @@ import InputText from "../../../components/InputText";
 import Colors from "../../../helpers/colors";
 import Button from "../../../components/Button";
 import Menu from "@mui/material/Menu";
+import DropDown from "../../../components/DropDown";
 
 // Asset
 import profilePost from "../../../assets/img/profile-post.png";
@@ -21,9 +25,12 @@ import eye from "../../../assets/icon/Eye.svg";
 
 // Dummy Data
 import { dataContent, notification } from "./DataDummy";
-import DropDown from "../../../components/DropDown";
 
 const DataProyek = ({ setActiveStep }) => {
+  const [search, setSearch] = useState("");
+  const [menuFilter, setMenuFilter] = useState(null);
+  const [dropDown, setDropDown] = useState(0);
+
   const dataHeader = [
     {
       title: "No",
@@ -95,10 +102,6 @@ const DataProyek = ({ setActiveStep }) => {
       center: true,
     },
   ];
-
-  const [search, setSearch] = useState("");
-  const [menuFilter, setMenuFilter] = useState(null);
-  const [dropDown, setDropDown] = useState(0);
 
   return (
     <Container>
@@ -378,9 +381,7 @@ const DataProyek = ({ setActiveStep }) => {
               open={Boolean(menuFilter)}
               onClose={() => setMenuFilter(null)}
             >
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-              >
+              <DropdownWrap>
                 <p>Pilih jenis grup :</p>
                 <DropDown
                   dropdownValue={dropDown}
@@ -393,10 +394,8 @@ const DataProyek = ({ setActiveStep }) => {
                     { label: "Private", value: 1 },
                   ]}
                 />
-              </div>
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-              >
+              </DropdownWrap>
+              <DropdownWrap>
                 <p>Pilih Kategori grup :</p>
                 <DropDown
                   dropdownValue={dropDown}
@@ -410,10 +409,8 @@ const DataProyek = ({ setActiveStep }) => {
                     { label: "Komunitas", value: 2 },
                   ]}
                 />
-              </div>
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-              >
+              </DropdownWrap>
+              <DropdownWrap>
                 <p>Pilih status grup :</p>
                 <DropDown
                   dropdownValue={dropDown}
@@ -427,9 +424,10 @@ const DataProyek = ({ setActiveStep }) => {
                     { label: "Menunggu", value: 2 },
                   ]}
                 />
-              </div>
+              </DropdownWrap>
             </Menu>
           </div>
+
           <TitleBar>Recent Activity</TitleBar>
           <ContentWrapper>
             <ScrollView>
@@ -499,6 +497,12 @@ const ContentWrapper = styled("div")(() => ({
   flexDirection: "column",
   whiteSpace: "nowrap",
   minWidth: "fit-content",
+}));
+
+const DropdownWrap = styled("p")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "4px",
 }));
 
 const TitleBar = styled("p")(() => ({

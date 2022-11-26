@@ -7,13 +7,13 @@ import DialogActions from "@mui/material/DialogActions";
 import Table from "../../../components/Table";
 import Pagination from "../../../components/Pagination";
 import Button from "../../../components/Button";
+import InputText from "../../../components/InputText";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
 
 // Dummy Data
 import { dataContentAll } from "./DataDummy";
-import InputText from "../../../components/InputText";
 
 const Notifikasi = ({ setActiveStep }) => {
   const dataHeaderAll = [
