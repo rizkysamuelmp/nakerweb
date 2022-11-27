@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import Button from "../../../components/Button";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import DropDown from "../../../components/DropDown";
-import { Avatar, Checkbox, IconButton, InputAdornment } from "@mui/material";
+import { Avatar, Checkbox, IconButton } from "@mui/material";
 import InputText from "../../../components/InputText";
 
 // Assets
@@ -13,8 +13,6 @@ import business from "../../../assets/icon/Business.svg";
 import iconCamera from "../../../assets/icon/icon-camera.svg";
 import PopUp from "../../../components/PopUp";
 import documentWriter from "../../../assets/img/document-writer.png";
-import Colors from "../../../helpers/colors";
-import downIcon from "../../../assets/icon/down.svg";
 
 // Main Page
 const FormulirLoker = () => {
@@ -35,7 +33,6 @@ const StepOne = ({ setActive }) => {
   const [namaPerusahaan, setNamaPerusahaan] = useState("");
   const [alamat, setAlamat] = useState("");
   const [telepon, setTelepon] = useState("");
-  const [kategori, setKategori] = useState("");
   const [namaPic, setNamaPic] = useState("");
   const [email, setEmail] = useState("");
   const [initial, setInitial] = useState({

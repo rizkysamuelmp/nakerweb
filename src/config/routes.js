@@ -12,6 +12,7 @@ import Notifikasi from "../container/pages/Notifikasi";
 import DataPostingan from "../container/pages/DataPostingan";
 import DataTiket from "../container/pages/DataTiket";
 import DataPengguna from "../container/pages/DataPengguna";
+import LiveChat from "../container/pages/LiveChat";
 
 export const DesignSystemRoutes = [
   {
@@ -113,6 +114,13 @@ const AppRoutes = [
     nameComponent: "Data My Team",
     path: "/nakerweb/my-team",
     component: DataMyTeam,
+    exact: true,
+  },
+  {
+    id: 12,
+    nameComponent: "Live Chat",
+    path: "/nakerweb/live-chat",
+    component: LiveChat,
     exact: true,
   },
 ];
