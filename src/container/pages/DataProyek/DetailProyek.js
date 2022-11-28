@@ -57,8 +57,6 @@ function LinearProgressWithLabel(props) {
 }
 
 const DetailProyek = ({ setActiveStep }) => {
-  const [tabSelect, setTabSelect] = useState(1);
-
   const dataHeader = [
     {
       title: "No",
@@ -162,6 +160,9 @@ const DetailProyek = ({ setActiveStep }) => {
             variant="contained"
             borderRadius="5px"
             padding="0px 7px 0px 9px"
+            onClick={() => {
+              setActiveStep("info");
+            }}
           >
             Detail
             <img src={eye} alt="eye" />
@@ -172,6 +173,8 @@ const DetailProyek = ({ setActiveStep }) => {
     },
   ];
 
+  const [tabSelect, setTabSelect] = useState(1);
+
   return (
     <React.Fragment>
       <Container>
@@ -179,7 +182,7 @@ const DetailProyek = ({ setActiveStep }) => {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}
           >
-            <Back onClick={() => setActiveStep("allTask")}>
+            <Back onClick={() => setActiveStep("info")}>
               <img
                 src={back}
                 alt="icon-back"

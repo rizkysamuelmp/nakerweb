@@ -12,12 +12,19 @@ import ProfilGrup from "./ProfilGrup";
 
 const Page = () => {
   const [activeStep, setActiveStep] = useState("page");
+  const [history, setHistory] = useState("");
 
   return (
     <Container>
-      {activeStep === "page" && <DataGrup setActiveStep={setActiveStep} />}
-      {activeStep === "all" && <SemuaGrup setActiveStep={setActiveStep} />}
-      {activeStep === "detail" && <DetailGrup setActiveStep={setActiveStep} />}
+      {activeStep === "page" && (
+        <DataGrup setActiveStep={setActiveStep} setHistory={setHistory} />
+      )}
+      {activeStep === "all" && (
+        <SemuaGrup setActiveStep={setActiveStep} setHistory={setHistory} />
+      )}
+      {activeStep === "detail" && (
+        <DetailGrup setActiveStep={setActiveStep} history={history} />
+      )}
       {activeStep === "grup" && <ProfilGrup setActiveStep={setActiveStep} />}
     </Container>
   );

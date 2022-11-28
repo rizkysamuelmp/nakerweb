@@ -24,7 +24,7 @@ import {
   sektorTrending,
 } from "./DataDummy";
 
-const DataLoker = ({ setActiveStep }) => {
+const DataLoker = ({ setActiveStep, setHistory }) => {
   return (
     <Container>
       {/* Title */}
@@ -89,7 +89,10 @@ const DataLoker = ({ setActiveStep }) => {
                 aria-label="contacts"
                 disablePadding
                 key={index}
-                onClick={() => setActiveStep("detail")}
+                onClick={() => {
+                  setActiveStep("detail");
+                  setHistory("home");
+                }}
               >
                 <ItemCustom>
                   <ContentWrap>
