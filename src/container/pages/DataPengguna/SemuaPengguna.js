@@ -22,13 +22,6 @@ import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
 import profile from "../../../assets/img/profile-post.png";
 
-// style
-const Container = styled("div")`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
 const SemuaPengguna = ({ setActiveStep }) => {
   const dataHeader = [
     {
@@ -110,7 +103,11 @@ const SemuaPengguna = ({ setActiveStep }) => {
 
   return (
     <Container>
-      <Title title="Semua Pengguna">
+      <Title
+        title="Semua Pengguna"
+        withBack
+        onBack={() => setActiveStep("home")}
+      >
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText
@@ -310,5 +307,12 @@ const SemuaPengguna = ({ setActiveStep }) => {
     </Container>
   );
 };
+
+// Style
+const Container = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
 
 export default SemuaPengguna;

@@ -19,7 +19,7 @@ const DetailPostingan = ({ setActiveStep }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Postingan" />
+      <Title title="Postingan" withBack onBack={() => setActiveStep("page")} />
 
       {/* Image & Post */}
       <RowWrapper>

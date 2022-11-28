@@ -9,6 +9,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Table from "../../../components/Table";
 import { TextareaAutosize } from "@mui/material";
+import InputText from "../../../components/InputText";
+import Progress from "../../../components/Progress";
 
 // Asset
 import { ReactComponent as IconArrowRight } from "../../../assets/icon/icon-arrow-right.svg";
@@ -18,11 +20,10 @@ import { ReactComponent as IconSuccessCheck } from "../../../assets/icon/icon-su
 import { ReactComponent as IconSendChat } from "../../../assets/icon/icon-send-chat.svg";
 import eye from "../../../assets/icon/Eye.svg";
 import profilePict from "../../../assets/img/profile-chat.png";
+import back from "../../../assets/icon/Back.svg";
 
 // Dummy
 import { dataTask } from "./DataDummy";
-import InputText from "../../../components/InputText";
-import Progress from "../../../components/Progress";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -173,12 +174,28 @@ const DetailProyek = ({ setActiveStep }) => {
 
   return (
     <React.Fragment>
-      <Title>
-        Usaha Studio Foto dan video..
-        <IconArrowRight />
-        <StatusWrap>Planing</StatusWrap>
-      </Title>
       <Container>
+        <Title>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+          >
+            <Back onClick={() => setActiveStep("info")}>
+              <img
+                src={back}
+                alt="icon-back"
+                width={16}
+                heigh={16}
+                style={{ marginRight: "5px" }}
+              />
+              Kembali
+            </Back>
+            <div style={{ display: "flex" }}>
+              Usaha Studio Foto dan video..
+              <IconArrowRight />
+            </div>
+          </div>
+          <StatusWrap>Planing</StatusWrap>
+        </Title>
         <Tab>
           <div>
             <Button
@@ -330,7 +347,7 @@ const DetailProyek = ({ setActiveStep }) => {
             <div
               style={{
                 width: "45%",
-                padding: "40px 14px 10px 13px",
+                padding: "40px 14px 30px 13px",
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
@@ -613,7 +630,6 @@ const Title = styled("div")(() => ({
   padding: "16px",
   boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
   backgroundColor: "white",
-  margin: "-17px -17px 10px -17px",
 }));
 
 const Container = styled("div")(() => ({
@@ -628,6 +644,16 @@ const Tab = styled("div")(() => ({
   boxShadow: "box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.05);",
   padding: "16px",
 }));
+
+const Back = styled("div")`
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+`;
 
 const RowWrapper = styled("div")(() => ({
   display: "flex",
@@ -645,6 +671,8 @@ const StatusWrap = styled("div")(() => ({
   color: "white",
   fontWeight: 500,
   fontSize: "13px",
+  height: "fit-content",
+  alignSelf: "end",
 }));
 
 export default DetailProyek;

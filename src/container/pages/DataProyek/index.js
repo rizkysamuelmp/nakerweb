@@ -12,12 +12,19 @@ import DetailProyek from "./DetailProyek";
 
 const Page = () => {
   const [activeStep, setActiveStep] = useState("page");
+  const [history, setHistory] = useState("home");
 
   return (
     <Container>
-      {activeStep === "page" && <DataProyek setActiveStep={setActiveStep} />}
-      {activeStep === "info" && <InfoProyek setActiveStep={setActiveStep} />}
-      {activeStep === "all" && <SemuaProyek setActiveStep={setActiveStep} />}
+      {activeStep === "page" && (
+        <DataProyek setActiveStep={setActiveStep} setHistory={setHistory} />
+      )}
+      {activeStep === "info" && (
+        <InfoProyek setActiveStep={setActiveStep} history={history} />
+      )}
+      {activeStep === "all" && (
+        <SemuaProyek setActiveStep={setActiveStep} setHistory={setHistory} />
+      )}
       {activeStep === "proyek" && (
         <DetailProyek setActiveStep={setActiveStep} />
       )}

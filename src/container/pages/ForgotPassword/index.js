@@ -3,10 +3,13 @@ import Button from "../../../components/Button";
 import { logo, social } from "../../../assets/img";
 import InputText from "../../../components/InputText";
 import PopUp from "../../../components/PopUp";
+import { Link } from "react-router-dom";
 
 // Asset
 import iconEmail from "../../../assets/icon/icon-email.svg";
 import mailSuccess from "../../../assets/img/mail-success.png";
+import { IconButton } from "@mui/material";
+import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -23,6 +26,11 @@ const ForgotPassword = () => {
         justifyContent: "space-evenly",
       }}
     >
+      <Link to="/nakerweb/log-in">
+        <IconButton style={{ position: "fixed", top: "20px", left: "20px" }}>
+          <IconBack />
+        </IconButton>
+      </Link>
       <div
         className="form-login"
         style={{

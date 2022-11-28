@@ -11,7 +11,7 @@ import DetailLoker from "./DetailLoker";
 import FormulirLoker from "./FormulirLoker";
 
 const Page = () => {
-  const [activeStep, setActiveStep] = useState("formulir");
+  const [activeStep, setActiveStep] = useState("page");
 
   return (
     <Container>

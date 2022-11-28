@@ -9,6 +9,7 @@ import PageContainer from "../../components/PageContainer";
 import AppRoutes, {
   BeforeLogin,
   DesignSystemRoutes,
+  User,
 } from "../../config/routes";
 
 const App = () => (
@@ -17,14 +18,20 @@ const App = () => (
       {DesignSystemRoutes.map((route) => (
         <Route key={route.id} {...route} />
       ))}
+
       {BeforeLogin.map((route) => (
         <Route key={route.id} {...route} />
       ))}
+
       <PageContainer>
         {AppRoutes.map((route) => (
           <Route key={route.id} {...route} />
         ))}
+        {User.map((route) => (
+          <Route key={route.id} {...route} />
+        ))}
       </PageContainer>
+
       <Redirect from="/" to="/design-system" />
       <Redirect from="*" to="/error-404" />
     </Switch>

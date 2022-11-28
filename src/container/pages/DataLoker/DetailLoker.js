@@ -27,7 +27,14 @@ const DetailLoker = ({ setActiveStep }) => {
     <Container>
       <HeadContainer>
         <Back onClick={() => setActiveStep("all")}>
-          <img src={back} alt="" /> Kembali
+          <img
+            src={back}
+            alt="icon-back"
+            height={16}
+            width={16}
+            style={{ marginRight: "5px" }}
+          />{" "}
+          Kembali
         </Back>
         <RightHead>Detail Loker</RightHead>
       </HeadContainer>

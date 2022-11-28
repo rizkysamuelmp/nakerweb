@@ -18,7 +18,7 @@ import iconCalendar from "../../../assets/icon/icon-calendar.png";
 // Dummy Data
 import { dataContent } from "./DataDummy";
 
-const DataProyek = ({ setActiveStep }) => {
+const DataProyek = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
     {
       title: "No",
@@ -142,7 +142,10 @@ const DataProyek = ({ setActiveStep }) => {
             variant="contained"
             borderRadius="5px"
             padding="0px 7px 0px 9px"
-            onClick={() => setActiveStep("info")}
+            onClick={() => {
+              setActiveStep("info");
+              setHistory("home");
+            }}
           >
             Detail
             <img src={eye} alt="eye" />

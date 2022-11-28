@@ -25,7 +25,7 @@ const DetailGrup = ({ setActiveStep }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Data Grup" />
+      <Title title="Data Grup" withBack onBack={() => setActiveStep("page")} />
 
       {/* Banner Image */}
       <RowWrapper>

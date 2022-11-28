@@ -12,6 +12,7 @@ import iconEmail from "../../../assets/icon/icon-email.svg";
 import iconPassword from "../../../assets/icon/icon-password.svg";
 import LockErrorBlack from "../../../assets/img/lock-error-black.png";
 import mailBlue from "../../../assets/img/mail-blue.png";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -182,18 +183,25 @@ const Login = () => {
                 </p>
               }
             />
-            <p
+            <Link
+              to="/nakerweb/forgot-password"
               style={{
-                fontWeight: " 700",
-                fontSize: " 13px",
-                lineHeight: " 18px",
-                letterSpacing: " 0.01em",
-                color: " #0B85FF",
-                cursor: "pointer",
+                textDecoration: "none",
               }}
             >
-              Lupa kata sandi
-            </p>
+              <p
+                style={{
+                  fontWeight: " 700",
+                  fontSize: " 13px",
+                  lineHeight: " 18px",
+                  letterSpacing: " 0.01em",
+                  color: " #0B85FF",
+                  cursor: "pointer",
+                }}
+              >
+                Lupa kata sandi
+              </p>
+            </Link>
           </div>
           <Button
             variant="contained"

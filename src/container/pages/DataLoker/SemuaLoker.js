@@ -21,6 +21,7 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
+import iconPlus from "../../../assets/icon/icon-plus-white.svg";
 
 // Dummy Data
 import { dataContentAll } from "./DataDummy";
@@ -142,7 +143,7 @@ const SemuaLoker = ({ setActiveStep }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Semua Loker">
+      <Title title="Semua Loker" withBack onBack={() => setActiveStep("page")}>
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText
@@ -199,7 +200,6 @@ const SemuaLoker = ({ setActiveStep }) => {
               <img src={iconExport} alt="icon-slider" />
             </Button>
           </div>
-
           {/* List Menu Exoprt */}
           <Menu
             id="menu-appbar"
@@ -247,6 +247,11 @@ const SemuaLoker = ({ setActiveStep }) => {
               Export Pdf
             </MenuItem>
           </Menu>
+
+          {/* Icon Plus */}
+          <Button padding="12px" onClick={() => setActiveStep("formulir")}>
+            <img alt="icon-plus" src={iconPlus} width={16} height={16} />
+          </Button>
 
           {/* Tombol Filter */}
           <Button

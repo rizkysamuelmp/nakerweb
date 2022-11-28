@@ -15,13 +15,17 @@ import PopUp from "../../../components/PopUp";
 import documentWriter from "../../../assets/img/document-writer.png";
 
 // Main Page
-const FormulirLoker = () => {
-  const [activeStep, setActiveStep] = useState("stepOne");
+const FormulirLoker = ({ setActiveStep }) => {
+  const [step, setStep] = useState("stepOne");
 
   return (
     <Container>
-      {activeStep === "stepOne" && <StepOne setActive={setActiveStep} />}
-      {activeStep === "stepTwo" && <StepTwo setActive={setActiveStep} />}
+      {step === "stepOne" && (
+        <StepOne setStep={setStep} setActiveStep={setActiveStep} />
+      )}
+      {step === "stepTwo" && (
+        <StepTwo setStep={setStep} setActiveStep={setActiveStep} />
+      )}
     </Container>
   );
 };
@@ -29,13 +33,13 @@ const FormulirLoker = () => {
 export default FormulirLoker;
 
 // Page Step One
-const StepOne = ({ setActive }) => {
+const StepOne = ({ setStep, setActiveStep }) => {
   const [namaPerusahaan, setNamaPerusahaan] = useState("");
   const [alamat, setAlamat] = useState("");
   const [telepon, setTelepon] = useState("");
   const [namaPic, setNamaPic] = useState("");
   const [email, setEmail] = useState("");
-  const [initial, setInitial] = useState({
+  const initial = {
     testType: "global",
     message: "",
     image: null,
@@ -44,7 +48,7 @@ const StepOne = ({ setActive }) => {
     files: [],
     image2: null,
     image2ReducedSize: null,
-  });
+  };
 
   // ref
   const inputEl = useRef(null);
@@ -55,23 +59,27 @@ const StepOne = ({ setActive }) => {
   };
 
   const onChange = async (event) => {
-    const originalFile = event.target.files[0];
-    const regex = /^.*base64,/;
+    // const originalFile = event.target.files[0];
+    // const regex = /^.*base64,/;
   };
 
-  const convertToBase64 = (blob) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = function () {
-        resolve(reader.result);
-      };
-      reader.readAsDataURL(blob);
-    });
-  };
+  // const convertToBase64 = (blob) => {
+  //   return new Promise((resolve) => {
+  //     const reader = new FileReader();
+  //     reader.onload = function () {
+  //       resolve(reader.result);
+  //     };
+  //     reader.readAsDataURL(blob);
+  //   });
+  // };
 
   return (
     <Container>
-      <Title title="Formulir permintaan publikasi loker" />
+      <Title
+        title="Formulir permintaan publikasi loker"
+        withBack
+        onBack={() => setActiveStep("all")}
+      />
       <BodyWrapper>
         {/* Info Perusahaan */}
         <CardWrapper borderRadius="10px 10px 0 0">
@@ -226,9 +234,7 @@ const StepOne = ({ setActive }) => {
                 </div>
               </Line>
               <FooterWrapper>
-                <Button onClick={() => setActive("stepTwo")}>
-                  Selanjutnya
-                </Button>
+                <Button onClick={() => setStep("stepTwo")}>Selanjutnya</Button>
               </FooterWrapper>
             </CardBodyRight>
           </CardBody>
@@ -239,7 +245,7 @@ const StepOne = ({ setActive }) => {
 };
 
 // Page Step Two
-const StepTwo = () => {
+const StepTwo = ({ setStep, setActiveStep }) => {
   const [deskrisi, setDeskrisi] = useState("");
   const [posisi, setPosisi] = useState("");
   const [kualifikasi, setKualifikasi] = useState("");
@@ -249,6 +255,11 @@ const StepTwo = () => {
 
   return (
     <Container>
+      <Title
+        title="Formulir permintaan publikasi loker"
+        withBack
+        onBack={() => setStep("stepOne")}
+      />
       <CardWrapper borderRadius="10px">
         <CardHead>
           <img src={business} alt="" width="24px" />
@@ -425,7 +436,7 @@ const StepTwo = () => {
         padding="60px 30px 25px 30px"
         imgSrc={documentWriter}
         onClose={() => setKirim(false)}
-        onClickAction={() => setKirim(false)}
+        onClickAction={() => setActiveStep("all")}
         title="Berhasil dikirim"
         info="Formulir anda berhasil dikirim
         dan akan di review."
@@ -512,13 +523,6 @@ const FormLabel = styled("label")`
   font-size: 12px;
   line-height: 15px;
   color: #000000;
-`;
-
-const DescEmail = styled("div")`
-  font-weight: 300;
-  font-size: 8px;
-  line-height: 10px;
-  font-style: italic;
 `;
 
 const FooterWrapper = styled("div")`
