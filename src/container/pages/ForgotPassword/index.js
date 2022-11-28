@@ -3,7 +3,7 @@ import Button from "../../../components/Button";
 import { logo, social } from "../../../assets/img";
 import InputText from "../../../components/InputText";
 import PopUp from "../../../components/PopUp";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // Asset
 import iconEmail from "../../../assets/icon/icon-email.svg";
@@ -12,6 +12,8 @@ import { IconButton } from "@mui/material";
 import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
 
 const ForgotPassword = () => {
+  let history = useHistory();
+
   const [email, setEmail] = useState("");
   const [popUpEmailSuccess, setPopUpEmailSuccess] = useState(false);
 
@@ -135,6 +137,10 @@ const ForgotPassword = () => {
         open={popUpEmailSuccess}
         imgSrc={mailSuccess}
         onClose={() => setPopUpEmailSuccess(false)}
+        onClickAction={() => {
+          setPopUpEmailSuccess(false);
+          history.push("/nakerweb/log-in");
+        }}
         title="Berhasil kirim email"
         info="Link  reset kata sandi  telah dikirim ke email anda."
       />
