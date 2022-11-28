@@ -143,7 +143,7 @@ const SemuaTask = ({ setActiveStep }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Semua Task">
+      <Title title="Semua Task" withBack onBack={() => setActiveStep("proyek")}>
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText
@@ -175,7 +175,12 @@ const SemuaTask = ({ setActiveStep }) => {
                   },
                 }}
               >
-                <img src={iconSearch} alt="icon-search" />
+                <img
+                  src={iconSearch}
+                  alt="icon-search"
+                  width={24}
+                  height={24}
+                />
               </InputAdornment>
             }
           />
@@ -187,7 +192,7 @@ const SemuaTask = ({ setActiveStep }) => {
               setMenuFilter(event.currentTarget);
             }}
           >
-            <img src={iconSlider} alt="icon-slider" />
+            <img src={iconSlider} alt="icon-slider" width={24} height={24} />
           </Button>
           <Menu
             id="menu-appbar"

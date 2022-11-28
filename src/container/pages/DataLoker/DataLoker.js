@@ -85,7 +85,12 @@ const DataLoker = ({ setActiveStep }) => {
           <TitleBar>Loker trending</TitleBar>
           <ScrollWrapper style={{ gap: "5px", paddingRight: "15px" }}>
             {lokerTranding.map((item, index) => (
-              <List aria-label="contacts" disablePadding key={index}>
+              <List
+                aria-label="contacts"
+                disablePadding
+                key={index}
+                onClick={() => setActiveStep("detail")}
+              >
                 <ItemCustom>
                   <ContentWrap>
                     <img alt="person-trending" src={imagePerson} />

@@ -113,10 +113,10 @@ const DropDown = ({
           },
         }}
         renderValue={(selected) => {
-          if (selected.length === 0) {
+          if (dropdownValue.length === 0) {
             return placeHolder;
           }
-          return listDropDown[selected]?.label || "";
+          return listDropDown[dropdownValue]?.label || "";
         }}
         inputProps={{
           "aria-label": "Without label",
