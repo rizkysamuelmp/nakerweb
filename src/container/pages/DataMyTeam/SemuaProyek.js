@@ -93,7 +93,6 @@ const SemuaProyek = ({ setActiveStep }) => {
   ];
 
   const [search, setSearch] = useState("");
-
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
 

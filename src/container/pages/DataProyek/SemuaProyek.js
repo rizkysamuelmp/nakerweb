@@ -27,7 +27,7 @@ import { dataContent } from "./DataDummy";
 import profilePost from "../../../assets/img/profile-post.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
 
-const SemuaProyek = ({ setActiveStep }) => {
+const SemuaProyek = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
     {
       title: "No",
@@ -151,7 +151,10 @@ const SemuaProyek = ({ setActiveStep }) => {
             variant="contained"
             borderRadius="5px"
             padding="0px 7px 0px 9px"
-            onClick={() => setActiveStep("detail")}
+            onClick={() => {
+              setActiveStep("info");
+              setHistory("all");
+            }}
           >
             Detail
             <img src={eye} alt="eye" />
@@ -163,7 +166,6 @@ const SemuaProyek = ({ setActiveStep }) => {
   ];
 
   const [search, setSearch] = useState("");
-
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
@@ -171,7 +173,7 @@ const SemuaProyek = ({ setActiveStep }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Semua Grup">
+      <Title title="Semua Grup" withBack onBack={() => setActiveStep("page")}>
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText

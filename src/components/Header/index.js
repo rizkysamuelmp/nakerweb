@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 // Asset
 import { logo } from "../../assets/img";
-import profile from "../../assets/img/profile.png";
+import profile from "../../assets/img/profile-post.png";
 import alarm from "../../assets/icon/icon-alarm.png";
 import alarmOn from "../../assets/icon/icon-alarm-notif.png";
 
@@ -50,7 +50,50 @@ const Header = ({ onClick, isNotif }) => {
               Super Admin
             </p>
           </div>
-          <img src={profile} alt="" />
+
+          {/* Icon Profile */}
+          {/* <IconButton onClick={(event) => setMenuProfile(event.currentTarget)}> */}
+          <img src={profile} alt="" width={44} height={44} />
+          {/* </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={menuProfile}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            sx={{
+              top: "40px",
+              left: "10px",
+              fontFamily: "Inter",
+              fontWeight: 500,
+              fontSize: "13px",
+              lineHeight: "16px",
+              color: "#000000",
+              "& .MuiPaper-root": {
+                borderRadius: "10px",
+              },
+              "& .MuiList-root": {
+                padding: "0px",
+              },
+            }}
+            open={Boolean(menuProfile)}
+            onClose={() => setMenuProfile(null)}
+          >
+            <MenuItem
+              onClick={() => setMenuProfile(null)}
+              sx={{ padding: "10px 30px" }}
+            >
+              Keluar
+            </MenuItem>
+          </Menu> */}
+
+          {/* Icon Bell */}
           <IconButton onClick={onClick}>
             <img
               alt="icon-alarm"

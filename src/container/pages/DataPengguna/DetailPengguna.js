@@ -11,16 +11,22 @@ import profilePhoto from "../../../assets/img/profilePhoto.png";
 import verifiedAccount from "../../../assets/icon/verifiedAccount.svg";
 import customer from "../../../assets/icon/customer.svg";
 import pencil from "../../../assets/icon/pencil.svg";
-
 import barBlue from "../../../assets/img/bar-blue.png";
 import barYellow from "../../../assets/img/bar-yellow.png";
 import barRed from "../../../assets/img/bar-red.png";
 import barPurple from "../../../assets/img/bar-purple.png";
 import barGreen from "../../../assets/img/bar-green.png";
+import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
 
-const DetailPengguna = () => {
+const DetailPengguna = ({ setActiveStep }) => {
   return (
     <Container>
+      <IconButton
+        style={{ position: "absolute", zIndex: 100 }}
+        onClick={() => setActiveStep("home")}
+      >
+        <IconBack />
+      </IconButton>
       <Profile>
         <img width="100%" height="225px" src={backroundUser} alt="" />
         <DetailProfile>

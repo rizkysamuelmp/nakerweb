@@ -15,8 +15,10 @@ const Page = () => {
   return (
     <Container>
       {activeStep === "home" && <DataPengguna setActiveStep={setActiveStep} />}
-      {activeStep === "all" && <SemuaPengguna />}
-      {activeStep === "detail" && <DetailPengguna />}
+      {activeStep === "all" && <SemuaPengguna setActiveStep={setActiveStep} />}
+      {activeStep === "detail" && (
+        <DetailPengguna setActiveStep={setActiveStep} />
+      )}
     </Container>
   );
 };

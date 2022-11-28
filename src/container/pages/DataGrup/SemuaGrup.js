@@ -173,7 +173,7 @@ const SemuaLoker = ({ setActiveStep }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Semua Grup">
+      <Title title="Semua Grup" withBack onBack={() => setActiveStep("page")}>
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText

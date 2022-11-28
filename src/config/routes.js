@@ -12,13 +12,22 @@ import Notifikasi from "../container/pages/Notifikasi";
 import DataPostingan from "../container/pages/DataPostingan";
 import DataTiket from "../container/pages/DataTiket";
 import DataPengguna from "../container/pages/DataPengguna";
-import LiveChat from "../container/pages/LiveChat";
 
 export const DesignSystemRoutes = [
   {
     id: 1,
     path: "/design-system",
     component: DesignSystem,
+    exact: true,
+  },
+];
+
+export const User = [
+  {
+    id: 1,
+    nameComponent: "Data My Team",
+    path: "/nakerweb/my-team",
+    component: DataMyTeam,
     exact: true,
   },
 ];
@@ -97,30 +106,9 @@ const AppRoutes = [
   },
   {
     id: 9,
-    nameComponent: "Download Data",
-    path: "/nakerweb/download-data",
-    // component: DataLoker,
-    exact: true,
-  },
-  {
-    id: 10,
     nameComponent: "Pengaturan System",
     path: "/nakerweb/pengaturan",
     // component: DataLoker,
-    exact: true,
-  },
-  {
-    id: 11,
-    nameComponent: "Data My Team",
-    path: "/nakerweb/my-team",
-    component: DataMyTeam,
-    exact: true,
-  },
-  {
-    id: 12,
-    nameComponent: "Live Chat",
-    path: "/nakerweb/live-chat",
-    component: LiveChat,
     exact: true,
   },
 ];

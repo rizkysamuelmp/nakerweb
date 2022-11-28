@@ -22,6 +22,9 @@ import iconThumb from "../../../assets/icon/icon-thumb-fill-blue.png";
 import imagePerson from "../../../assets/img/image-person-trending.png";
 import iconArrowRight from "../../../assets/icon/icon-arrow-right.png";
 import groupSuccess from "../../../assets/img/group-success.png";
+import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
+
+// Dummy
 import { dataChart1, dataChart2, dataChart3, lokerTranding } from "./DataDummy";
 
 const ProfilGrup = ({ setActiveStep }) => {
@@ -32,6 +35,13 @@ const ProfilGrup = ({ setActiveStep }) => {
 
   return (
     <Container>
+      <IconButton
+        style={{ position: "absolute", zIndex: 100 }}
+        onClick={() => setActiveStep("page")}
+      >
+        <IconBack />
+      </IconButton>
+
       {/* Banner Image */}
       <BannerWrap>
         <img
@@ -43,7 +53,7 @@ const ProfilGrup = ({ setActiveStep }) => {
             objectFit: "cover",
             borderRadius: "10px",
           }}
-          height={140}
+          height={180}
         />
         <InfoBannerWrap>
           <TextBannerWrap>
@@ -109,18 +119,12 @@ const ProfilGrup = ({ setActiveStep }) => {
             onClose={() => setMenuEdit(null)}
           >
             <MenuItem
-              onClick={() => setPopupUpdate(true)}
-              sx={{ padding: "11px 18px" }}
-            >
-              Perbarui Grup
-            </MenuItem>
-            <div style={{ border: "1px solid #E5E5E5" }} />
-            <MenuItem
               onClick={() => setMenuEdit(null)}
               sx={{ padding: "11px 18px" }}
             >
               Nonaktifkan Grup
             </MenuItem>
+            <div style={{ border: "1px solid #E5E5E5" }} />
             <MenuItem
               onClick={() => setPopupConfirm(true)}
               sx={{ padding: "11px 18px" }}
@@ -337,6 +341,7 @@ const TextBannerWrap = styled("div")(() => ({
   flexDirection: "column",
   gap: "10px",
   alignSelf: "center",
+  marginTop: "40px",
 }));
 
 const InfoBannerWrap = styled("div")(() => ({
@@ -350,7 +355,7 @@ const InfoBannerWrap = styled("div")(() => ({
   fontWeight: 500,
   fontSize: "15px",
   lineHeight: "18px",
-  height: "140px",
+  height: "180px",
   display: "flex",
   justifyContent: "space-between",
   borderRadius: "10px",
@@ -426,7 +431,7 @@ const BoxWrapper = styled("div")(() => ({
   flexDirection: "column",
 }));
 
-const BannerWrap = styled("p")(() => ({
+const BannerWrap = styled("div")(() => ({
   bottom: "0",
   background: "rgba(0, 0, 0, 0.5)",
   color: "#f1f1f1",

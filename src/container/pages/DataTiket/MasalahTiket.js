@@ -12,12 +12,16 @@ import iconSend from "../../../assets/icon/icon-send.png";
 // Data Dummy
 import { message } from "./dataDummy";
 
-const MasalahTiket = () => {
+const MasalahTiket = ({ setActiveStep }) => {
   const [popupSend, setPopupSend] = useState(false);
   return (
     <Container>
       {/* Tittle */}
-      <Title title="Detail Tiket" />
+      <Title
+        title="Detail Tiket"
+        withBack
+        onBack={() => setActiveStep("page")}
+      />
 
       {/* Wrapper  */}
       <Wrapper>

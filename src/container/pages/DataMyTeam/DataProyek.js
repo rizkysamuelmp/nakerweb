@@ -269,33 +269,43 @@ const DataProyek = ({ setActiveStep }) => {
               </div>
             </div>
           </ContentWrapper>
+
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               gap: "10px",
               width: "100%",
+              overflow: "scroll",
+              paddingBottom: "20px",
             }}
           >
             <Table headerContent={dataHeader} dataContent={dataContent} />
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
-              <p
-                style={{
-                  fontFamily: "Inter",
-                  fontWeight: 600,
-                  fontSize: "15px",
-                  lineHeight: "18px",
-                  color: "#115AAA",
-                  cursor: "pointer",
-                }}
-                onClick={() => setActiveStep("all")}
-              >
-                Lihat Semua
-              </p>
-            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "-20px",
+            }}
+          >
+            <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
+            <p
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 600,
+                fontSize: "15px",
+                lineHeight: "18px",
+                color: "#115AAA",
+                cursor: "pointer",
+              }}
+              onClick={() => setActiveStep("all")}
+            >
+              Lihat Semua
+            </p>
           </div>
         </div>
+
         <div
           style={{
             display: "flex",
@@ -428,37 +438,36 @@ const DataProyek = ({ setActiveStep }) => {
           </div>
 
           <TitleBar>Recent Activity</TitleBar>
-          <ContentWrapper>
-            <ScrollView>
-              {notification.map((item, index) => (
-                <List aria-label="contacts" disablePadding key={index}>
-                  <ItemCustom>
-                    <img alt="person-trending" src={profile} />
-                    <TextWrapper>
-                      <p
-                        style={{
-                          fontWeight: 600,
-                          fontSize: "15px",
-                          lineHeight: "18px",
-                        }}
-                      >
-                        {item.name}
-                      </p>
-                      <p
-                        style={{
-                          fontWeight: 400,
-                          fontSize: "13px",
-                          lineHeight: "16px",
-                        }}
-                      >
-                        {item.text}
-                      </p>
-                    </TextWrapper>
-                  </ItemCustom>
-                </List>
-              ))}
-            </ScrollView>
-          </ContentWrapper>
+
+          <ScrollView>
+            {notification.map((item, index) => (
+              <List aria-label="contacts" disablePadding key={index}>
+                <ItemCustom>
+                  <img alt="person-trending" src={profile} />
+                  <TextWrapper>
+                    <p
+                      style={{
+                        fontWeight: 600,
+                        fontSize: "15px",
+                        lineHeight: "18px",
+                      }}
+                    >
+                      {item.name}
+                    </p>
+                    <p
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "13px",
+                        lineHeight: "16px",
+                      }}
+                    >
+                      {item.text}
+                    </p>
+                  </TextWrapper>
+                </ItemCustom>
+              </List>
+            ))}
+          </ScrollView>
         </div>
       </RowWrapper>
     </Container>
@@ -495,7 +504,18 @@ const ContentWrapper = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   whiteSpace: "nowrap",
-  minWidth: "fit-content",
+}));
+
+const ScrollView = styled("div")(() => ({
+  overflow: "scroll",
+  height: "538px",
+  display: "flex",
+  gap: "10px",
+  flexDirection: "column",
+  backgroundColor: "#FFFFFF",
+  boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.1)",
+  padding: "10px",
+  borderRadius: "10px",
 }));
 
 const DropdownWrap = styled("p")(() => ({
@@ -511,14 +531,6 @@ const TitleBar = styled("p")(() => ({
   lineHeight: "18px",
   letterSpacing: "0.01em",
   color: "#000000",
-}));
-
-const ScrollView = styled("p")(() => ({
-  overflow: "scroll",
-  height: "538px",
-  display: "flex",
-  gap: "10px",
-  flexDirection: "column",
 }));
 
 const ItemCustom = styled(ListItemButton)(() => ({

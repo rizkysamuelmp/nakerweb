@@ -1,11 +1,10 @@
-import { styled } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import AppRoutes from "../../config/routes";
 
 // Assets
-import arrowDown from "../../assets/icon/arrow-down.svg";
-import arrowDownWhite from "../../assets/icon/icon-arrow-down-white.svg";
+import logout from "../../assets/icon/icon-logout.png";
 
 // Style
 const LinkWrapper = styled(Link)`
@@ -17,9 +16,9 @@ const LinkWrapper = styled(Link)`
   font-weight: 600;
   font-size: 15px;
   line-height: 19.5px;
-  cursor: pointer;
-  padding: 10px 8px;
+  padding: 10px 16px;
   text-decoration: none;
+  width: 100%;
 `;
 
 const Sidebar = () => {
@@ -32,7 +31,6 @@ const Sidebar = () => {
         width: "228px",
         display: "flex",
         flexDirection: "column",
-        padding: "16px 14px",
         position: "fixed",
         backgroundColor: "white",
         zIndex: 900,
@@ -40,23 +38,49 @@ const Sidebar = () => {
       }}
     >
       {AppRoutes.map((item, index) => (
-        <LinkWrapper
-          to={item.path}
-          key={index}
-          style={{
-            backgroundColor:
-              location?.pathname === item.path ? "#115AAA" : "white",
-            color: location?.pathname === item.path ? "white" : "black",
+        <Button
+          variant="text"
+          sx={{
+            p: 0,
+            textTransform: "unset",
+            borderRadius: "0px",
+            width: "100%",
+            justifyContent: "start",
           }}
         >
-          <p>{item.nameComponent}</p>
-          <img
+          <LinkWrapper
+            to={item.path}
+            key={index}
+            style={{
+              backgroundColor:
+                location?.pathname === item.path ? "#115AAA" : "white",
+              color: location?.pathname === item.path ? "white" : "black",
+            }}
+          >
+            <p>{item.nameComponent}</p>
+            {/* <img
             src={location?.pathname === item.path ? arrowDownWhite : arrowDown}
             style={{ width: "10px", height: "10px" }}
             alt=""
-          />
-        </LinkWrapper>
+          /> */}
+          </LinkWrapper>
+        </Button>
       ))}
+      <Button
+        variant="text"
+        sx={{
+          p: 0,
+          textTransform: "unset",
+          borderRadius: "0px",
+          width: "100%",
+          justifyContent: "start",
+        }}
+      >
+        <LinkWrapper>
+          <p>Keluar</p>
+          <img alt="logout" src={logout} width={24} height={24} />
+        </LinkWrapper>
+      </Button>
     </div>
   );
 };

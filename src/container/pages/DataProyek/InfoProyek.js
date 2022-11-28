@@ -13,11 +13,21 @@ import { ReactComponent as IconUser } from "../../../assets/icon/icon_user.svg";
 import profilePost from "../../../assets/img/profile-post.png";
 import Button from "../../../components/Button";
 
-const InfoProyek = ({ setActiveStep }) => {
+const InfoProyek = ({ setActiveStep, history }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Data Proyek" />
+      <Title
+        title="Data Proyek"
+        withBack
+        onBack={() => {
+          if (history === "home") {
+            setActiveStep("page");
+          } else {
+            setActiveStep("all");
+          }
+        }}
+      />
 
       <RowWrapper>
         <div
@@ -224,23 +234,51 @@ const InfoProyek = ({ setActiveStep }) => {
               </div>
             </div>
           </ContentWrapper>
-          <RowWrapper style={{ justifyContent: "end" }}>
-            <Button
-              full
-              color="#039C40"
-              onClick={() => setActiveStep("proyek")}
+        </div>
+      </RowWrapper>
+      <RowWrapper>
+        <div
+          style={{
+            width: "60%",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button>
+            <p
+              style={{
+                fontWeight: 600,
+                fontSize: "18px",
+                lineHeight: "22px",
+              }}
             >
-              <p
-                style={{
-                  fontWeight: 600,
-                  fontSize: "18px",
-                  lineHeight: "22px",
-                }}
-              >
-                Tampilkan proyek lengkap
-              </p>
-            </Button>
-          </RowWrapper>
+              Setujui
+            </p>
+          </Button>
+          <Button color="#E20000">
+            <p
+              style={{
+                fontWeight: 600,
+                fontSize: "18px",
+                lineHeight: "22px",
+              }}
+            >
+              Tolak
+            </p>
+          </Button>
+        </div>
+        <div style={{ width: "40%" }}>
+          <Button full color="#039C40" onClick={() => setActiveStep("proyek")}>
+            <p
+              style={{
+                fontWeight: 600,
+                fontSize: "18px",
+                lineHeight: "22px",
+              }}
+            >
+              Tampilkan proyek lengkap
+            </p>
+          </Button>
         </div>
       </RowWrapper>
     </Container>
