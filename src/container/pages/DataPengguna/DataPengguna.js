@@ -20,7 +20,7 @@ import profile from "../../../assets/img/profile-post.png";
 import { dataContent } from "./dataDummy";
 import Button from "../../../components/Button";
 
-const DataPengguna = ({ setActiveStep }) => {
+const DataPengguna = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
     {
       title: "No",
@@ -83,7 +83,10 @@ const DataPengguna = ({ setActiveStep }) => {
           variant="contained"
           borderRadius="5px"
           padding="0px 7px 0px 9px"
-          onClick={() => setActiveStep("detail")}
+          onClick={() => {
+            setActiveStep("detail");
+            setHistory("home");
+          }}
         >
           {rowData.action}
           <img src={eye} alt="eye" />

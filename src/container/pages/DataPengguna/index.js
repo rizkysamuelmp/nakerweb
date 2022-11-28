@@ -11,13 +11,18 @@ const Container = styled("div")``;
 
 const Page = () => {
   const [activeStep, setActiveStep] = useState("home");
+  const [history, setHistory] = useState("");
 
   return (
     <Container>
-      {activeStep === "home" && <DataPengguna setActiveStep={setActiveStep} />}
-      {activeStep === "all" && <SemuaPengguna setActiveStep={setActiveStep} />}
+      {activeStep === "home" && (
+        <DataPengguna setActiveStep={setActiveStep} setHistory={setHistory} />
+      )}
+      {activeStep === "all" && (
+        <SemuaPengguna setActiveStep={setActiveStep} setHistory={setHistory} />
+      )}
       {activeStep === "detail" && (
-        <DetailPengguna setActiveStep={setActiveStep} />
+        <DetailPengguna setActiveStep={setActiveStep} history={history} />
       )}
     </Container>
   );

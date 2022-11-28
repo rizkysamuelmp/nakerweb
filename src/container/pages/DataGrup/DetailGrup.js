@@ -16,7 +16,7 @@ import PopUp from "../../../components/PopUp";
 import deleteGroup from "../../../assets/img/group-delete.png";
 import groupSuccess from "../../../assets/img/group-success.png";
 
-const DetailGrup = ({ setActiveStep }) => {
+const DetailGrup = ({ setActiveStep, history }) => {
   const [poupKonfSetuju, setPopUpKonfSetuju] = useState(false);
   const [poUpSetuju, setPopUpSetuju] = useState(false);
   const [popUpKonfTolak, setPopKonfTolak] = useState(false);
@@ -25,7 +25,17 @@ const DetailGrup = ({ setActiveStep }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Data Grup" withBack onBack={() => setActiveStep("page")} />
+      <Title
+        title="Data Grup"
+        withBack
+        onBack={() => {
+          if (history === "home") {
+            setActiveStep("page");
+          } else {
+            setActiveStep("all");
+          }
+        }}
+      />
 
       {/* Banner Image */}
       <RowWrapper>

@@ -22,7 +22,7 @@ import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
 import profile from "../../../assets/img/profile-post.png";
 
-const SemuaPengguna = ({ setActiveStep }) => {
+const SemuaPengguna = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
     {
       title: "No",
@@ -85,7 +85,10 @@ const SemuaPengguna = ({ setActiveStep }) => {
           variant="contained"
           borderRadius="5px"
           padding="0px 7px 0px 9px"
-          onClick={() => setActiveStep("detail")}
+          onClick={() => {
+            setActiveStep("detail");
+            setHistory("all");
+          }}
         >
           {rowData.action}
           <img src={eye} alt="eye" />
@@ -164,7 +167,7 @@ const SemuaPengguna = ({ setActiveStep }) => {
               width="fit-content"
               borderRadius="0px 5px 5px 0px"
             >
-              <img src={iconExport} alt="icon-slider" />
+              <img src={iconExport} alt="icon-slider" width={24} height={24} />
             </Button>
           </div>
           {/* List Menu Exoprt */}
@@ -200,17 +203,17 @@ const SemuaPengguna = ({ setActiveStep }) => {
           >
             <MenuItem
               onClick={() => setMenuExport(null)}
-              sx={{ padding: "8px 12px 3px 0px" }}
+              sx={{ padding: "8px 12px 3px 12px" }}
             >
-              <img src={iconXls} alt="icon-xls" />
+              <img src={iconXls} alt="icon-xls" width={24} height={24} />
               Export Excel
             </MenuItem>
             <div style={{ border: "1px solid #E5E5E5" }} />
             <MenuItem
               onClick={() => setMenuExport(null)}
-              sx={{ padding: "3px 12px 8px 0px" }}
+              sx={{ padding: "3px 12px 8px 12px" }}
             >
-              <img src={iconPdf} alt="icon-pdf" />
+              <img src={iconPdf} alt="icon-pdf" width={24} height={24} />
               Export Pdf
             </MenuItem>
           </Menu>

@@ -12,12 +12,19 @@ import FormulirLoker from "./FormulirLoker";
 
 const Page = () => {
   const [activeStep, setActiveStep] = useState("page");
+  const [history, setHistory] = useState("");
 
   return (
     <Container>
-      {activeStep === "page" && <DataLoker setActiveStep={setActiveStep} />}
-      {activeStep === "all" && <SemuaLoker setActiveStep={setActiveStep} />}
-      {activeStep === "detail" && <DetailLoker setActiveStep={setActiveStep} />}
+      {activeStep === "page" && (
+        <DataLoker setActiveStep={setActiveStep} setHistory={setHistory} />
+      )}
+      {activeStep === "all" && (
+        <SemuaLoker setActiveStep={setActiveStep} setHistory={setHistory} />
+      )}
+      {activeStep === "detail" && (
+        <DetailLoker setActiveStep={setActiveStep} history={history} />
+      )}
       {activeStep === "formulir" && (
         <FormulirLoker setActiveStep={setActiveStep} />
       )}

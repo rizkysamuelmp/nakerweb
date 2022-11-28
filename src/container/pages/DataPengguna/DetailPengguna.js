@@ -18,12 +18,18 @@ import barPurple from "../../../assets/img/bar-purple.png";
 import barGreen from "../../../assets/img/bar-green.png";
 import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
 
-const DetailPengguna = ({ setActiveStep }) => {
+const DetailPengguna = ({ setActiveStep, history }) => {
   return (
     <Container>
       <IconButton
         style={{ position: "absolute", zIndex: 100 }}
-        onClick={() => setActiveStep("home")}
+        onClick={() => {
+          if (history === "home") {
+            setActiveStep("home");
+          } else {
+            setActiveStep("all");
+          }
+        }}
       >
         <IconBack />
       </IconButton>

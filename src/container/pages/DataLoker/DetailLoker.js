@@ -17,7 +17,7 @@ import iconBusinessDecline from "../../../assets/icon/business-icon-decline.png"
 // Data Dummy
 import { infoPerusahaan } from "./DataDummy";
 
-const DetailLoker = ({ setActiveStep }) => {
+const DetailLoker = ({ setActiveStep, history }) => {
   const [confAccept, setConfAccept] = useState(false);
   const [accept, setAccept] = useState(false);
   const [confDecline, setConfDecline] = useState(false);
@@ -26,14 +26,22 @@ const DetailLoker = ({ setActiveStep }) => {
   return (
     <Container>
       <HeadContainer>
-        <Back onClick={() => setActiveStep("all")}>
+        <Back
+          onClick={() => {
+            if (history === "home") {
+              setActiveStep("page");
+            } else {
+              setActiveStep("all");
+            }
+          }}
+        >
           <img
             src={back}
             alt="icon-back"
             height={16}
             width={16}
             style={{ marginRight: "5px" }}
-          />{" "}
+          />
           Kembali
         </Back>
         <RightHead>Detail Loker</RightHead>
@@ -247,7 +255,6 @@ const HeadContainer = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 35px;
 `;
 
 const Back = styled("div")`
@@ -273,14 +280,14 @@ const Body = styled("div")`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 27px 35px;
+  padding: 27px 0px;
   background: #f4f7fb;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 10px;
 `;
 
 const InfoCard = styled("div")`
   background: #ffffff;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 10px;
   padding: 13px 11px;
 `;
 
@@ -377,7 +384,6 @@ const FooterContainer = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 35px;
 `;
 
 export default DetailLoker;

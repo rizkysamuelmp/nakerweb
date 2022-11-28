@@ -18,7 +18,7 @@ import iconCalendar from "../../../assets/icon/icon-calendar.png";
 // Dummy Data
 import { dataContent } from "./DataDummy";
 
-const DataLoker = ({ setActiveStep }) => {
+const DataLoker = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
     {
       title: "No",
@@ -82,7 +82,10 @@ const DataLoker = ({ setActiveStep }) => {
             variant="contained"
             borderRadius="5px"
             padding="0px 7px 0px 9px"
-            onClick={() => setActiveStep("detail")}
+            onClick={() => {
+              setActiveStep("detail");
+              setHistory("home");
+            }}
           >
             Detail
             <img src={eye} alt="eye" />

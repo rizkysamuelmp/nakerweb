@@ -37,7 +37,7 @@ const ProfilGrup = ({ setActiveStep }) => {
     <Container>
       <IconButton
         style={{ position: "absolute", zIndex: 100 }}
-        onClick={() => setActiveStep("page")}
+        onClick={() => setActiveStep("detail")}
       >
         <IconBack />
       </IconButton>
