@@ -5,6 +5,7 @@ import InputText from "../../../components/InputText";
 import InputAdornment from "@mui/material/InputAdornment";
 import { Checkbox, FormControlLabel, IconButton } from "@mui/material";
 import PopUp from "../../../components/PopUp";
+import { Link, useHistory } from "react-router-dom";
 
 // Asset
 import { ReactComponent as EyeLookIcon } from "../../../assets/icon/icon-eye-look.svg";
@@ -12,9 +13,10 @@ import iconEmail from "../../../assets/icon/icon-email.svg";
 import iconPassword from "../../../assets/icon/icon-password.svg";
 import LockErrorBlack from "../../../assets/img/lock-error-black.png";
 import mailBlue from "../../../assets/img/mail-blue.png";
-import { Link } from "react-router-dom";
 
 const Login = () => {
+  let history = useHistory();
+
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
   const [email, setEmail] = useState("");
@@ -22,11 +24,11 @@ const Login = () => {
   const [popUpEmail, setPopUpEmail] = useState(false);
 
   const handleSubmit = () => {
-    if (email !== "rizky@gmail.com") {
-      setPopUpEmail(true);
-    } else {
-      setPopUpAuth(true);
-    }
+    // if (email !== "rizky@gmail.com") {
+    //   setPopUpEmail(true);
+    // } else {
+    // }
+    setPopUpAuth(true);
   };
 
   return (
@@ -206,7 +208,8 @@ const Login = () => {
           <Button
             variant="contained"
             full
-            type="submit"
+            // type="submit"
+            onClick={() => history.push("/nakerweb/dashboard")}
             disabled={email === "" || password === ""}
           >
             Masuk
