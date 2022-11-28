@@ -37,6 +37,7 @@ const InputText = ({
   backgroundColor,
   placeholderStyle,
   height,
+  multiline,
   ...input
 }) => {
   return (
@@ -49,6 +50,7 @@ const InputText = ({
       placeholder={placeholder}
       maxLength={maxLength}
       autoComplete={autoComplete}
+      multiline={multiline}
       disabled={disabled}
       onChange={onChange}
       onBlur={onBlur}
@@ -146,6 +148,7 @@ InputText.propTypes = {
   backgroundColor: PropTypes.string,
   placeholderStyle: PropTypes.object,
   height: PropTypes.string,
+  multiline: PropTypes.bool,
 };
 
 InputText.defaultProps = {
@@ -178,6 +181,7 @@ InputText.defaultProps = {
   backgroundColor: "white",
   placeholderStyle: {},
   height: "auto",
+  multiline: false,
 };
 
 export default InputText;

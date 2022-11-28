@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
+import { TextField } from "@mui/material";
 
 // Assets
 import profile from "../../../assets/img/profile.png";
+import send from "../../../assets/icon/send.svg";
 
 // Data Dummy
 const dataDummy = [
@@ -51,16 +53,18 @@ const dataDummy = [
 ];
 
 const LiveChat = () => {
+  const [inputChat, setInputChat] = useState("");
+
   return (
     <Container>
       <Left>
-        <Header>
+        <HeaderLeft>
           <HeaderText>Chats</HeaderText>
           <InputContainer>
             <SearchInput>search</SearchInput>
             <Filter>Filter</Filter>
           </InputContainer>
-        </Header>
+        </HeaderLeft>
         <BodyLeft>
           {dataDummy.map((item) => (
             <BodyWrapperLeft>
@@ -84,30 +88,68 @@ const LiveChat = () => {
             </NameWrapper>
           </div>
         </Header>
-        <BodyRight>
+        <BodyContainer>
+          <BodyRight>
+            <div
+              style={{
+                padding: "5px",
+                position: "relative",
+              }}
+            >
+              <BubbleSender>Hello</BubbleSender>
+            </div>
+            <div style={{ padding: "5px" }}>
+              <BubbleSender>
+                <Message>Hello</Message>
+              </BubbleSender>
+            </div>
+            <div style={{ padding: "5px", position: "relative" }}>
+              <BubbleSender>Hello</BubbleSender>
+            </div>
+            <ReceiverWrapper>
+              <BubbleReceiver>Hello</BubbleReceiver>
+            </ReceiverWrapper>
+            <div style={{ padding: "5px", position: "relative" }}>
+              <BubbleSender>Hello</BubbleSender>
+            </div>
+          </BodyRight>
           <div
             style={{
-              padding: "5px",
-              position: "relative",
+              padding: "10px",
             }}
           >
-            <BubbleSender>Hello</BubbleSender>
+            <TextField
+              multiline
+              maxRows={6}
+              value={inputChat}
+              onChange={(e) => setInputChat(e.target.value)}
+              style={{
+                width: "100%",
+              }}
+              inputProps={{
+                style: {
+                  padding: 5,
+                  borderRadius: 50,
+                },
+              }}
+              height="45px"
+              InputProps={{
+                endAdornment: (
+                  <div
+                    onClick={() => console.log("asd")}
+                    style={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img src={send} alt="" width="24px" />
+                  </div>
+                ),
+              }}
+            />
           </div>
-          <div style={{ padding: "5px", position: "relative" }}>
-            <BubbleSender>
-              <Message>Hello</Message>
-            </BubbleSender>
-          </div>
-          <div style={{ padding: "5px", position: "relative" }}>
-            <BubbleSender>Hello</BubbleSender>
-          </div>
-          <ReceiverWrapper>
-            <BubbleReceiver>Hello</BubbleReceiver>
-          </ReceiverWrapper>
-          <div style={{ padding: "5px", position: "relative" }}>
-            <BubbleSender>Hello</BubbleSender>
-          </div>
-        </BodyRight>
+        </BodyContainer>
       </Right>
     </Container>
   );
@@ -117,7 +159,9 @@ export default LiveChat;
 
 const Container = styled("div")`
   display: flex;
-  min-height: 100vh;
+  min-height: 80vh;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 `;
 
 const Left = styled("div")`
@@ -125,13 +169,24 @@ const Left = styled("div")`
   border-right: 0.5px solid rgba(0, 0, 0, 0.5);
 `;
 
-const Header = styled("div")`
+const HeaderLeft = styled("div")`
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #d7eaff;
   height: 68px;
   padding: 0 10px;
+  border-radius: 10px 0 0 0;
+`;
+
+const Header = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #d7eaff;
+  height: 12%;
+  padding: 0 10px;
+  border-radius: 0 10px 0 0;
 `;
 
 const HeaderText = styled("p")`
@@ -201,6 +256,13 @@ const Time = styled("span")`
   font-size: 12px;
   line-height: 15px;
   color: #878686;
+`;
+
+const BodyContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 88%;
 `;
 
 const BodyRight = styled("div")`
