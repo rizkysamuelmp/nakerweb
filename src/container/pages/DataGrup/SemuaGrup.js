@@ -205,7 +205,12 @@ const SemuaLoker = ({ setActiveStep }) => {
                   },
                 }}
               >
-                <img src={iconSearch} alt="icon-search" />
+                <img
+                  src={iconSearch}
+                  alt="icon-search"
+                  width={24}
+                  height={24}
+                />
               </InputAdornment>
             }
           />
@@ -286,7 +291,7 @@ const SemuaLoker = ({ setActiveStep }) => {
               setMenuFilter(event.currentTarget);
             }}
           >
-            <img src={iconSlider} alt="icon-slider" />
+            <img src={iconSlider} alt="icon-slider" width={24} height={24} />
           </Button>
           <Menu
             id="menu-appbar"

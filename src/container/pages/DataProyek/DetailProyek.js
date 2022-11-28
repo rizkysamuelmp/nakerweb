@@ -179,7 +179,7 @@ const DetailProyek = ({ setActiveStep }) => {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}
           >
-            <Back onClick={() => setActiveStep("info")}>
+            <Back onClick={() => setActiveStep("allTask")}>
               <img
                 src={back}
                 alt="icon-back"

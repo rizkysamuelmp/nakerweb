@@ -99,7 +99,7 @@ const SemuaProyek = ({ setActiveStep }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Semua Proyek">
+      <Title title="Semua Proyek" withBack onBack={() => setActiveStep("page")}>
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText
@@ -131,7 +131,12 @@ const SemuaProyek = ({ setActiveStep }) => {
                   },
                 }}
               >
-                <img src={iconSearch} alt="icon-search" />
+                <img
+                  src={iconSearch}
+                  alt="icon-search"
+                  width={24}
+                  height={24}
+                />
               </InputAdornment>
             }
           />
@@ -143,7 +148,7 @@ const SemuaProyek = ({ setActiveStep }) => {
               setMenuFilter(event.currentTarget);
             }}
           >
-            <img src={iconSlider} alt="icon-slider" />
+            <img src={iconSlider} alt="icon-slider" width={24} height={24} />
           </Button>
           <Menu
             id="menu-appbar"
@@ -181,7 +186,7 @@ const SemuaProyek = ({ setActiveStep }) => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih jenis grup :</p>
+              <p>Pilih jenis proyek :</p>
               <DropDown
                 dropdownValue={dropDown}
                 handleChange={(e) => setDropDown(e.target.value)}
@@ -197,24 +202,24 @@ const SemuaProyek = ({ setActiveStep }) => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih Kategori grup :</p>
+              <p>Pilih Kategori proyek :</p>
               <DropDown
                 dropdownValue={dropDown}
                 handleChange={(e) => setDropDown(e.target.value)}
                 listDropDown={[
                   {
-                    label: "Perusahaan",
+                    label: "Planning",
                     value: 0,
                   },
-                  { label: "Organisasi", value: 1 },
-                  { label: "Komunitas", value: 2 },
+                  { label: "Organizer", value: 1 },
+                  { label: "Mentoring", value: 2 },
                 ]}
               />
             </div>
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih status grup :</p>
+              <p>Pilih status proyek :</p>
               <DropDown
                 dropdownValue={dropDown}
                 handleChange={(e) => setDropDown(e.target.value)}

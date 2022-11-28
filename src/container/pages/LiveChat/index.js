@@ -129,7 +129,6 @@ const LiveChat = () => {
               inputProps={{
                 style: {
                   padding: 5,
-                  borderRadius: 50,
                 },
               }}
               height="45px"
@@ -184,7 +183,7 @@ const Header = styled("div")`
   align-items: center;
   justify-content: space-between;
   background-color: #d7eaff;
-  height: 12%;
+  height: 68px;
   padding: 0 10px;
   border-radius: 0 10px 0 0;
 `;

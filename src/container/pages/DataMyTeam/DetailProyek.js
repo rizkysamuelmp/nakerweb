@@ -26,6 +26,7 @@ import { ReactComponent as IconSendChat } from "../../../assets/icon/icon-send-c
 import eye from "../../../assets/icon/Eye.svg";
 import profilePict from "../../../assets/img/profile-chat.png";
 import profile from "../../../assets/icon/profile.png";
+import back from "../../../assets/icon/Back.svg";
 
 // Dummy
 import { dataTask } from "./DataDummy";
@@ -182,27 +183,28 @@ const DetailProyek = ({ setActiveStep }) => {
 
   return (
     <React.Fragment>
-      <Title>
-        <div
-          style={{
-            display: "flex",
-            height: "fit-content",
-            alignItems: "center",
-          }}
-        >
-          Usaha Studio Foto dan video..
-          <IconArrowRight />
-          <StatusWrap>Planing</StatusWrap>
-        </div>
-        <Button
-          padding="5px 8px"
-          borderRadius="3px"
-          onClick={() => setPopUpAdd(true)}
-        >
-          Tambah Tugas
-        </Button>
-      </Title>
       <Container>
+        <Title>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+          >
+            <Back onClick={() => setActiveStep("all")}>
+              <img
+                src={back}
+                alt="icon-back"
+                width={16}
+                heigh={16}
+                style={{ marginRight: "5px" }}
+              />
+              Kembali
+            </Back>
+            <div style={{ display: "flex" }}>
+              Usaha Studio Foto dan video..
+              <IconArrowRight />
+              <StatusWrap>Planing</StatusWrap>
+            </div>
+          </div>
+        </Title>
         <Tab>
           <div>
             <Button
@@ -673,14 +675,9 @@ const DetailProyek = ({ setActiveStep }) => {
           <TextTitle>Status</TextTitle>
           <TextDetail>Belum dikerjakan</TextDetail>
         </TextWrap>
-        <div style={{ display: "flex", gap: "20px" }}>
-          <Button padding="13px 0px" full onClick={() => setPopUpTask(false)}>
-            Tandai Sedang dikerjakan
-          </Button>
-          <Button padding="13px 0px" full onClick={() => setPopUpTask(false)}>
-            Tandai sudah dikerjakan
-          </Button>
-        </div>
+        <Button padding="13px 0px" full onClick={() => setPopUpTask(false)}>
+          Tandai Sedang dikerjakan
+        </Button>
       </PopUpDialog>
 
       {/* Popup Tambah Task */}
@@ -777,6 +774,16 @@ const InputWrap = styled("div")(() => ({
   gap: "6px",
 }));
 
+const Back = styled("div")`
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+`;
+
 const TextWrap = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
@@ -823,7 +830,6 @@ const Title = styled("div")(() => ({
   padding: "16px",
   boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
   backgroundColor: "white",
-  margin: "-17px -17px 10px -17px",
   justifyContent: "space-between",
 }));
 
@@ -856,6 +862,8 @@ const StatusWrap = styled("div")(() => ({
   color: "white",
   fontWeight: 500,
   fontSize: "13px",
+  height: "fit-content",
+  alignSelf: "end",
 }));
 
 export default DetailProyek;

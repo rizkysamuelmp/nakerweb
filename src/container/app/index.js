@@ -11,6 +11,7 @@ import AppRoutes, {
   DesignSystemRoutes,
   User,
 } from "../../config/routes";
+import LiveChat from "../pages/LiveChat";
 
 const App = () => (
   <Router>
@@ -24,6 +25,7 @@ const App = () => (
       ))}
 
       <PageContainer>
+        <Route key="live" path="/nakerweb/live-chat" component={LiveChat} />
         {AppRoutes.map((route) => (
           <Route key={route.id} {...route} />
         ))}

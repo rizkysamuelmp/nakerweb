@@ -138,7 +138,7 @@ const SemuaLoker = ({ setActiveStep }) => {
   const [search, setSearch] = useState("");
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
-  const [dropDown, setDropDown] = useState(0);
+  const [dropDown, setDropDown] = useState();
 
   return (
     <Container>
@@ -175,7 +175,12 @@ const SemuaLoker = ({ setActiveStep }) => {
                   },
                 }}
               >
-                <img src={iconSearch} alt="icon-search" />
+                <img
+                  src={iconSearch}
+                  alt="icon-search"
+                  width={24}
+                  height={24}
+                />
               </InputAdornment>
             }
           />
@@ -261,7 +266,7 @@ const SemuaLoker = ({ setActiveStep }) => {
               setMenuFilter(event.currentTarget);
             }}
           >
-            <img src={iconSlider} alt="icon-slider" />
+            <img src={iconSlider} alt="icon-slider" width={24} height={24} />
           </Button>
           <Menu
             id="menu-appbar"
@@ -299,18 +304,24 @@ const SemuaLoker = ({ setActiveStep }) => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih jenis loker :</p>
-              <DropDown
-                dropdownValue={dropDown}
-                handleChange={(e) => setDropDown(e.target.value)}
-              />
-            </div>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-            >
               <p>Pilih kategori Loker :</p>
               <DropDown
                 dropdownValue={dropDown}
+                listDropDown={[
+                  {
+                    label: "Part Time",
+                    value: 0,
+                  },
+                  {
+                    label: "Full Time",
+                    value: 0,
+                  },
+                  {
+                    label: "Freelancer",
+                    value: 0,
+                  },
+                ]}
+                placeHolder=""
                 handleChange={(e) => setDropDown(e.target.value)}
               />
             </div>
@@ -320,6 +331,17 @@ const SemuaLoker = ({ setActiveStep }) => {
               <p>Pilih lokasi Loker :</p>
               <DropDown
                 dropdownValue={dropDown}
+                listDropDown={[
+                  {
+                    label: "Solo",
+                    value: 0,
+                  },
+                  {
+                    label: "Yogyakarta",
+                    value: 1,
+                  },
+                ]}
+                placeHolder=""
                 handleChange={(e) => setDropDown(e.target.value)}
               />
             </div>
@@ -329,6 +351,17 @@ const SemuaLoker = ({ setActiveStep }) => {
               <p>Pilih Sektor Loker :</p>
               <DropDown
                 dropdownValue={dropDown}
+                listDropDown={[
+                  {
+                    label: "Industri pakaian",
+                    value: 0,
+                  },
+                  {
+                    label: "Tambang Nikkel",
+                    value: 1,
+                  },
+                ]}
+                placeHolder=""
                 handleChange={(e) => setDropDown(e.target.value)}
               />
             </div>
@@ -338,6 +371,17 @@ const SemuaLoker = ({ setActiveStep }) => {
               <p>Pilih status Loker :</p>
               <DropDown
                 dropdownValue={dropDown}
+                listDropDown={[
+                  {
+                    label: "Aktif",
+                    value: 0,
+                  },
+                  {
+                    label: "Tidak Aktif",
+                    value: 1,
+                  },
+                ]}
+                placeHolder=""
                 handleChange={(e) => setDropDown(e.target.value)}
               />
             </div>

@@ -96,10 +96,9 @@ const SemuaPengguna = ({ setActiveStep }) => {
   ];
 
   const [search, setSearch] = useState("");
-
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
-  const [dropDown, setDropDown] = useState(0);
+  const [dropDown, setDropDown] = useState();
 
   return (
     <Container>
@@ -139,7 +138,12 @@ const SemuaPengguna = ({ setActiveStep }) => {
                   },
                 }}
               >
-                <img src={iconSearch} alt="icon-search" />
+                <img
+                  src={iconSearch}
+                  alt="icon-search"
+                  width={24}
+                  height={24}
+                />
               </InputAdornment>
             }
           />
@@ -218,7 +222,7 @@ const SemuaPengguna = ({ setActiveStep }) => {
               setMenuFilter(event.currentTarget);
             }}
           >
-            <img src={iconSlider} alt="icon-slider" />
+            <img src={iconSlider} alt="icon-slider" width={24} height={24} />
           </Button>
           <Menu
             id="menu-appbar"
@@ -256,45 +260,88 @@ const SemuaPengguna = ({ setActiveStep }) => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih jenis loker :</p>
+              <p>Jenis Kelamin :</p>
               <DropDown
                 dropdownValue={dropDown}
+                listDropDown={[
+                  {
+                    label: "Laki-laki",
+                    value: 0,
+                  },
+                  { label: "Perempuan", value: 1 },
+                ]}
+                placeHolder="Pilih Jenis Kelamin"
                 handleChange={(e) => setDropDown(e.target.value)}
               />
             </div>
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih kategori Loker :</p>
+              <p>Range Usia :</p>
               <DropDown
                 dropdownValue={dropDown}
+                listDropDown={[
+                  {
+                    label: "Usia 12 - 25 tahun",
+                    value: 0,
+                  },
+                  { label: "Usia 26 - 39 tahun", value: 1 },
+                  { label: "Usia 40 - 52 tahun", value: 2 },
+                  { label: "Usia 53 - 65 tahun", value: 3 },
+                ]}
+                placeHolder="Pilih Range Usia"
                 handleChange={(e) => setDropDown(e.target.value)}
               />
             </div>
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih lokasi Loker :</p>
+              <p>Sektor :</p>
               <DropDown
                 dropdownValue={dropDown}
+                listDropDown={[
+                  {
+                    label: "Pabrik baju",
+                    value: 0,
+                  },
+                  { label: "Pabrik Semen", value: 1 },
+                ]}
+                placeHolder="Pilih Sektor Perusahaan"
                 handleChange={(e) => setDropDown(e.target.value)}
               />
             </div>
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih Sektor Loker :</p>
+              <p>Kota :</p>
               <DropDown
                 dropdownValue={dropDown}
+                listDropDown={[
+                  {
+                    label: "Solo",
+                    value: 0,
+                  },
+                  { label: "Yogyakarta", value: 1 },
+                  { label: "Klaten", value: 2 },
+                ]}
+                placeHolder="Pilih Kota"
                 handleChange={(e) => setDropDown(e.target.value)}
               />
             </div>
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih status Loker :</p>
+              <p>Status :</p>
               <DropDown
                 dropdownValue={dropDown}
+                listDropDown={[
+                  {
+                    label: "Aktif",
+                    value: 0,
+                  },
+                  { label: "Tidak Aktif", value: 1 },
+                ]}
+                placeHolder="Pilih Status Akun"
                 handleChange={(e) => setDropDown(e.target.value)}
               />
             </div>
