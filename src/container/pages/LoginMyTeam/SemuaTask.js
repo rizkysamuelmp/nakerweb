@@ -1,4 +1,4 @@
-// Page Semua Proyek
+// Page Semua Task
 // --------------------------------------------------------
 
 import React, { useState } from "react";
@@ -17,13 +17,11 @@ import DropDown from "../../../components/DropDown";
 import iconSlider from "../../../assets/icon/icon-slider.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import eye from "../../../assets/icon/Eye.svg";
-import profilePost from "../../../assets/img/profile-post.png";
-import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
 
 // Dummy Data
-import { dataContent } from "./DataDummy";
+import { dataTask } from "./DataDummy";
 
-const SemuaProyek = ({ setActiveStep, setHistory }) => {
+const SemuaTask = ({ setActiveStep }) => {
   const dataHeader = [
     {
       title: "No",
@@ -32,77 +30,120 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
       center: true,
     },
     {
-      title: "Profile",
-      width: 80,
-      center: true,
-      render: () => (
-        <img alt="profile-chat" src={profilePost} height={24} width={24} />
-      ),
-    },
-    {
-      title: "Nama Proyek",
+      title: "Judul Task",
       width: 250,
-      key: "projectName",
+      key: "title",
     },
     {
-      title: "Step",
-      key: "step",
+      title: "Deskripsi",
+      width: 250,
+      key: "description",
     },
     {
-      title: "Lokasi",
-      key: "location",
+      title: "Petugas",
+      key: "officer",
+      center: true,
     },
     {
-      title: "Member",
-      width: 70,
+      title: "Status",
+      width: 160,
+      center: true,
       render: (rowData) => (
-        <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-          <IconGroup />
-          <p>{rowData.member}</p>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {rowData.status === "Sudah Dikerjakan" ? (
+            <div
+              style={{
+                border: "1px solid #039C40",
+                backgroundColor: "#AEF8AC",
+                borderRadius: "30px",
+                padding: "4px 20px",
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "13px",
+                lineHeight: "16px",
+                color: "#039C40",
+              }}
+            >
+              {rowData.status}
+            </div>
+          ) : rowData.status === "Sedang Berjalan" ? (
+            <div
+              style={{
+                border: "1px solid #C80707",
+                backgroundColor: "#F5969633",
+                borderRadius: "30px",
+                padding: "4px 20px",
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "13px",
+                lineHeight: "16px",
+                color: "#C80707",
+              }}
+            >
+              {rowData.status}
+            </div>
+          ) : (
+            <div
+              style={{
+                border: "1px solid #2C4AE9",
+                backgroundColor: "#B5BEE94A",
+                borderRadius: "30px",
+                padding: "4px 20px",
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "13px",
+                lineHeight: "16px",
+                color: "#2C4AE9",
+              }}
+            >
+              {rowData.status}
+            </div>
+          )}
         </div>
       ),
     },
     {
-      title: "Task",
-      key: "task",
-    },
-    {
-      title: "Progress",
-      key: "progress",
-    },
-    {
-      title: "Tanggal Dibuat",
-      key: "dateCreated",
-    },
-    {
       title: "Aksi",
-      key: "action",
-      render: (rowData) => (
-        <Button
-          variant="contained"
-          borderRadius="5px"
-          padding="0px 7px 0px 9px"
-          onClick={() => {
-            setActiveStep("proyek");
-            setHistory("all");
+      width: 100,
+      render: () => (
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            whiteSpace: "nowrap",
           }}
         >
-          Detail
-          <img src={eye} alt="eye" />
-        </Button>
+          <Button
+            variant="contained"
+            borderRadius="5px"
+            padding="0px 7px 0px 9px"
+          >
+            Detail
+            <img src={eye} alt="eye" />
+          </Button>
+        </div>
       ),
       center: true,
     },
   ];
 
   const [search, setSearch] = useState("");
+
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
 
   return (
     <Container>
       {/* Title */}
-      <Title title="Semua Proyek" withBack onBack={() => setActiveStep("page")}>
+      <Title title="Semua Task" withBack onBack={() => setActiveStep("proyek")}>
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText
@@ -189,7 +230,7 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih jenis proyek :</p>
+              <p>Pilih tipe task :</p>
               <DropDown
                 dropdownValue={dropDown}
                 handleChange={(e) => setDropDown(e.target.value)}
@@ -205,34 +246,17 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih Kategori proyek :</p>
+              <p>Pilih status task :</p>
               <DropDown
                 dropdownValue={dropDown}
                 handleChange={(e) => setDropDown(e.target.value)}
                 listDropDown={[
                   {
-                    label: "Planning",
+                    label: "Perusahaan",
                     value: 0,
                   },
-                  { label: "Organizer", value: 1 },
-                  { label: "Mentoring", value: 2 },
-                ]}
-              />
-            </div>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-            >
-              <p>Pilih status proyek :</p>
-              <DropDown
-                dropdownValue={dropDown}
-                handleChange={(e) => setDropDown(e.target.value)}
-                listDropDown={[
-                  {
-                    label: "Aktif",
-                    value: 0,
-                  },
-                  { label: "Tidak Aktif", value: 1 },
-                  { label: "Menunggu", value: 2 },
+                  { label: "Organisasi", value: 1 },
+                  { label: "Komunitas", value: 2 },
                 ]}
               />
             </div>
@@ -250,7 +274,7 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
             width: "100%",
           }}
         >
-          <Table headerContent={dataHeader} dataContent={dataContent} />
+          <Table headerContent={dataHeader} dataContent={dataTask} />
           <Pagination count={10} currentData={10} totalData={100} page={2} />
         </div>
       </RowWrapper>
@@ -271,4 +295,4 @@ const RowWrapper = styled("div")(() => ({
   width: "100%",
 }));
 
-export default SemuaProyek;
+export default SemuaTask;

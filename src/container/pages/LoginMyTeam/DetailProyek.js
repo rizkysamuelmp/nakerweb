@@ -62,7 +62,7 @@ function LinearProgressWithLabel(props) {
   );
 }
 
-const DetailProyek = ({ setActiveStep, history }) => {
+const DetailProyek = ({ setActiveStep }) => {
   const [tabSelect, setTabSelect] = useState(1);
   const [popUpAdd, setPopUpAdd] = useState(false);
   const [popUpTask, setPopUpTask] = useState(false);
@@ -188,15 +188,7 @@ const DetailProyek = ({ setActiveStep, history }) => {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}
           >
-            <Back
-              onClick={() => {
-                if (history === "home") {
-                  setActiveStep("page");
-                } else {
-                  setActiveStep("all");
-                }
-              }}
-            >
+            <Back onClick={() => setActiveStep("all")}>
               <img
                 src={back}
                 alt="icon-back"

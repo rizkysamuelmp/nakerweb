@@ -12,6 +12,7 @@ import Notifikasi from "../container/pages/Notifikasi";
 import DataPostingan from "../container/pages/DataPostingan";
 import DataTiket from "../container/pages/DataTiket";
 import DataPengguna from "../container/pages/DataPengguna";
+import LoginMyTeam from "../container/pages/LoginMyTeam";
 
 export const DesignSystemRoutes = [
   {
@@ -35,7 +36,7 @@ export const User = [
 export const BeforeLogin = [
   {
     id: 1,
-    path: "/nakerweb/log-in",
+    path: "/nakerweb/login",
     component: Login,
     exact: true,
   },
@@ -43,6 +44,12 @@ export const BeforeLogin = [
     id: 2,
     path: "/nakerweb/forgot-password",
     component: ForgotPassword,
+    exact: true,
+  },
+  {
+    id: 3,
+    path: "/nakerweb/login-myteam",
+    component: LoginMyTeam,
     exact: true,
   },
 ];

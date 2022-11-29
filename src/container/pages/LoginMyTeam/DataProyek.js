@@ -26,7 +26,7 @@ import eye from "../../../assets/icon/Eye.svg";
 // Dummy Data
 import { dataContent, notification } from "./DataDummy";
 
-const DataProyek = ({ setActiveStep, setHistory }) => {
+const DataProyek = ({ setActiveStep }) => {
   const [search, setSearch] = useState("");
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
@@ -92,10 +92,7 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
             variant="contained"
             borderRadius="5px"
             padding="0px 7px 0px 9px"
-            onClick={() => {
-              setActiveStep("proyek");
-              setHistory("home");
-            }}
+            onClick={() => setActiveStep("proyek")}
           >
             Detail
             <img src={eye} alt="eye" />

@@ -23,7 +23,7 @@ import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg
 // Dummy Data
 import { dataContent } from "./DataDummy";
 
-const SemuaProyek = ({ setActiveStep, setHistory }) => {
+const SemuaProyek = ({ setActiveStep }) => {
   const dataHeader = [
     {
       title: "No",
@@ -82,10 +82,7 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
           variant="contained"
           borderRadius="5px"
           padding="0px 7px 0px 9px"
-          onClick={() => {
-            setActiveStep("proyek");
-            setHistory("all");
-          }}
+          onClick={() => setActiveStep("proyek")}
         >
           Detail
           <img src={eye} alt="eye" />
