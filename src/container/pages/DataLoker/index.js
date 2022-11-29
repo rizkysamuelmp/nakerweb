@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
+import PageContainer from "../../../components/PageContainer";
 
 // Page
 import DataLoker from "./DataLoker";
@@ -15,20 +16,22 @@ const Page = () => {
   const [history, setHistory] = useState("");
 
   return (
-    <Container>
-      {activeStep === "page" && (
-        <DataLoker setActiveStep={setActiveStep} setHistory={setHistory} />
-      )}
-      {activeStep === "all" && (
-        <SemuaLoker setActiveStep={setActiveStep} setHistory={setHistory} />
-      )}
-      {activeStep === "detail" && (
-        <DetailLoker setActiveStep={setActiveStep} history={history} />
-      )}
-      {activeStep === "formulir" && (
-        <FormulirLoker setActiveStep={setActiveStep} />
-      )}
-    </Container>
+    <PageContainer>
+      <Container>
+        {activeStep === "page" && (
+          <DataLoker setActiveStep={setActiveStep} setHistory={setHistory} />
+        )}
+        {activeStep === "all" && (
+          <SemuaLoker setActiveStep={setActiveStep} setHistory={setHistory} />
+        )}
+        {activeStep === "detail" && (
+          <DetailLoker setActiveStep={setActiveStep} history={history} />
+        )}
+        {activeStep === "formulir" && (
+          <FormulirLoker setActiveStep={setActiveStep} />
+        )}
+      </Container>
+    </PageContainer>
   );
 };
 

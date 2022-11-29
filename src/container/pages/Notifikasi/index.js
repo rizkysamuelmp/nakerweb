@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
+import PageContainer from "../../../components/PageContainer";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Table from "../../../components/Table";
@@ -64,99 +65,101 @@ const Notifikasi = ({ setActiveStep }) => {
   const [popUpAdd, setPopUpAdd] = useState(false);
 
   return (
-    <Container>
-      {/* Title */}
-      <Title title="Notifikasi">
-        <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-          <Button
-            padding="12px"
-            width="167px"
-            borderRadius="5px"
-            onClick={() => {
-              setPopUpAdd(true);
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "Inter",
-                fontWeight: 600,
-                fontSize: "15px",
-                lineHeight: "18px",
-                color: "white",
+    <PageContainer>
+      <Container>
+        {/* Title */}
+        <Title title="Notifikasi">
+          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+            <Button
+              padding="12px"
+              width="167px"
+              borderRadius="5px"
+              onClick={() => {
+                setPopUpAdd(true);
               }}
             >
-              Tambah
-            </p>
-          </Button>
-        </div>
-      </Title>
+              <p
+                style={{
+                  fontFamily: "Inter",
+                  fontWeight: 600,
+                  fontSize: "15px",
+                  lineHeight: "18px",
+                  color: "white",
+                }}
+              >
+                Tambah
+              </p>
+            </Button>
+          </div>
+        </Title>
 
-      {/* Table */}
-      <RowWrapper>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-            width: "100%",
-          }}
-        >
-          <Table headerContent={dataHeaderAll} dataContent={dataContentAll} />
-          <Pagination count={10} currentData={10} totalData={100} page={2} />
-        </div>
-      </RowWrapper>
-
-      <PopUpDialog
-        open={popUpAdd}
-        onClose={() => setPopUpAdd(false)}
-        aria-labelledby="popup-dialog-title"
-      >
-        <DialogContentCustom>
-          <InputWrap>
-            <InpuTitle>Judul Notifikasi</InpuTitle>
-            <InputText
-              placeholder="Masukan judul notifikasi"
-              borderRadius="0px"
-              borderColor="#E4E4E4"
-              backgroundColor="rgba(217, 217, 217, 0.1)"
-              placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
-            />
-          </InputWrap>
-          <InputWrap>
-            <InpuTitle>Jenis Notifikasi</InpuTitle>
-            <InputText
-              placeholder="Pilih jenis notifikasi ex : (Grup, Social mwedia)"
-              borderRadius="0px"
-              borderColor="#E4E4E4"
-              backgroundColor="rgba(217, 217, 217, 0.1)"
-              placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
-            />
-          </InputWrap>
-          <InputWrap>
-            <InpuTitle>Isi Notifikasi</InpuTitle>
-            <InputText
-              placeholder="Silahkan isi pesan"
-              borderRadius="0px"
-              borderColor="#E4E4E4"
-              backgroundColor="rgba(217, 217, 217, 0.1)"
-              placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
-            />
-          </InputWrap>
-        </DialogContentCustom>
-
-        <DialogActionsCustom>
-          <Button
-            variant="contained"
-            width="217px"
-            borderRadius="5px"
-            padding="13px"
-            onClick={() => setPopUpAdd(false)}
+        {/* Table */}
+        <RowWrapper>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              width: "100%",
+            }}
           >
-            <ButtonText>Buat notifikasi</ButtonText>
-          </Button>
-        </DialogActionsCustom>
-      </PopUpDialog>
-    </Container>
+            <Table headerContent={dataHeaderAll} dataContent={dataContentAll} />
+            <Pagination count={10} currentData={10} totalData={100} page={2} />
+          </div>
+        </RowWrapper>
+
+        <PopUpDialog
+          open={popUpAdd}
+          onClose={() => setPopUpAdd(false)}
+          aria-labelledby="popup-dialog-title"
+        >
+          <DialogContentCustom>
+            <InputWrap>
+              <InpuTitle>Judul Notifikasi</InpuTitle>
+              <InputText
+                placeholder="Masukan judul notifikasi"
+                borderRadius="0px"
+                borderColor="#E4E4E4"
+                backgroundColor="rgba(217, 217, 217, 0.1)"
+                placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
+              />
+            </InputWrap>
+            <InputWrap>
+              <InpuTitle>Jenis Notifikasi</InpuTitle>
+              <InputText
+                placeholder="Pilih jenis notifikasi ex : (Grup, Social mwedia)"
+                borderRadius="0px"
+                borderColor="#E4E4E4"
+                backgroundColor="rgba(217, 217, 217, 0.1)"
+                placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
+              />
+            </InputWrap>
+            <InputWrap>
+              <InpuTitle>Isi Notifikasi</InpuTitle>
+              <InputText
+                placeholder="Silahkan isi pesan"
+                borderRadius="0px"
+                borderColor="#E4E4E4"
+                backgroundColor="rgba(217, 217, 217, 0.1)"
+                placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
+              />
+            </InputWrap>
+          </DialogContentCustom>
+
+          <DialogActionsCustom>
+            <Button
+              variant="contained"
+              width="217px"
+              borderRadius="5px"
+              padding="13px"
+              onClick={() => setPopUpAdd(false)}
+            >
+              <ButtonText>Buat notifikasi</ButtonText>
+            </Button>
+          </DialogActionsCustom>
+        </PopUpDialog>
+      </Container>
+    </PageContainer>
   );
 };
 

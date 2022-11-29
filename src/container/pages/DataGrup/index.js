@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
+import PageContainer from "../../../components/PageContainer";
 
 // Page
 import DataGrup from "./DataGrup";
@@ -15,18 +16,20 @@ const Page = () => {
   const [history, setHistory] = useState("");
 
   return (
-    <Container>
-      {activeStep === "page" && (
-        <DataGrup setActiveStep={setActiveStep} setHistory={setHistory} />
-      )}
-      {activeStep === "all" && (
-        <SemuaGrup setActiveStep={setActiveStep} setHistory={setHistory} />
-      )}
-      {activeStep === "detail" && (
-        <DetailGrup setActiveStep={setActiveStep} history={history} />
-      )}
-      {activeStep === "grup" && <ProfilGrup setActiveStep={setActiveStep} />}
-    </Container>
+    <PageContainer>
+      <Container>
+        {activeStep === "page" && (
+          <DataGrup setActiveStep={setActiveStep} setHistory={setHistory} />
+        )}
+        {activeStep === "all" && (
+          <SemuaGrup setActiveStep={setActiveStep} setHistory={setHistory} />
+        )}
+        {activeStep === "detail" && (
+          <DetailGrup setActiveStep={setActiveStep} history={history} />
+        )}
+        {activeStep === "grup" && <ProfilGrup setActiveStep={setActiveStep} />}
+      </Container>
+    </PageContainer>
   );
 };
 

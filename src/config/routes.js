@@ -13,6 +13,7 @@ import DataPostingan from "../container/pages/DataPostingan";
 import DataTiket from "../container/pages/DataTiket";
 import DataPengguna from "../container/pages/DataPengguna";
 import LoginMyTeam from "../container/pages/LoginMyTeam";
+import PengaturanSistem from "../container/pages/PengaturanSystem";
 
 export const DesignSystemRoutes = [
   {
@@ -115,7 +116,7 @@ const AppRoutes = [
     id: 9,
     nameComponent: "Pengaturan System",
     path: "/nakerweb/pengaturan",
-    // component: DataLoker,
+    component: PengaturanSistem,
     exact: true,
   },
 ];

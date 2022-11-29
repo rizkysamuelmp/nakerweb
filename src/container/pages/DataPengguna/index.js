@@ -3,6 +3,7 @@
 
 import { styled } from "@mui/material";
 import React, { useState } from "react";
+import PageContainer from "../../../components/PageContainer";
 import DataPengguna from "./DataPengguna";
 import DetailPengguna from "./DetailPengguna";
 import SemuaPengguna from "./SemuaPengguna";
@@ -14,17 +15,22 @@ const Page = () => {
   const [history, setHistory] = useState("");
 
   return (
-    <Container>
-      {activeStep === "home" && (
-        <DataPengguna setActiveStep={setActiveStep} setHistory={setHistory} />
-      )}
-      {activeStep === "all" && (
-        <SemuaPengguna setActiveStep={setActiveStep} setHistory={setHistory} />
-      )}
-      {activeStep === "detail" && (
-        <DetailPengguna setActiveStep={setActiveStep} history={history} />
-      )}
-    </Container>
+    <PageContainer>
+      <Container>
+        {activeStep === "home" && (
+          <DataPengguna setActiveStep={setActiveStep} setHistory={setHistory} />
+        )}
+        {activeStep === "all" && (
+          <SemuaPengguna
+            setActiveStep={setActiveStep}
+            setHistory={setHistory}
+          />
+        )}
+        {activeStep === "detail" && (
+          <DetailPengguna setActiveStep={setActiveStep} history={history} />
+        )}
+      </Container>
+    </PageContainer>
   );
 };
 

@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
+import PageContainer from "../../../components/PageContainer";
 
 // Page
 import DataPostingan from "./DataPostingan";
@@ -12,12 +13,16 @@ const Page = () => {
   const [activeStep, setActiveStep] = useState("page");
 
   return (
-    <Container>
-      {activeStep === "page" && <DataPostingan setActiveStep={setActiveStep} />}
-      {activeStep === "detail" && (
-        <DetailPostingan setActiveStep={setActiveStep} />
-      )}
-    </Container>
+    <PageContainer>
+      <Container>
+        {activeStep === "page" && (
+          <DataPostingan setActiveStep={setActiveStep} />
+        )}
+        {activeStep === "detail" && (
+          <DetailPostingan setActiveStep={setActiveStep} />
+        )}
+      </Container>
+    </PageContainer>
   );
 };
 

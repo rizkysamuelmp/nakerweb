@@ -5,12 +5,12 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import PageContainer from "../../components/PageContainer";
 import AppRoutes, {
   BeforeLogin,
   DesignSystemRoutes,
   User,
 } from "../../config/routes";
+import { Login } from "../pages";
 import LiveChat from "../pages/LiveChat";
 
 const App = () => (
@@ -24,18 +24,20 @@ const App = () => (
         <Route key={route.id} {...route} />
       ))}
 
-      <PageContainer>
-        <Route key="live" path="/nakerweb/live-chat" component={LiveChat} />
-        {AppRoutes.map((route) => (
-          <Route key={route.id} {...route} />
-        ))}
-        {User.map((route) => (
-          <Route key={route.id} {...route} />
-        ))}
-      </PageContainer>
+      <Route key="live" path="/nakerweb/live-chat" component={LiveChat} />
+      {AppRoutes.map((route) => (
+        <Route key={route.id} {...route} />
+      ))}
+      {User.map((route) => (
+        <Route key={route.id} {...route} />
+      ))}
 
-      <Redirect from="/" to="/design-system" />
-      <Redirect from="*" to="/error-404" />
+      <Route exact path="/">
+        <Redirect to="/nakerweb/login" /> : <Login />
+      </Route>
+
+      {/* <Redirect from="/" to="/nakerweb/login" /> */}
+      {/* <Redirect from="*" to="/error-404" /> */}
     </Switch>
   </Router>
 );

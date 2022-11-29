@@ -28,7 +28,7 @@ const ForgotPassword = () => {
         justifyContent: "space-evenly",
       }}
     >
-      <Link to="/nakerweb/log-in">
+      <Link to="/nakerweb/login">
         <IconButton style={{ position: "fixed", top: "20px", left: "20px" }}>
           <IconBack />
         </IconButton>
@@ -139,7 +139,7 @@ const ForgotPassword = () => {
         onClose={() => setPopUpEmailSuccess(false)}
         onClickAction={() => {
           setPopUpEmailSuccess(false);
-          history.push("/nakerweb/log-in");
+          history.push("/nakerweb/login");
         }}
         title="Berhasil kirim email"
         info="Link  reset kata sandi  telah dikirim ke email anda."

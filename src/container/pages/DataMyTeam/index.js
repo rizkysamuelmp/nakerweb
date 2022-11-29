@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
+import PageContainer from "../../../components/PageContainer";
 
 // Page
 import DataProyek from "./DataProyek";
@@ -16,19 +17,23 @@ const Page = () => {
   const [history, setHistory] = useState("");
 
   return (
-    <Container>
-      {activeStep === "page" && (
-        <DataProyek setActiveStep={setActiveStep} setHistory={setHistory} />
-      )}
-      {activeStep === "all" && (
-        <SemuaProyek setActiveStep={setActiveStep} setHistory={setHistory} />
-      )}
-      {activeStep === "allTask" && <SemuaTask setActiveStep={setActiveStep} />}
-      {activeStep === "proyek" && (
-        <DetailProyek setActiveStep={setActiveStep} history={history} />
-      )}
-      {activeStep === "add" && <TambahProyek setActiveStep={setActiveStep} />}
-    </Container>
+    <PageContainer>
+      <Container>
+        {activeStep === "page" && (
+          <DataProyek setActiveStep={setActiveStep} setHistory={setHistory} />
+        )}
+        {activeStep === "all" && (
+          <SemuaProyek setActiveStep={setActiveStep} setHistory={setHistory} />
+        )}
+        {activeStep === "allTask" && (
+          <SemuaTask setActiveStep={setActiveStep} />
+        )}
+        {activeStep === "proyek" && (
+          <DetailProyek setActiveStep={setActiveStep} history={history} />
+        )}
+        {activeStep === "add" && <TambahProyek setActiveStep={setActiveStep} />}
+      </Container>
+    </PageContainer>
   );
 };
 

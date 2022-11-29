@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { TextField } from "@mui/material";
+import PageContainer from "../../../components/PageContainer";
 
 // Assets
 import profile from "../../../assets/img/profile.png";
@@ -56,101 +57,103 @@ const LiveChat = () => {
   const [inputChat, setInputChat] = useState("");
 
   return (
-    <Container>
-      <Left>
-        <HeaderLeft>
-          <HeaderText>Chats</HeaderText>
-          <InputContainer>
-            <SearchInput>search</SearchInput>
-            <Filter>Filter</Filter>
-          </InputContainer>
-        </HeaderLeft>
-        <BodyLeft>
-          {dataDummy.map((item) => (
-            <BodyWrapperLeft>
-              <img src={item.profile} alt="profile" width="10%" />
-              <NameWrapper>
-                <Name>{item.nama}</Name>
-                <Desc>{item.typing ? "Sedang Mengetik" : ""}</Desc>
+    <PageContainer>
+      <Container>
+        <Left>
+          <HeaderLeft>
+            <HeaderText>Chats</HeaderText>
+            <InputContainer>
+              <SearchInput>search</SearchInput>
+              <Filter>Filter</Filter>
+            </InputContainer>
+          </HeaderLeft>
+          <BodyLeft>
+            {dataDummy.map((item) => (
+              <BodyWrapperLeft>
+                <img src={item.profile} alt="profile" width="10%" />
+                <NameWrapper>
+                  <Name>{item.nama}</Name>
+                  <Desc>{item.typing ? "Sedang Mengetik" : ""}</Desc>
+                </NameWrapper>
+                <Time>{item.time}</Time>
+              </BodyWrapperLeft>
+            ))}
+          </BodyLeft>
+        </Left>
+        <Right>
+          <Header>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <img src={profile} alt="profile" />
+              <NameWrapper gap="5px">
+                <Name>Muh. Arifandi</Name>
+                <DescOnline>Online</DescOnline>
               </NameWrapper>
-              <Time>{item.time}</Time>
-            </BodyWrapperLeft>
-          ))}
-        </BodyLeft>
-      </Left>
-      <Right>
-        <Header>
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <img src={profile} alt="profile" />
-            <NameWrapper gap="5px">
-              <Name>Muh. Arifandi</Name>
-              <DescOnline>Online</DescOnline>
-            </NameWrapper>
-          </div>
-        </Header>
-        <BodyContainer>
-          <BodyRight>
+            </div>
+          </Header>
+          <BodyContainer>
+            <BodyRight>
+              <div
+                style={{
+                  padding: "5px",
+                  position: "relative",
+                }}
+              >
+                <BubbleSender>Hello</BubbleSender>
+              </div>
+              <div style={{ padding: "5px" }}>
+                <BubbleSender>
+                  <Message>Hello</Message>
+                </BubbleSender>
+              </div>
+              <div style={{ padding: "5px", position: "relative" }}>
+                <BubbleSender>Hello</BubbleSender>
+              </div>
+              <ReceiverWrapper>
+                <BubbleReceiver>Hello</BubbleReceiver>
+              </ReceiverWrapper>
+              <div style={{ padding: "5px", position: "relative" }}>
+                <BubbleSender>Hello</BubbleSender>
+              </div>
+            </BodyRight>
             <div
               style={{
-                padding: "5px",
-                position: "relative",
+                padding: "10px",
               }}
             >
-              <BubbleSender>Hello</BubbleSender>
+              <TextField
+                multiline
+                maxRows={6}
+                value={inputChat}
+                onChange={(e) => setInputChat(e.target.value)}
+                style={{
+                  width: "100%",
+                }}
+                inputProps={{
+                  style: {
+                    padding: 5,
+                  },
+                }}
+                height="45px"
+                InputProps={{
+                  endAdornment: (
+                    <div
+                      onClick={() => console.log("asd")}
+                      style={{
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img src={send} alt="" width="24px" />
+                    </div>
+                  ),
+                }}
+              />
             </div>
-            <div style={{ padding: "5px" }}>
-              <BubbleSender>
-                <Message>Hello</Message>
-              </BubbleSender>
-            </div>
-            <div style={{ padding: "5px", position: "relative" }}>
-              <BubbleSender>Hello</BubbleSender>
-            </div>
-            <ReceiverWrapper>
-              <BubbleReceiver>Hello</BubbleReceiver>
-            </ReceiverWrapper>
-            <div style={{ padding: "5px", position: "relative" }}>
-              <BubbleSender>Hello</BubbleSender>
-            </div>
-          </BodyRight>
-          <div
-            style={{
-              padding: "10px",
-            }}
-          >
-            <TextField
-              multiline
-              maxRows={6}
-              value={inputChat}
-              onChange={(e) => setInputChat(e.target.value)}
-              style={{
-                width: "100%",
-              }}
-              inputProps={{
-                style: {
-                  padding: 5,
-                },
-              }}
-              height="45px"
-              InputProps={{
-                endAdornment: (
-                  <div
-                    onClick={() => console.log("asd")}
-                    style={{
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <img src={send} alt="" width="24px" />
-                  </div>
-                ),
-              }}
-            />
-          </div>
-        </BodyContainer>
-      </Right>
-    </Container>
+          </BodyContainer>
+        </Right>
+      </Container>
+    </PageContainer>
   );
 };
 

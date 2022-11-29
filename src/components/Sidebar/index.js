@@ -76,7 +76,7 @@ const Sidebar = () => {
           justifyContent: "start",
         }}
       >
-        <LinkWrapper to="/nakerweb/log-in">
+        <LinkWrapper to="/nakerweb/login">
           <p>Keluar</p>
           <img alt="logout" src={logout} width={24} height={24} />
         </LinkWrapper>
