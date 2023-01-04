@@ -8,7 +8,7 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputText from "../../../components/InputText";
-import Colors from "../../../helpers/colors";
+import Colors from "../../../utils/helpers/colors";
 import Button from "../../../components/Button";
 import Menu from "@mui/material/Menu";
 import DropDown from "../../../components/DropDown";

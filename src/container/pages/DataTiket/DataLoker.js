@@ -1,5 +1,4 @@
 import { styled } from "@mui/material/styles";
-import Pagination from "../../../components/Pagination";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
 import Button from "../../../components/Button";

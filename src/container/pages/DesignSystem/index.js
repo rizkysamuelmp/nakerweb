@@ -2,7 +2,7 @@
 // DesignSystem Component
 // --------------------------------------------------------
 import React, { useState } from "react";
-import Colors from "../../../helpers/colors";
+import Colors from "../../../utils/helpers/colors";
 import Button from "../../../components/Button";
 import { ReactComponent as Eye } from "../../../assets/icon/Eye.svg";
 import InputText from "../../../components/InputText";

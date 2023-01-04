@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import iconDown from "../../assets/icon/icon-down.png";
 import InputAdornment from "@mui/material/InputAdornment";
-import Colors from "../../helpers/colors";
+import Colors from "../../utils/helpers/colors";
 
 const DropDown = ({
   imageCheck,
@@ -22,12 +22,14 @@ const DropDown = ({
   placeHolderInside,
   backgroundColor,
   width,
+  borderColor,
 }) => {
   return (
     <FormControl
       className="m-dropdown"
       sx={{
         margin: "5px 0",
+        width: width,
       }}
     >
       <SelectMUI
@@ -41,7 +43,7 @@ const DropDown = ({
             position="start"
             className="inputAdorment"
             sx={{
-              zIndex: 200,
+              zIndex: 1,
               cursor: "pointer",
               height: "40px",
               justifyContent: "center",
@@ -83,7 +85,7 @@ const DropDown = ({
         }}
         sx={{
           ".MuiOutlinedInput-notchedOutline": {
-            borderColor: "#115AAA",
+            borderColor: borderColor,
             legend: {
               width: "inherit !important",
               maxWidth: "inherit !important",
@@ -136,6 +138,7 @@ const DropDown = ({
             {placeHolder}
           </CustomMenuItem>
         )}
+
         {listDropDown.map((item) => (
           <CustomMenuItem key={item.label} value={item.value}>
             <React.Fragment>{item.label}</React.Fragment>
@@ -157,19 +160,16 @@ DropDown.propTypes = {
   searchPlaceHolderEn: PropTypes.string,
   backgroundColor: PropTypes.string,
   width: PropTypes.string,
+  borderColor: PropTypes.string,
 };
 
 DropDown.defaultProps = {
   imageCheck: "",
   listDropDown: [
-    {
-      label: "Teknologi Media, dan Komunikasi",
-      subLabel: "Bidang 1",
-      value: 0,
-    },
-    { label: "Kesehatan", subLabel: "Bidang 2", value: 1 },
-    { label: "Konstruksi", subLabel: "Bidang 3", value: 2 },
-    { label: "Pertanian", subLabel: "Bidang 4", value: 3 },
+    { label: "Teknologi", value: 0 },
+    { label: "Kesehatan", value: 1 },
+    { label: "Konstruksi", value: 2 },
+    { label: "Pertanian", value: 3 },
   ],
   size: "md",
   handleChange: () => {},
@@ -178,6 +178,7 @@ DropDown.defaultProps = {
   placeHolderInside: true,
   backgroundColor: "transparent",
   width: "255px",
+  borderColor: "#115AAA",
 };
 
 const CustomMenuItem = styled(MenuItem)(() => ({

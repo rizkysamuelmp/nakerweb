@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import DropDown from "../../../components/DropDown";
 import Button from "../../../components/Button";
 import InputText from "../../../components/InputText";
-import Colors from "../../../helpers/colors";
+import Colors from "../../../utils/helpers/colors";
 import { InputAdornment, Menu } from "@mui/material";
 
 // Assets

@@ -8,6 +8,7 @@ import {
 import AppRoutes, {
   BeforeLogin,
   DesignSystemRoutes,
+  LokerPublic,
   User,
 } from "../../config/routes";
 import { Login } from "../pages";
@@ -17,6 +18,10 @@ const App = () => (
   <Router>
     <Switch>
       {DesignSystemRoutes.map((route) => (
+        <Route key={route.id} {...route} />
+      ))}
+
+      {LokerPublic.map((route) => (
         <Route key={route.id} {...route} />
       ))}
 

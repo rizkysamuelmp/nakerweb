@@ -5,7 +5,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ButtonMUI from "@mui/material/Button";
 import { CircularProgress } from "@mui/material";
-import Colors from "../../helpers/colors";
+import Colors from "../../utils/helpers/colors";
 
 const Button = ({
   startIcon,
