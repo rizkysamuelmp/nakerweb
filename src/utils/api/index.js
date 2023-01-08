@@ -25,3 +25,6 @@ export const serviceGetProvince = (payload) =>
 
 export const serviceGetCity = (payload) =>
   axios.post(`${apiUrl}/loker/getCity`, payload);
+
+export const serviceGetAllLoker = (payload) =>
+  axios.post(`${apiUrl}/loker/getAllLoker`, payload);

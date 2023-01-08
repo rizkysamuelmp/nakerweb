@@ -6,6 +6,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { Checkbox, FormControlLabel, IconButton } from "@mui/material";
 import PopUp from "../../../components/PopUp";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 // Asset
 import { ReactComponent as EyeLookIcon } from "../../../assets/icon/icon-eye-look.svg";
@@ -16,6 +17,7 @@ import mailBlue from "../../../assets/img/mail-blue.png";
 
 const Login = () => {
   let history = useHistory();
+  // const dispatch = useDispatch();
 
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);

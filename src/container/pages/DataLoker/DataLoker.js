@@ -1,7 +1,7 @@
 // Page Data Loker
 // --------------------------------------------------------
 
-import React from "react";
+import React, { useEffect } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
@@ -9,6 +9,9 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import Chart from "../../../components/Chart";
 import ChartLine from "../../../components/ChartLine";
+
+// Redux
+import { useDispatch } from "react-redux";
 
 // Asset
 import imagePerson from "../../../assets/img/image-person-trending.png";
@@ -23,8 +26,15 @@ import {
   lokerTranding,
   sektorTrending,
 } from "./DataDummy";
+import { getDataLoker } from "../../../store/actions/dataLoker";
 
 const DataLoker = ({ setActiveStep, setHistory }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDataLoker());
+  }, [dispatch]);
+
   return (
     <Container>
       {/* Title */}

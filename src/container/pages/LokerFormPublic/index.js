@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import InputText from "../../../components/InputText";
 import Compressor from "compressorjs";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import {
   serviceGetCategory,
   serviceGetCity,
@@ -39,7 +39,7 @@ import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
 
 // Main Page
 const FormulirLoker = () => {
-  let history = useHistory();
+  // let history = useHistory();
 
   const [step, setStep] = useState("1");
   const [loading, setLoading] = useState(false);

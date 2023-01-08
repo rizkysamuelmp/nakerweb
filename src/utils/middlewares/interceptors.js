@@ -6,6 +6,9 @@ export const requestInterceptors = async () => {
     (config) => {
       // config.withCredentials = process.env.NODE_ENV !== 'production';
       config.headers["Content-Type"] = "text/plain";
+      config.headers["Access-Control-Allow-Headers"] = "Content-Type";
+      config.headers["Access-Control-Allow-Origin"] = "*";
+      config.headers["Access-Control-Allow-Methods"] = "POST,GET";
       // config.headers["Access-Control-Allow-Origin"] = "*";
       // config.headers["Access-Control-Allow-Credentials"] = true;
 
