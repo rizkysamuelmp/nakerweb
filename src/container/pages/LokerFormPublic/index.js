@@ -55,18 +55,33 @@ const FormulirLoker = () => {
   const [selectType, setSelectType] = useState([]);
 
   const [error, setError] = useState(false);
-  const [namaPerusahaan, setNamaPerusahaan] = useState("");
-  const [alamat, setAlamat] = useState("");
-  const [telepon, setTelepon] = useState("");
-  const [namaPic, setNamaPic] = useState("");
-  const [email, setEmail] = useState("");
-  const [deskrisi, setDeskrisi] = useState("");
-  const [posisi, setPosisi] = useState("");
-  const [kualifikasi, setKualifikasi] = useState("");
+  const namaPerusahaan = useRef(null);
+  const alamat = useRef("");
+  const telepon = useRef("");
+  const namaPic = useRef("");
+  const email = useRef("");
+  const deskrisi = useRef("");
+  const posisi = useRef("");
+  const kualifikasi = useRef("");
+  // const kirim = useRef(false);
+  const benefit = useRef("");
+  const minGaji = useRef("");
+  const maxGaji = useRef("");
+  // const agree = useRef();
+  // const startDate = useRef("");
+  // const endDate = useRef("");
+  // const [namaPerusahaan, setNamaPerusahaan] = useState("");
+  // const [alamat, setAlamat] = useState("");
+  // const [telepon, setTelepon] = useState("");
+  // const [namaPic, setNamaPic] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [deskrisi, setDeskrisi] = useState("");
+  // const [posisi, setPosisi] = useState("");
+  // const [kualifikasi, setKualifikasi] = useState("");
   const [kirim, setKirim] = useState(false);
-  const [benefit, setBenefit] = useState("");
-  const [minGaji, setMinGaji] = useState("");
-  const [maxGaji, setMaxGaji] = useState("");
+  // const [benefit, setBenefit] = useState("");
+  // const [minGaji, setMinGaji] = useState("");
+  // const [maxGaji, setMaxGaji] = useState("");
   const [agree, setAgree] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -194,23 +209,23 @@ const FormulirLoker = () => {
   // API Save Loker
   async function saveLoker() {
     const payload = {
-      name: namaPerusahaan,
-      address: alamat,
-      phone: telepon,
+      name: namaPerusahaan.current.value,
+      address: alamat.current.value,
+      phone: telepon.current.value,
       category: listKategori[selectKategori].label,
-      pic_name: namaPic,
+      pic_name: namaPic.current.value,
       total_employe: 0,
       sector_id: listKategori[selectKategori].sektor_id,
-      email: email,
-      job_desc: deskrisi,
-      job_position: posisi,
-      cualified: kualifikasi,
+      email: email.current.value,
+      job_desc: deskrisi.current.value,
+      job_position: posisi.current.value,
+      cualified: kualifikasi.current.value,
       provinice: listProvinsi[selectProvinsi].kode,
       city: listKota[selectKota].kode,
-      start_salary: minGaji,
-      end_salary: maxGaji,
+      start_salary: minGaji.current.value,
+      end_salary: maxGaji.current.value,
       job_type: listType[selectType].id,
-      benefit: benefit,
+      benefit: benefit.current.value,
       start_open: moment(startDate).format("YYYY-MM-DD"),
       end_open: moment(endDate).format("YYYY-MM-DD"),
       banner: banner.image,
@@ -392,17 +407,20 @@ const FormulirLoker = () => {
                   <InputText
                     borderRadius="5px"
                     placeholder="Tulis nama perusahaan..."
-                    value={namaPerusahaan}
+                    inputRef={namaPerusahaan}
                     name="namePerusahaan"
-                    onChange={(e) => {
-                      setNamaPerusahaan(e.target.value);
-                    }}
+                    type="text"
                     height="40px"
                     borderColor={
-                      error && namaPerusahaan === "" ? "#FCA1A1" : "#E4E4E4"
+                      error && namaPerusahaan.current.value === ""
+                        ? "#FCA1A1"
+                        : "#E4E4E4"
                     }
                     backgroundColor="rgba(217, 217, 217, 0.1)"
-                    placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
+                    placeholderStyle={{
+                      fontSize: "12px",
+                      lineHeight: "15px",
+                    }}
                   />
                 </Line>
                 <Line>
@@ -410,10 +428,13 @@ const FormulirLoker = () => {
                   <InputText
                     borderRadius="5px"
                     placeholder="Tulis alamat..."
-                    value={alamat}
-                    onChange={(e) => setAlamat(e.target.value)}
+                    inputRef={alamat}
                     height="40px"
-                    borderColor={error && alamat === "" ? "#FCA1A1" : "#E4E4E4"}
+                    borderColor={
+                      error && alamat.current.value === ""
+                        ? "#FCA1A1"
+                        : "#E4E4E4"
+                    }
                     backgroundColor="rgba(217, 217, 217, 0.1)"
                     placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
                   />
@@ -423,11 +444,12 @@ const FormulirLoker = () => {
                   <InputText
                     borderRadius="5px"
                     placeholder="Tulis nomor telepon"
-                    value={telepon}
-                    onChange={(e) => setTelepon(e.target.value)}
+                    inputRef={telepon}
                     height="40px"
                     borderColor={
-                      error && telepon === "" ? "#FCA1A1" : "#E4E4E4"
+                      error && telepon.current.value === ""
+                        ? "#FCA1A1"
+                        : "#E4E4E4"
                     }
                     backgroundColor="rgba(217, 217, 217, 0.1)"
                     placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
@@ -467,13 +489,14 @@ const FormulirLoker = () => {
                     <InputText
                       borderRadius="5px"
                       placeholder="Penanggung jawab"
-                      value={namaPic}
-                      onChange={(e) => setNamaPic(e.target.value)}
+                      inputRef={namaPic}
                       height="40px"
                       type="text"
                       width="100%"
                       borderColor={
-                        error && namaPic === "" ? "#FCA1A1" : "#E4E4E4"
+                        error && namaPic.current.value === ""
+                          ? "#FCA1A1"
+                          : "#E4E4E4"
                       }
                       backgroundColor="rgba(217, 217, 217, 0.1)"
                       placeholderStyle={{
@@ -493,13 +516,14 @@ const FormulirLoker = () => {
                     <InputText
                       borderRadius="5px"
                       placeholder="Tuliskan Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      inputRef={email}
                       height="40px"
                       width="100%"
                       type="email"
                       borderColor={
-                        error && email === "" ? "#FCA1A1" : "#E4E4E4"
+                        error && email.current.value === ""
+                          ? "#FCA1A1"
+                          : "#E4E4E4"
                       }
                       backgroundColor="rgba(217, 217, 217, 0.1)"
                       placeholderStyle={{
@@ -531,11 +555,11 @@ const FormulirLoker = () => {
               <Button
                 onClick={() => {
                   if (
-                    namaPerusahaan === "" ||
-                    alamat === "" ||
-                    telepon === "" ||
-                    namaPic === "" ||
-                    email === "" ||
+                    namaPerusahaan.current.value === "" ||
+                    alamat.current.value === "" ||
+                    telepon.current.value === "" ||
+                    namaPic.current.value === "" ||
+                    email.current.value === "" ||
                     selectKategori.length === 0 ||
                     logo.image === null
                   ) {
@@ -659,10 +683,13 @@ const FormulirLoker = () => {
                   <InputText
                     placeholder="Posisi apa yang anda butuhkan ?"
                     borderRadius="5px"
-                    value={posisi}
-                    onChange={(e) => setPosisi(e.target.value)}
+                    inputRef={posisi}
                     height="40px"
-                    borderColor={error && posisi === "" ? "#FCA1A1" : "#E4E4E4"}
+                    borderColor={
+                      error && posisi.current.value === ""
+                        ? "#FCA1A1"
+                        : "#E4E4E4"
+                    }
                     backgroundColor="rgba(217, 217, 217, 0.1)"
                     placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
                   />
@@ -683,11 +710,12 @@ const FormulirLoker = () => {
                       fontFamily: "inherit",
                       height: "174px",
                       borderColor: `${
-                        error && deskrisi === "" ? "#FCA1A1" : "#E4E4E4"
+                        error && deskrisi.current.value === ""
+                          ? "#FCA1A1"
+                          : "#E4E4E4"
                       }`,
                     }}
-                    value={deskrisi}
-                    onChange={(e) => setDeskrisi(e.target.value)}
+                    ref={deskrisi}
                   />
                 </Wrapper>
 
@@ -786,14 +814,17 @@ const FormulirLoker = () => {
                       padding: "10px",
                       height: "72px",
                       borderColor: `${
-                        error && kualifikasi === "" ? "#FCA1A1" : "#E4E4E4"
+                        error && kualifikasi.current.value === ""
+                          ? "#FCA1A1"
+                          : "#E4E4E4"
                       }`,
                     }}
                     borderColor={
-                      error && kualifikasi === "" ? "#FCA1A1" : "#E4E4E4"
+                      error && kualifikasi.current.value === ""
+                        ? "#FCA1A1"
+                        : "#E4E4E4"
                     }
-                    value={kualifikasi}
-                    onChange={(e) => setKualifikasi(e.target.value)}
+                    ref={kualifikasi}
                   />
                 </Wrapper>
 
@@ -845,10 +876,11 @@ const FormulirLoker = () => {
                   >
                     <InputText
                       placeholder="Mulai"
-                      value={minGaji}
-                      onChange={(e) => setMinGaji(e.target.value)}
+                      inputRef={minGaji}
                       borderColor={
-                        error && minGaji === "" ? "#FCA1A1" : "#E4E4E4"
+                        error && minGaji.current.value === ""
+                          ? "#FCA1A1"
+                          : "#E4E4E4"
                       }
                       borderRadius="5px"
                       height="40px"
@@ -861,10 +893,11 @@ const FormulirLoker = () => {
                     -
                     <InputText
                       placeholder="Sampai"
-                      value={maxGaji}
-                      onChange={(e) => setMaxGaji(e.target.value)}
+                      inputRef={maxGaji}
                       borderColor={
-                        error && maxGaji === "" ? "#FCA1A1" : "#E4E4E4"
+                        error && maxGaji.current.value === ""
+                          ? "#FCA1A1"
+                          : "#E4E4E4"
                       }
                       borderRadius="5px"
                       height="40px"
@@ -896,12 +929,13 @@ const FormulirLoker = () => {
                 <Wrapper>
                   <TitleDesc>Benefit</TitleDesc>
                   <InputText
-                    value={benefit}
-                    onChange={(e) => setBenefit(e.target.value)}
+                    inputRef={benefit}
                     borderRadius="5px"
                     height="40px"
                     borderColor={
-                      error && benefit === "" ? "#FCA1A1" : "#E4E4E4"
+                      error && benefit.current.value === ""
+                        ? "#FCA1A1"
+                        : "#E4E4E4"
                     }
                     placeholder="Tuliskan benefit apa saja yang anda berikan ?"
                     backgroundColor="rgba(217, 217, 217, 0.1)"
@@ -943,16 +977,17 @@ const FormulirLoker = () => {
                 onClick={() => {
                   if (
                     banner.image === null ||
-                    posisi === "" ||
-                    deskrisi === "" ||
-                    kualifikasi === "" ||
+                    posisi.current.value === "" ||
+                    deskrisi.current.value === "" ||
+                    kualifikasi.current.value === "" ||
                     selectProvinsi.length === 0 ||
                     selectKota.length === 0 ||
-                    benefit === ""
+                    benefit.current.value === ""
                   ) {
                     setError(true);
                   } else {
                     saveLoker();
+                    setKirim(true);
                   }
                 }}
                 disabled={!agree}

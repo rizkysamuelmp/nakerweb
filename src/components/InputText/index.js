@@ -6,16 +6,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
-
+import { useRef } from "react";
 const InputText = ({
   id,
   type,
   name,
-  value,
+  inputRef,
   placeholder,
   maxLength,
   autoComplete,
-  onChange,
   onBlur,
   onFocus,
   onKeyDown,
@@ -30,6 +29,7 @@ const InputText = ({
   iconAdornment,
   endIcon,
   key,
+  label,
   noPadding,
   width,
   borderRadius,
@@ -40,19 +40,20 @@ const InputText = ({
   multiline,
   ...input
 }) => {
+  const nama = useRef("");
   return (
     <TextField
       id={id}
       key={key}
+      inputRef={inputRef}
+      label={label}
       type={type}
       name={name}
-      value={value}
       placeholder={placeholder}
       maxLength={maxLength}
       autoComplete={autoComplete}
       multiline={multiline}
       disabled={disabled}
-      onChange={onChange}
       onBlur={onBlur}
       variant={variant}
       onFocus={onFocus}
@@ -156,11 +157,9 @@ InputText.defaultProps = {
   type: "text",
   key: "",
   name: "",
-  value: "",
   placeholder: "",
   maxLength: "",
   autoComplete: "off",
-  onChange: () => {},
   onBlur: () => {},
   onFocus: () => {},
   onKeyDown: () => {},

@@ -1,5 +1,6 @@
 {
   "name": "portalnakerweb",
+  "proxy": "http://admin.kubu.id/api",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
