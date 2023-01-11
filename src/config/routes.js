@@ -14,12 +14,22 @@ import DataTiket from "../container/pages/DataTiket";
 import DataPengguna from "../container/pages/DataPengguna";
 import LoginMyTeam from "../container/pages/LoginMyTeam";
 import PengaturanSistem from "../container/pages/PengaturanSystem";
+import LokerFormPublic from "../container/pages/LokerFormPublic";
 
 export const DesignSystemRoutes = [
   {
     id: 1,
     path: "/design-system",
     component: DesignSystem,
+    exact: true,
+  },
+];
+
+export const LokerPublic = [
+  {
+    id: 1,
+    path: "/loker",
+    component: LokerFormPublic,
     exact: true,
   },
 ];

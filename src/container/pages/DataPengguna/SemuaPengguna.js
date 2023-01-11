@@ -10,7 +10,7 @@ import InputText from "../../../components/InputText";
 import Pagination from "../../../components/Pagination";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
-import Colors from "../../../helpers/colors";
+import Colors from "../../../utils/helpers/colors";
 import { dataContent } from "./dataDummy";
 
 // Asset

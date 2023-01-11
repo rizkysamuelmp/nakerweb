@@ -9,7 +9,7 @@ import Pagination from "../../../components/Pagination";
 import Button from "../../../components/Button";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputText from "../../../components/InputText";
-import Colors from "../../../helpers/colors";
+import Colors from "../../../utils/helpers/colors";
 import Menu from "@mui/material/Menu";
 import DropDown from "../../../components/DropDown";
 

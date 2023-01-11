@@ -5,7 +5,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import PaginationMUI from "@mui/material/Pagination";
-import Colors from "../../helpers/colors";
+import Colors from "../../utils/helpers/colors";
 
 const Container = styled("div")(() => ({
   display: "flex",

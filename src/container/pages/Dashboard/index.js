@@ -30,12 +30,12 @@ const Dashboard = () => {
           color: "#FFBF0B",
         },
         {
-          title: "Penggun Belum verifikasi",
+          title: "Pengguna Belum verifikasi",
           detail: "150 Pengguna",
           color: "#03B74B",
         },
         {
-          title: "Penggun terverifikasi",
+          title: "Pengguna terverifikasi",
           detail: "30 Pengguna",
           color: "#FE4747",
         },
