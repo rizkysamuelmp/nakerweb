@@ -10,7 +10,11 @@ import { useRef } from "react";
 const InputText = ({
   id,
   type,
+  value,
+  onChange,
   name,
+  error,
+  helperText,
   inputRef,
   placeholder,
   maxLength,
@@ -45,9 +49,13 @@ const InputText = ({
     <TextField
       id={id}
       key={key}
+      value={value}
+      onChange={onChange}
       inputRef={inputRef}
       label={label}
       type={type}
+      error={error}
+      helperText={helperText}
       name={name}
       placeholder={placeholder}
       maxLength={maxLength}
