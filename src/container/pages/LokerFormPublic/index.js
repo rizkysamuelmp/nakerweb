@@ -17,6 +17,7 @@ import {
   DialogContent,
   FormControlLabel,
   IconButton,
+  TextField,
 } from "@mui/material";
 import InputText from "../../../components/InputText";
 import Compressor from "compressorjs";
@@ -28,7 +29,7 @@ import {
   serviceGetProvince,
   serviceLoker,
 } from "../../../utils/api";
-
+import { Controller, useForm } from "react-hook-form";
 // Assets
 import organization from "../../../assets/icon/Organization.svg";
 import business from "../../../assets/icon/Business.svg";
@@ -55,21 +56,15 @@ const FormulirLoker = () => {
   const [selectType, setSelectType] = useState([]);
 
   const [error, setError] = useState(false);
-  const [namaPerusahaan, setNamaPerusahaan] = useState("");
-  const [alamat, setAlamat] = useState("");
-  const [telepon, setTelepon] = useState("");
-  const [namaPic, setNamaPic] = useState("");
-  const [email, setEmail] = useState("");
-  const [deskrisi, setDeskrisi] = useState("");
-  const [posisi, setPosisi] = useState("");
-  const [kualifikasi, setKualifikasi] = useState("");
   const [kirim, setKirim] = useState(false);
-  const [benefit, setBenefit] = useState("");
-  const [minGaji, setMinGaji] = useState("");
-  const [maxGaji, setMaxGaji] = useState("");
   const [agree, setAgree] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  // useForm function
+  const { control, handleSubmit } = useForm({
+    reValidateMode: "onChange",
+  });
 
   const [logo, setLogo] = useState({
     testType: "global",
@@ -192,25 +187,24 @@ const FormulirLoker = () => {
     }
   }
   // API Save Loker
-  async function saveLoker() {
+  async function saveLoker(data) {
     const payload = {
-      name: namaPerusahaan,
-      address: alamat,
-      phone: telepon,
+      name: data.namaPerusahaan,
+      address: data.alamat,
+      phone: data.telepon,
       category: listKategori[selectKategori].label,
-      pic_name: namaPic,
+      pic_name: data.namaPic,
       total_employe: 0,
       sector_id: listKategori[selectKategori].sektor_id,
-      email: email,
-      job_desc: deskrisi,
-      job_position: posisi,
-      cualified: kualifikasi,
-      provinice: listProvinsi[selectProvinsi].kode,
+      email: data.email,
+      job_desc: data.deskripsiPekerjaan,
+      job_position: data.posisi,
+      cualified: data.kualifikasi,
       city: listKota[selectKota].kode,
-      start_salary: minGaji,
-      end_salary: maxGaji,
+      start_salary: data.minGaji,
+      end_salary: data.maxGaji,
       job_type: listType[selectType].id,
-      benefit: benefit,
+      benefit: data.benefit,
       start_open: moment(startDate).format("YYYY-MM-DD"),
       end_open: moment(endDate).format("YYYY-MM-DD"),
       banner: banner.image,
@@ -322,6 +316,21 @@ const FormulirLoker = () => {
     window.location.reload(false);
   };
 
+  const onSubmit = (data) => {
+    if (step === "1" && error === false) {
+      setError(false);
+      setStep("2");
+    } else {
+      setError(true);
+    }
+    if (step === "2" && error === false) {
+      setError(false);
+      saveLoker(data);
+    } else {
+      setError(true);
+    }
+  };
+
   return (
     <Container>
       <Dialog open={loading}>
@@ -332,648 +341,772 @@ const FormulirLoker = () => {
         </DialogContent>
       </Dialog>
 
-      {step === "1" && (
-        <React.Fragment>
-          <Title title="Formulir Permintaan Publikasi Loker" />
-
-          {/* Info Perusahaan */}
-          <CardWrapper borderRadius="10px 10px 0 0">
-            <CardHead>
-              <img src={organization} alt="" width="24px" />
-              <span>Info Perusahaan</span>
-            </CardHead>
-            <CardBody>
-              <CardBodyLeft>
-                <FormLabel style={{ textAlign: "center" }}>
-                  Logo Perusahaan
-                </FormLabel>
-                <IconButton
-                  style={{
-                    width: "232px",
-                    height: "232px",
-                  }}
-                  onClick={onClickLogo}
-                >
-                  <ImageWrap
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {step === "1" && (
+          <React.Fragment>
+            <Title title="Formulir Permintaan Publikasi Loker" />
+            {/* Info Perusahaan */}
+            <CardWrapper borderRadius="10px 10px 0 0">
+              <CardHead>
+                <img src={organization} alt="" width="24px" />
+                <span>Info Perusahaan</span>
+              </CardHead>
+              <CardBody>
+                <CardBodyLeft>
+                  <FormLabel style={{ textAlign: "center" }}>
+                    Logo Perusahaan
+                  </FormLabel>
+                  <IconButton
                     style={{
-                      border: `1px dashed ${
-                        logo.image === null && error ? "#FCA1A1" : "#E0E0E0"
-                      }`,
+                      width: "232px",
+                      height: "232px",
                     }}
+                    onClick={onClickLogo}
                   >
-                    {logo.image ? (
-                      <Avatar
-                        sx={{
-                          height: 192,
-                          width: 192,
-                        }}
-                        alt="avatar2"
-                        className="avatar"
-                        src={logo.image}
-                      />
-                    ) : (
-                      <ImageBackground>
-                        <img alt="icon-camera" src={iconCamera} />
-                      </ImageBackground>
-                    )}
-                  </ImageWrap>
-                  <input
-                    type="file"
-                    ref={inputLogo}
-                    accept=".jpg, .png"
-                    style={{ visibility: "hidden", display: "none" }}
-                    onChange={onChangeLogo}
-                  />
-                </IconButton>
-              </CardBodyLeft>
-              <CardBodyRight>
-                <Line>
-                  <FormLabel>Nama Perusahaan</FormLabel>
-                  <InputText
-                    borderRadius="5px"
-                    placeholder="Tulis nama perusahaan..."
-                    value={namaPerusahaan}
-                    name="namePerusahaan"
-                    onChange={(e) => {
-                      setNamaPerusahaan(e.target.value);
-                    }}
-                    height="40px"
-                    borderColor={
-                      error && namaPerusahaan === "" ? "#FCA1A1" : "#E4E4E4"
-                    }
-                    backgroundColor="rgba(217, 217, 217, 0.1)"
-                    placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
-                  />
-                </Line>
-                <Line>
-                  <FormLabel>Alamat</FormLabel>
-                  <InputText
-                    borderRadius="5px"
-                    placeholder="Tulis alamat..."
-                    value={alamat}
-                    onChange={(e) => setAlamat(e.target.value)}
-                    height="40px"
-                    borderColor={error && alamat === "" ? "#FCA1A1" : "#E4E4E4"}
-                    backgroundColor="rgba(217, 217, 217, 0.1)"
-                    placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
-                  />
-                </Line>
-                <Line>
-                  <FormLabel>Telepon</FormLabel>
-                  <InputText
-                    borderRadius="5px"
-                    placeholder="Tulis nomor telepon"
-                    value={telepon}
-                    onChange={(e) => setTelepon(e.target.value)}
-                    height="40px"
-                    borderColor={
-                      error && telepon === "" ? "#FCA1A1" : "#E4E4E4"
-                    }
-                    backgroundColor="rgba(217, 217, 217, 0.1)"
-                    placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
-                  />
-                </Line>
-                <Line>
-                  <FormLabel>Kategori</FormLabel>
-                  <div
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <DropDown
-                      dropdownValue={selectKategori}
-                      listDropDown={listKategori}
-                      handleChange={(data) =>
-                        setSelectKategori([data.target.value])
-                      }
-                      placeHolder="Pilih Kategori"
-                      borderRadius="5px"
-                      width="100%"
-                      borderColor={
-                        selectKategori.length === 0 && error
-                          ? "#FCA1A1"
-                          : "#E4E4E4"
-                      }
-                    />
-                  </div>
-                </Line>
-                <Line>
-                  <FormLabel>Nama PIC</FormLabel>
-                  <div
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <InputText
-                      borderRadius="5px"
-                      placeholder="Penanggung jawab"
-                      value={namaPic}
-                      onChange={(e) => setNamaPic(e.target.value)}
-                      height="40px"
-                      type="text"
-                      width="100%"
-                      borderColor={
-                        error && namaPic === "" ? "#FCA1A1" : "#E4E4E4"
-                      }
-                      backgroundColor="rgba(217, 217, 217, 0.1)"
-                      placeholderStyle={{
-                        fontSize: "12px",
-                        lineHeight: "15px",
+                    <ImageWrap
+                      style={{
+                        border: `1px dashed ${
+                          logo.image === null && error ? "red" : "#E0E0E0"
+                        }`,
                       }}
-                    />
-                  </div>
-                </Line>
-                <Line>
-                  <FormLabel>Email</FormLabel>
-                  <div
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <InputText
-                      borderRadius="5px"
-                      placeholder="Tuliskan Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      height="40px"
-                      width="100%"
-                      type="email"
-                      borderColor={
-                        error && email === "" ? "#FCA1A1" : "#E4E4E4"
-                      }
-                      backgroundColor="rgba(217, 217, 217, 0.1)"
-                      placeholderStyle={{
-                        fontSize: "12px",
-                        lineHeight: "15px",
-                      }}
-                    />
-                  </div>
-                </Line>
-                <Line>
-                  <FormLabel />
-                  <div
-                    style={{
-                      width: "100%",
-                      fontStyle: "italic",
-                      fontWeight: " 300",
-                      fontSize: " 10px",
-                      lineHeight: "10px",
-                    }}
-                  >
-                    Email ini akan dikirimkan notifikasi ketika sesoarang
-                    berhasil melamar
-                  </div>
-                </Line>
-              </CardBodyRight>
-            </CardBody>
-
-            <FooterWrapper>
-              <Button
-                onClick={() => {
-                  if (
-                    namaPerusahaan === "" ||
-                    alamat === "" ||
-                    telepon === "" ||
-                    namaPic === "" ||
-                    email === "" ||
-                    selectKategori.length === 0 ||
-                    logo.image === null
-                  ) {
-                    setError(true);
-                  } else {
-                    setStep("2");
-                    setError(false);
-                  }
-                }}
-              >
-                Selanjutnya
-              </Button>
-            </FooterWrapper>
-          </CardWrapper>
-        </React.Fragment>
-      )}
-
-      {step === "2" && (
-        <React.Fragment>
-          <div>
-            <IconButton style={{ padding: "0px" }} onClick={() => setStep("1")}>
-              <IconBack />
-            </IconButton>
-          </div>
-          <Title title="Formulir Permintaan Publikasi Loker" />
-          <CardWrapper borderRadius="10px">
-            <CardHead>
-              <img src={business} alt="" width="24px" />
-              <span>Info Lowongan</span>
-            </CardHead>
-            <CardBody>
-              <BodyStepTwo>
-                {/* Deskrisi Pekerjaan */}
-                <Wrapper>
-                  <TitleDesc>Banner Loker</TitleDesc>
-
-                  <div
-                    style={{
-                      border: `1px dashed ${
-                        banner.image === null && error ? "#FCA1A1" : "#E0E0E0"
-                      }`,
-                      aspectRatio: "10 / 2",
-                      padding: "10px",
-                      borderRadius: "5px",
-                      width: "100%",
-                    }}
-                  >
-                    {banner.image ? (
-                      <Button sx={{ p: 0 }} onClick={onClickBanner}>
+                    >
+                      {logo.image ? (
                         <Avatar
                           sx={{
-                            height: "100%",
-                            width: "100%",
-                            aspectRatio: "10 / 2",
-                          }}
-                          style={{
-                            borderRadius: "0px",
+                            height: 192,
+                            width: 192,
                           }}
                           alt="avatar2"
                           className="avatar"
-                          src={banner.image}
+                          src={logo.image}
                         />
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="text"
-                        style={{
-                          borderRadius: "5px",
-                          backgroundColor: "#F0F0F0",
-                          height: "100%",
-                          width: "100%",
+                      ) : (
+                        <ImageBackground>
+                          <img alt="icon-camera" src={iconCamera} />
+                        </ImageBackground>
+                      )}
+                    </ImageWrap>
+                    <input
+                      type="file"
+                      ref={inputLogo}
+                      accept=".jpg, .png"
+                      style={{ visibility: "hidden", display: "none" }}
+                      onChange={onChangeLogo}
+                    />
+                  </IconButton>
+                </CardBodyLeft>
+                <CardBodyRight>
+                  <Line>
+                    <FormLabel>Nama Perusahaan</FormLabel>
+                    <Controller
+                      control={control}
+                      name="namaPerusahaan"
+                      defaultValue=""
+                      rules={{
+                        required: "Silahkan tulis Nama Perusaaan",
+                      }}
+                      render={({ field, fieldState: { error } }) => (
+                        <>
+                          <InputText
+                            value={field.value}
+                            onChange={field.onChange}
+                            inputRef={field.ref}
+                            error={error}
+                            helperText={error ? error.message : null}
+                            borderRadius="5px"
+                            placeholder="Tulis nama perusahaan..."
+                            type="text"
+                            height="40px"
+                            backgroundColor="rgba(217, 217, 217, 0.1)"
+                            placeholderStyle={{
+                              fontSize: "12px",
+                              lineHeight: "15px",
+                            }}
+                          />
+                        </>
+                      )}
+                    />
+                  </Line>
+                  <Line>
+                    <FormLabel>Alamat</FormLabel>
+                    <Controller
+                      control={control}
+                      name="alamat"
+                      defaultValue=""
+                      rules={{
+                        required: "Silahkan Ketik Alamat",
+                      }}
+                      render={({ field, fieldState: { error } }) => (
+                        <InputText
+                          value={field.value}
+                          onChange={field.onChange}
+                          inputRef={field.ref}
+                          error={error}
+                          helperText={error ? error.message : null}
+                          borderRadius="5px"
+                          placeholder="Tulis alamat..."
+                          height="40px"
+                          backgroundColor="rgba(217, 217, 217, 0.1)"
+                          placeholderStyle={{
+                            fontSize: "12px",
+                            lineHeight: "15px",
+                          }}
+                        />
+                      )}
+                    />
+                  </Line>
+                  <Line>
+                    <FormLabel>Telepon</FormLabel>
+                    <Controller
+                      control={control}
+                      name="telepon"
+                      defaultValue=""
+                      rules={{
+                        required: "Silahkan Ketik Nomor Telepon",
+                        pattern: {
+                          value: /^(0|[0-9]\d*)(\.\d+)?$/,
+                          message: "Masukan Nomor",
+                        },
+                      }}
+                      render={({ field, fieldState: { error } }) => (
+                        <InputText
+                          type="number"
+                          value={field.value}
+                          onChange={field.onChange}
+                          inputRef={field.ref}
+                          error={error}
+                          helperText={error ? error.message : null}
+                          borderRadius="5px"
+                          placeholder="Tulis nomor telepon"
+                          height="40px"
+                          backgroundColor="rgba(217, 217, 217, 0.1)"
+                          placeholderStyle={{
+                            fontSize: "12px",
+                            lineHeight: "15px",
+                          }}
+                        />
+                      )}
+                    />
+                  </Line>
+                  <Line>
+                    <FormLabel>Kategori</FormLabel>
+                    <div
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <DropDown
+                        dropdownValue={selectKategori}
+                        listDropDown={listKategori}
+                        handleChange={(data) =>
+                          setSelectKategori([data.target.value])
+                        }
+                        placeHolder="Pilih Kategori"
+                        borderRadius="5px"
+                        width="100%"
+                        borderColor={
+                          selectKategori.length === 0 && error
+                            ? "red"
+                            : "#E4E4E4"
+                        }
+                      />
+                    </div>
+                  </Line>
+                  <Line>
+                    <FormLabel>Nama PIC</FormLabel>
+                    <div
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <Controller
+                        control={control}
+                        name="namaPic"
+                        defaultValue=""
+                        rules={{
+                          required: "Silahkan Ketik Nama PIC",
                         }}
-                        onClick={onClickBanner}
-                      >
-                        <div
+                        render={({ field, fieldState: { error } }) => (
+                          <InputText
+                            value={field.value}
+                            onChange={field.onChange}
+                            inputRef={field.ref}
+                            error={error}
+                            helperText={error ? error.message : null}
+                            borderRadius="5px"
+                            placeholder="Penanggung jawab"
+                            height="40px"
+                            type="text"
+                            width="100%"
+                            backgroundColor="rgba(217, 217, 217, 0.1)"
+                            placeholderStyle={{
+                              fontSize: "12px",
+                              lineHeight: "15px",
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                  </Line>
+                  <Line>
+                    <FormLabel>Email</FormLabel>
+                    <div
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <Controller
+                        control={control}
+                        name="email"
+                        defaultValue=""
+                        rules={{
+                          required: "Silahkan Ketik Email Address",
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: "Email address salah",
+                          },
+                        }}
+                        render={({ field, fieldState: { error } }) => (
+                          <InputText
+                            value={field.value}
+                            onChange={field.onChange}
+                            inputRef={field.ref}
+                            error={error}
+                            helperText={error ? error.message : null}
+                            borderRadius="5px"
+                            placeholder="Tuliskan Email"
+                            height="40px"
+                            width="100%"
+                            backgroundColor="rgba(217, 217, 217, 0.1)"
+                            placeholderStyle={{
+                              fontSize: "12px",
+                              lineHeight: "15px",
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                  </Line>
+                  <Line>
+                    <FormLabel />
+                    <div
+                      style={{
+                        width: "100%",
+                        fontStyle: "italic",
+                        fontWeight: " 300",
+                        fontSize: " 10px",
+                        lineHeight: "10px",
+                      }}
+                    >
+                      Email ini akan dikirimkan notifikasi ketika sesoarang
+                      berhasil melamar
+                    </div>
+                  </Line>
+                </CardBodyRight>
+              </CardBody>
+              <FooterWrapper>
+                <Button
+                  type="submit"
+                  onClick={() => {
+                    if (logo.image === null || selectKategori.length === 0) {
+                      setError(true);
+                    } else {
+                      setError(false);
+                    }
+                  }}
+                >
+                  Selanjutnya
+                </Button>
+              </FooterWrapper>
+            </CardWrapper>
+          </React.Fragment>
+        )}
+        {step === "2" && (
+          <React.Fragment>
+            <div>
+              <IconButton
+                style={{ padding: "0px" }}
+                onClick={() => setStep("1")}
+              >
+                <IconBack />
+              </IconButton>
+            </div>
+            <Title title="Formulir Permintaan Publikasi Loker" />
+            <CardWrapper borderRadius="10px">
+              <CardHead>
+                <img src={business} alt="" width="24px" />
+                <span>Info Lowongan</span>
+              </CardHead>
+              <CardBody>
+                <BodyStepTwo>
+                  {/* Deskrisi Pekerjaan */}
+                  <Wrapper>
+                    <TitleDesc>Banner Loker</TitleDesc>
+                    <div
+                      style={{
+                        border: `1px dashed ${
+                          banner.image === null && error ? "red" : "#E0E0E0"
+                        }`,
+                        aspectRatio: "10 / 2",
+                        padding: "10px",
+                        borderRadius: "5px",
+                        width: "100%",
+                      }}
+                    >
+                      {banner.image ? (
+                        <Button sx={{ p: 0 }} onClick={onClickBanner}>
+                          <Avatar
+                            sx={{
+                              height: "100%",
+                              width: "100%",
+                              aspectRatio: "10 / 2",
+                            }}
+                            style={{
+                              borderRadius: "0px",
+                            }}
+                            alt="avatar2"
+                            className="avatar"
+                            src={banner.image}
+                          />
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="text"
                           style={{
-                            display: "flex",
+                            borderRadius: "5px",
+                            backgroundColor: "#F0F0F0",
                             height: "100%",
                             width: "100%",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textAlign: "center",
-                            gap: "5px",
                           }}
+                          onClick={onClickBanner}
                         >
-                          <img
-                            alt="icon-camera"
-                            src={iconCamera}
-                            height="40"
-                            width="40"
-                          />
-                          <p
+                          <div
                             style={{
+                              display: "flex",
+                              height: "100%",
                               width: "100%",
-                              fontStyle: "italic",
-                              fontWeight: " 300",
-                              fontSize: " 10px",
-                              lineHeight: "10px",
-                              color: "rgba(0, 0, 0, 0.25)",
+                              flexDirection: "column",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              textAlign: "center",
+                              gap: "5px",
                             }}
                           >
-                            Gambar 1024 x 256, max : 1MB
-                          </p>
-                        </div>
-                      </Button>
-                    )}
-                  </div>
-                  <input
-                    type="file"
-                    ref={inputBanner}
-                    accept=".jpg, .png"
-                    style={{ visibility: "hidden", display: "none" }}
-                    onChange={onChangeBanner}
-                  />
-                </Wrapper>
-
-                {/* Posisi */}
-                <Wrapper>
-                  <TitleDesc>Posisi</TitleDesc>
-                  <InputText
-                    placeholder="Posisi apa yang anda butuhkan ?"
-                    borderRadius="5px"
-                    value={posisi}
-                    onChange={(e) => setPosisi(e.target.value)}
-                    height="40px"
-                    borderColor={error && posisi === "" ? "#FCA1A1" : "#E4E4E4"}
-                    backgroundColor="rgba(217, 217, 217, 0.1)"
-                    placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
-                  />
-                </Wrapper>
-
-                <Wrapper>
-                  <TitleDesc>Deskripsi Pekerjaan</TitleDesc>
-                  <TextareaAutosize
-                    placeholder="Jelaskan secara rinci seperti apa pekerja yang anda ingin kan ....."
-                    minRows={6}
-                    maxRows={6}
-                    style={{
-                      resize: "none",
-                      background: "rgba(217, 217, 217, 0.1)",
-                      border: "1px solid #E5E5E5",
-                      borderRadius: "5px",
-                      padding: "10px",
-                      fontFamily: "inherit",
-                      height: "174px",
-                      borderColor: `${
-                        error && deskrisi === "" ? "#FCA1A1" : "#E4E4E4"
-                      }`,
-                    }}
-                    value={deskrisi}
-                    onChange={(e) => setDeskrisi(e.target.value)}
-                  />
-                </Wrapper>
-
-                {/* Batas Pendaftaran */}
-                <Wrapper>
-                  <TitleDesc>Batas Pendaftaran</TitleDesc>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        zIndex: 99,
-                      }}
-                    >
-                      <DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        selectsStart
-                        startDate={startDate}
-                        endDate={endDate}
-                        customInput={
-                          <InputText
-                            placeholder="Mulai"
-                            borderColor={
-                              error && startDate === null
-                                ? "#FCA1A1"
-                                : "#E4E4E4"
-                            }
-                            borderRadius="5px"
-                            height="40px"
-                            width="100%"
-                            backgroundColor="rgba(217, 217, 217, 0.1)"
-                            placeholderStyle={{
-                              fontSize: "12px",
-                              lineHeight: "15px",
-                            }}
-                          />
-                        }
-                      />
+                            <img
+                              alt="icon-camera"
+                              src={iconCamera}
+                              height="40"
+                              width="40"
+                            />
+                            <p
+                              style={{
+                                width: "100%",
+                                fontStyle: "italic",
+                                fontWeight: " 300",
+                                fontSize: " 10px",
+                                lineHeight: "10px",
+                                color: "rgba(0, 0, 0, 0.25)",
+                              }}
+                            >
+                              Gambar 1024 x 256, max : 1MB
+                            </p>
+                          </div>
+                        </Button>
+                      )}
                     </div>
-                    -
-                    <div
-                      style={{
-                        width: "100%",
-                        zIndex: 99,
+                    <input
+                      type="file"
+                      ref={inputBanner}
+                      accept=".jpg, .png"
+                      style={{ visibility: "hidden", display: "none" }}
+                      onChange={onChangeBanner}
+                    />
+                  </Wrapper>
+                  {/* Posisi */}
+                  <Wrapper>
+                    <TitleDesc>Posisi</TitleDesc>
+                    <Controller
+                      control={control}
+                      name="posisi"
+                      defaultValue=""
+                      rules={{
+                        required: "Silahkan Ketik Posisi",
                       }}
-                    >
-                      <DatePicker
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={startDate}
-                        customInput={
-                          <InputText
-                            placeholder="Sampai"
-                            borderColor={
-                              error && endDate === null ? "#FCA1A1" : "#E4E4E4"
-                            }
-                            borderRadius="5px"
-                            height="40px"
-                            width="100%"
-                            backgroundColor="rgba(217, 217, 217, 0.1)"
-                            placeholderStyle={{
-                              fontSize: "12px",
-                              lineHeight: "15px",
-                            }}
-                          />
-                        }
-                      />
-                    </div>
-                  </div>
-                </Wrapper>
-              </BodyStepTwo>
-
-              <BodyStepTwo>
-                {/* Kualifikasi */}
-                <Wrapper>
-                  <TitleDesc>Kualifikasi</TitleDesc>
-                  <TextareaAutosize
-                    // aria-label="minimum height"
-                    placeholder="Jelaskan secara rinci seperti apa pekerja yang anda ingin kan ....."
-                    minRows={6}
-                    style={{
-                      resize: "none",
-                      backgroundColor: "rgba(217, 217, 217, 0.1)",
-                      fontFamily: "inherit",
-                      border: "1px solid #E5E5E5",
-                      borderRadius: "5px",
-                      padding: "10px",
-                      height: "72px",
-                      borderColor: `${
-                        error && kualifikasi === "" ? "#FCA1A1" : "#E4E4E4"
-                      }`,
-                    }}
-                    borderColor={
-                      error && kualifikasi === "" ? "#FCA1A1" : "#E4E4E4"
-                    }
-                    value={kualifikasi}
-                    onChange={(e) => setKualifikasi(e.target.value)}
-                  />
-                </Wrapper>
-
-                {/* Lokasi */}
-                <Wrapper>
-                  <TitleDesc>Lokasi</TitleDesc>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "27px",
-                    }}
-                  >
-                    <DropDown
-                      dropdownValue={selectProvinsi}
-                      listDropDown={listProvinsi}
-                      handleChange={(data) => handleChangeProvinsi(data)}
-                      placeHolder="Pilih Provinsi"
-                      width="100%"
-                      borderColor={
-                        selectProvinsi.length === 0 && error
-                          ? "#FCA1A1"
-                          : "#E4E4E4"
-                      }
-                    />
-                    <DropDown
-                      dropdownValue={selectKota}
-                      listDropDown={listKota}
-                      handleChange={(data) =>
-                        setSelectKota([data.target.value])
-                      }
-                      placeHolder="Pilih Kabupaten/Kota"
-                      width="100%"
-                      borderColor={
-                        selectKota.length === 0 && error ? "#FCA1A1" : "#E4E4E4"
-                      }
-                    />
-                  </div>
-                </Wrapper>
-
-                {/* Gaji */}
-                <Wrapper>
-                  <TitleDesc>Gaji</TitleDesc>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                    }}
-                  >
-                    <InputText
-                      placeholder="Mulai"
-                      value={minGaji}
-                      onChange={(e) => setMinGaji(e.target.value)}
-                      borderColor={
-                        error && minGaji === "" ? "#FCA1A1" : "#E4E4E4"
-                      }
-                      borderRadius="5px"
-                      height="40px"
-                      backgroundColor="rgba(217, 217, 217, 0.1)"
-                      placeholderStyle={{
-                        fontSize: "12px",
-                        lineHeight: "15px",
-                      }}
-                    />
-                    -
-                    <InputText
-                      placeholder="Sampai"
-                      value={maxGaji}
-                      onChange={(e) => setMaxGaji(e.target.value)}
-                      borderColor={
-                        error && maxGaji === "" ? "#FCA1A1" : "#E4E4E4"
-                      }
-                      borderRadius="5px"
-                      height="40px"
-                      backgroundColor="rgba(217, 217, 217, 0.1)"
-                      placeholderStyle={{
-                        fontSize: "12px",
-                        lineHeight: "15px",
-                      }}
-                    />
-                  </div>
-                </Wrapper>
-
-                {/* Jenis */}
-                <Wrapper>
-                  <TitleDesc>Jenis</TitleDesc>
-                  <DropDown
-                    placeHolder="Pilih Jenis"
-                    dropdownValue={selectType}
-                    listDropDown={listType}
-                    handleChange={(data) => setSelectType([data.target.value])}
-                    width="100%"
-                    borderColor={
-                      selectType.length === 0 && error ? "#FCA1A1" : "#E4E4E4"
-                    }
-                  />
-                </Wrapper>
-
-                {/* Benefit */}
-                <Wrapper>
-                  <TitleDesc>Benefit</TitleDesc>
-                  <InputText
-                    value={benefit}
-                    onChange={(e) => setBenefit(e.target.value)}
-                    borderRadius="5px"
-                    height="40px"
-                    borderColor={
-                      error && benefit === "" ? "#FCA1A1" : "#E4E4E4"
-                    }
-                    placeholder="Tuliskan benefit apa saja yang anda berikan ?"
-                    backgroundColor="rgba(217, 217, 217, 0.1)"
-                    placeholderStyle={{ fontSize: "12px", lineHeight: "15px" }}
-                  />
-                </Wrapper>
-
-                {/* Syarat Dan Ketentuan */}
-                <Wrapper>
-                  <Agreement>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={agree}
-                          onChange={(e) => setAgree(e.target.checked)}
-                        />
-                      }
-                      label={
-                        <p
-                          style={{
-                            fontWeight: 600,
-                            fontSize: "16px",
-                            lineHeight: "19px",
+                      render={({ field, fieldState: { error } }) => (
+                        <InputText
+                          value={field.value}
+                          onChange={field.onChange}
+                          inputRef={field.ref}
+                          error={error}
+                          helperText={error ? error.message : null}
+                          placeholder="Posisi apa yang anda butuhkan ?"
+                          borderRadius="5px"
+                          height="40px"
+                          backgroundColor="rgba(217, 217, 217, 0.1)"
+                          placeholderStyle={{
+                            fontSize: "12px",
+                            lineHeight: "15px",
                           }}
-                        >
-                          Saya menyetujui{" "}
-                          <span style={{ color: "#0B85FF" }}> syarat </span>&
-                          <span style={{ color: "#0B85FF" }}> ketentuan.</span>
-                        </p>
+                        />
+                      )}
+                    />
+                  </Wrapper>
+                  <Wrapper>
+                    <TitleDesc>Deskripsi Pekerjaan</TitleDesc>
+                    <Controller
+                      control={control}
+                      name="deskripsiPekerjaan"
+                      defaultValue=""
+                      rules={{
+                        required: "Silahkan Ketik Pekerjaan",
+                      }}
+                      render={({ field, fieldState: { error } }) => (
+                        <TextField
+                          value={field.value}
+                          onChange={field.onChange}
+                          inputRef={field.ref}
+                          error={error}
+                          helperText={error ? error.message : null}
+                          placeholder="Jelaskan secara rinci seperti apa pekerja yang anda ingin kan ....."
+                          multiline
+                          sx={{
+                            backgroundColor: "rgba(217, 217, 217, 0.1)",
+                          }}
+                          InputProps={{
+                            inputComponent: TextareaAutosize,
+                            inputProps: {
+                              style: {
+                                resize: "auto",
+                              },
+                              minRows: 3,
+                            },
+                          }}
+                        />
+                      )}
+                    />
+                  </Wrapper>
+                  {/* Batas Pendaftaran */}
+                  <Wrapper>
+                    <TitleDesc>Batas Pendaftaran</TitleDesc>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "100%",
+                          zIndex: 99,
+                        }}
+                      >
+                        <DatePicker
+                          selected={startDate}
+                          onChange={(date) => setStartDate(date)}
+                          selectsStart
+                          startDate={startDate}
+                          endDate={endDate}
+                          customInput={
+                            <InputText
+                              placeholder="Mulai"
+                              borderColor={
+                                error && startDate === null
+                                  ? "#FCA1A1"
+                                  : "#E4E4E4"
+                              }
+                              borderRadius="5px"
+                              height="40px"
+                              width="100%"
+                              backgroundColor="rgba(217, 217, 217, 0.1)"
+                              placeholderStyle={{
+                                fontSize: "12px",
+                                lineHeight: "15px",
+                              }}
+                            />
+                          }
+                        />
+                      </div>
+                      -
+                      <div
+                        style={{
+                          width: "100%",
+                          zIndex: 99,
+                        }}
+                      >
+                        <DatePicker
+                          selected={endDate}
+                          onChange={(date) => setEndDate(date)}
+                          selectsEnd
+                          startDate={startDate}
+                          endDate={endDate}
+                          minDate={startDate}
+                          customInput={
+                            <InputText
+                              placeholder="Sampai"
+                              borderColor={
+                                error && endDate === null
+                                  ? "#FCA1A1"
+                                  : "#E4E4E4"
+                              }
+                              borderRadius="5px"
+                              height="40px"
+                              width="100%"
+                              backgroundColor="rgba(217, 217, 217, 0.1)"
+                              placeholderStyle={{
+                                fontSize: "12px",
+                                lineHeight: "15px",
+                              }}
+                            />
+                          }
+                        />
+                      </div>
+                    </div>
+                  </Wrapper>
+                </BodyStepTwo>
+                <BodyStepTwo>
+                  {/* Kualifikasi */}
+                  <Wrapper>
+                    <TitleDesc>Kualifikasi</TitleDesc>
+                    <Controller
+                      control={control}
+                      name="kualifikasi"
+                      defaultValue=""
+                      rules={{
+                        required: "Silahkan Ketik Kualifikasi",
+                      }}
+                      render={({ field, fieldState: { error } }) => (
+                        <TextField
+                          value={field.value}
+                          onChange={field.onChange}
+                          inputRef={field.ref}
+                          error={error}
+                          helperText={error ? error.message : null}
+                          placeholder="Jelaskan secara rinci seperti apa pekerja yang anda ingin kan ....."
+                          multiline
+                          sx={{
+                            backgroundColor: "rgba(217, 217, 217, 0.1)",
+                          }}
+                          InputProps={{
+                            inputComponent: TextareaAutosize,
+                            inputProps: {
+                              style: {
+                                resize: "auto",
+                              },
+                              minRows: 3,
+                            },
+                          }}
+                        />
+                      )}
+                    />
+                  </Wrapper>
+                  {/* Lokasi */}
+                  <Wrapper>
+                    <TitleDesc>Lokasi</TitleDesc>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "27px",
+                      }}
+                    >
+                      <DropDown
+                        dropdownValue={selectProvinsi}
+                        listDropDown={listProvinsi}
+                        handleChange={(data) => handleChangeProvinsi(data)}
+                        placeHolder="Pilih Provinsi"
+                        width="100%"
+                        borderColor={
+                          selectProvinsi.length === 0 && error
+                            ? "red"
+                            : "#E4E4E4"
+                        }
+                      />
+                      <DropDown
+                        dropdownValue={selectKota}
+                        listDropDown={listKota}
+                        handleChange={(data) =>
+                          setSelectKota([data.target.value])
+                        }
+                        placeHolder="Pilih Kabupaten/Kota"
+                        width="100%"
+                        borderColor={
+                          selectKota.length === 0 && error ? "red" : "#E4E4E4"
+                        }
+                      />
+                    </div>
+                  </Wrapper>
+                  {/* Gaji */}
+                  <Wrapper>
+                    <TitleDesc>Gaji</TitleDesc>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <Controller
+                        control={control}
+                        name="minGaji"
+                        defaultValue=""
+                        rules={{
+                          required: "Masukan Nominal Gaji",
+                        }}
+                        render={({ field, fieldState: { error } }) => (
+                          <InputText
+                            value={field.value}
+                            onChange={field.onChange}
+                            inputRef={field.ref}
+                            error={error}
+                            helperText={error ? error.message : null}
+                            borderRadius="5px"
+                            height="40px"
+                            placeholder="Mulai"
+                            backgroundColor="rgba(217, 217, 217, 0.1)"
+                            placeholderStyle={{
+                              fontSize: "12px",
+                              lineHeight: "15px",
+                            }}
+                          />
+                        )}
+                      />
+                      -
+                      <Controller
+                        control={control}
+                        name="maxGaji"
+                        defaultValue=""
+                        rules={{
+                          required: "Masukan Nominal Gaji",
+                        }}
+                        render={({ field, fieldState: { error } }) => (
+                          <InputText
+                            value={field.value}
+                            onChange={field.onChange}
+                            inputRef={field.ref}
+                            error={error}
+                            helperText={error ? error.message : null}
+                            borderRadius="5px"
+                            height="40px"
+                            placeholder="Sampai"
+                            backgroundColor="rgba(217, 217, 217, 0.1)"
+                            placeholderStyle={{
+                              fontSize: "12px",
+                              lineHeight: "15px",
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                  </Wrapper>
+                  {/* Jenis */}
+                  <Wrapper>
+                    <TitleDesc>Jenis</TitleDesc>
+                    <DropDown
+                      placeHolder="Pilih Jenis"
+                      dropdownValue={selectType}
+                      listDropDown={listType}
+                      handleChange={(data) =>
+                        setSelectType([data.target.value])
+                      }
+                      width="100%"
+                      borderColor={
+                        selectType.length === 0 && error ? "#FCA1A1" : "#E4E4E4"
                       }
                     />
-                  </Agreement>
-                </Wrapper>
-              </BodyStepTwo>
-            </CardBody>
-
-            <CardFooter>
-              <Button
-                onClick={() => {
-                  if (
-                    banner.image === null ||
-                    posisi === "" ||
-                    deskrisi === "" ||
-                    kualifikasi === "" ||
-                    selectProvinsi.length === 0 ||
-                    selectKota.length === 0 ||
-                    benefit === ""
-                  ) {
-                    setError(true);
-                  } else {
-                    saveLoker();
-                  }
-                }}
-                disabled={!agree}
-              >
-                Kirim
-              </Button>
-            </CardFooter>
-          </CardWrapper>
-
-          <PopUp
-            open={kirim}
-            width="350px"
-            padding="60px 30px 25px 30px"
-            imgSrc={documentWriter}
-            onClickAction={handleClose}
-            onClose={handleClose}
-            title="Berhasil"
-            info="Formulir anda berhasil dikirim dan akan direview."
-          />
-        </React.Fragment>
-      )}
+                  </Wrapper>
+                  {/* Benefit */}
+                  <Wrapper>
+                    <TitleDesc>Benefit</TitleDesc>
+                    <Controller
+                      control={control}
+                      name="benefit"
+                      defaultValue=""
+                      rules={{
+                        required: "Silahkan Ketik Benefit",
+                      }}
+                      render={({ field, fieldState: { error } }) => (
+                        <InputText
+                          value={field.value}
+                          onChange={field.onChange}
+                          inputRef={field.ref}
+                          error={error}
+                          helperText={error ? error.message : null}
+                          borderRadius="5px"
+                          height="40px"
+                          placeholder="Tuliskan benefit apa saja yang anda berikan ?"
+                          backgroundColor="rgba(217, 217, 217, 0.1)"
+                          placeholderStyle={{
+                            fontSize: "12px",
+                            lineHeight: "15px",
+                          }}
+                        />
+                      )}
+                    />
+                  </Wrapper>
+                  {/* Syarat Dan Ketentuan */}
+                  <Wrapper>
+                    <Agreement>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={agree}
+                            onChange={(e) => setAgree(e.target.checked)}
+                          />
+                        }
+                        label={
+                          <p
+                            style={{
+                              fontWeight: 600,
+                              fontSize: "16px",
+                              lineHeight: "19px",
+                            }}
+                          >
+                            Saya menyetujui{" "}
+                            <span style={{ color: "#0B85FF" }}> syarat </span>&
+                            <span style={{ color: "#0B85FF" }}>
+                              {" "}
+                              ketentuan.
+                            </span>
+                          </p>
+                        }
+                      />
+                    </Agreement>
+                  </Wrapper>
+                </BodyStepTwo>
+              </CardBody>
+              <CardFooter>
+                <Button
+                  type="submit"
+                  disabled={!agree}
+                  onClick={() => {
+                    if (
+                      banner.image === null ||
+                      selectProvinsi.length === 0 ||
+                      selectKota.length === 0
+                    ) {
+                      setError(true);
+                    } else {
+                      setError(false);
+                    }
+                  }}
+                >
+                  Kirim
+                </Button>
+              </CardFooter>
+            </CardWrapper>
+            <PopUp
+              open={kirim}
+              width="350px"
+              padding="60px 30px 25px 30px"
+              imgSrc={documentWriter}
+              onClickAction={handleClose}
+              onClose={handleClose}
+              title="Berhasil"
+              info="Formulir anda berhasil dikirim dan akan direview."
+            />
+          </React.Fragment>
+        )}
+      </form>
     </Container>
   );
 };
