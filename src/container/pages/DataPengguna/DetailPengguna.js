@@ -1,13 +1,12 @@
 // Page Detail Pengguna
 // --------------------------------------------------------
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { IconButton } from "@mui/material";
 
 // Assets
 import backroundUser from "../../../assets/img/backgroundUser.png";
-import profilePhoto from "../../../assets/img/profilePhoto.png";
 import verifiedAccount from "../../../assets/icon/verifiedAccount.svg";
 import customer from "../../../assets/icon/customer.svg";
 import pencil from "../../../assets/icon/pencil.svg";
@@ -17,8 +16,20 @@ import barRed from "../../../assets/img/bar-red.png";
 import barPurple from "../../../assets/img/bar-purple.png";
 import barGreen from "../../../assets/img/bar-green.png";
 import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
+import { getDetail } from "../../../utils/api";
 
-const DetailPengguna = ({ setActiveStep, history }) => {
+const DetailPengguna = ({ setActiveStep, history, id_user }) => {
+  const [userDetail, setUserDetail] = useState({});
+
+  useEffect(() => {
+    const fetchPengguna = async () => {
+      const response = await getDetail(id_user);
+      setUserDetail(response.data.data);
+    };
+
+    fetchPengguna();
+  }, [id_user]);
+
   return (
     <Container>
       <IconButton
@@ -36,10 +47,12 @@ const DetailPengguna = ({ setActiveStep, history }) => {
       <Profile>
         <img width="100%" height="225px" src={backroundUser} alt="" />
         <DetailProfile>
-          <img src={profilePhoto} width="100px" alt="" />
+          <img src={userDetail.foto_profile} width="100px" alt="" />
           <NickName>
-            <span>Muh. Arifandi</span>
-            <img src={verifiedAccount} alt="" width="23.91px" />
+            <span>{userDetail.full_name}</span>
+            {userDetail.is_verified === "1" && (
+              <img src={verifiedAccount} alt="" width="23.91px" />
+            )}
           </NickName>
         </DetailProfile>
       </Profile>
@@ -55,8 +68,8 @@ const DetailPengguna = ({ setActiveStep, history }) => {
               style={{ borderRadius: "10px 0px 0px 10px" }}
             />
             <ContentWrap>
-              <TitleSummary>300</TitleSummary>
-              <DetailSummary>Follower</DetailSummary>
+              <TitleSummary>{userDetail.follower}</TitleSummary>
+              <DetailSummary>Followers</DetailSummary>
             </ContentWrap>
           </Sumary>
           <Sumary>
@@ -67,8 +80,8 @@ const DetailPengguna = ({ setActiveStep, history }) => {
               style={{ borderRadius: "10px 0px 0px 10px" }}
             />
             <ContentWrap>
-              <TitleSummary>30</TitleSummary>
-              <DetailSummary>Follower</DetailSummary>
+              <TitleSummary>{userDetail.following}</TitleSummary>
+              <DetailSummary>Following</DetailSummary>
             </ContentWrap>
           </Sumary>
           <Sumary>
@@ -79,8 +92,8 @@ const DetailPengguna = ({ setActiveStep, history }) => {
               style={{ borderRadius: "10px 0px 0px 10px" }}
             />
             <ContentWrap>
-              <TitleSummary>30</TitleSummary>
-              <DetailSummary>Follower</DetailSummary>
+              <TitleSummary>{userDetail.total_group}</TitleSummary>
+              <DetailSummary>Grup</DetailSummary>
             </ContentWrap>
           </Sumary>
           <Sumary>
@@ -91,8 +104,8 @@ const DetailPengguna = ({ setActiveStep, history }) => {
               style={{ borderRadius: "10px 0px 0px 10px" }}
             />
             <ContentWrap>
-              <TitleSummary>30</TitleSummary>
-              <DetailSummary>Follower</DetailSummary>
+              <TitleSummary>{userDetail.total_proyek}</TitleSummary>
+              <DetailSummary>Project</DetailSummary>
             </ContentWrap>
           </Sumary>
           <Sumary>
@@ -103,8 +116,8 @@ const DetailPengguna = ({ setActiveStep, history }) => {
               style={{ borderRadius: "10px 0px 0px 10px" }}
             />
             <ContentWrap>
-              <TitleSummary>30</TitleSummary>
-              <DetailSummary>Follower</DetailSummary>
+              <TitleSummary>{userDetail.total_post}</TitleSummary>
+              <DetailSummary>Postingan</DetailSummary>
             </ContentWrap>
           </Sumary>
         </SumaryWrap>
@@ -125,26 +138,25 @@ const DetailPengguna = ({ setActiveStep, history }) => {
         <DetailBioData>
           <Line>
             <InfoData>Nama Lengkap</InfoData>
-            <ValueData>Muh. Arifandi</ValueData>
+            <ValueData>{userDetail.full_name}</ValueData>
           </Line>
           <Line>
             <InfoData>Jenis Kelamin</InfoData>
-            <ValueData>Laki-Laki</ValueData>
-          </Line>
-          <Line>
-            <InfoData>Nomor Telepon</InfoData>
-            <ValueData>085316547777</ValueData>
-          </Line>
-          <Line>
-            <InfoData>Alamat</InfoData>
             <ValueData>
-              Nambongan RT O1,/RW 30, Tlogoadi, Kec. Mlati, 55287, Kab Sleman,
-              Daerah Istimewa Yogyakarta, Indonesia
+              {userDetail.gender === "0" ? "Pria" : "Wanita"}
             </ValueData>
           </Line>
           <Line>
+            <InfoData>Nomor Telepon</InfoData>
+            <ValueData>{userDetail.phone}</ValueData>
+          </Line>
+          <Line>
+            <InfoData>Alamat</InfoData>
+            <ValueData>{userDetail.address}</ValueData>
+          </Line>
+          <Line>
             <InfoData>Tangal Lahir</InfoData>
-            <ValueData>21-10-2022</ValueData>
+            <ValueData>{userDetail.brith_date}</ValueData>
           </Line>
           <Line>
             <InfoData>Warga Negara</InfoData>
@@ -152,7 +164,7 @@ const DetailPengguna = ({ setActiveStep, history }) => {
           </Line>
           <Line>
             <InfoData>Email</InfoData>
-            <ValueData>arif76440@gmail.com</ValueData>
+            <ValueData>{userDetail.email}</ValueData>
           </Line>
         </DetailBioData>
       </BioData>
@@ -241,7 +253,7 @@ const InfoData = styled("div")`
   font-weight: 500;
   font-size: 15px;
   line-height: 18px;
-  color: #434343;
+  color: #8f8b8b;
 `;
 
 const ValueData = styled("div")`

@@ -3,7 +3,7 @@
 
 import { InputAdornment, Menu, MenuItem } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../../components/Button";
 import DropDown from "../../../components/DropDown";
 import InputText from "../../../components/InputText";
@@ -11,7 +11,7 @@ import Pagination from "../../../components/Pagination";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
 import Colors from "../../../utils/helpers/colors";
-import { dataContent } from "./dataDummy";
+// import { dataContent } from "./dataDummy";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
@@ -20,9 +20,13 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
-import profile from "../../../assets/img/profile-post.png";
+import { getAllDetail } from "../../../utils/api";
 
-const SemuaPengguna = ({ setActiveStep, setHistory }) => {
+const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
+  const [page, setPage] = useState("1");
+  const [limit, setLimit] = useState("10");
+  const [dataContent, setDataContent] = useState([]);
+
   const dataHeader = [
     {
       title: "No",
@@ -34,25 +38,32 @@ const SemuaPengguna = ({ setActiveStep, setHistory }) => {
       title: "Profile",
       key: "profile",
       render: (rowData) => (
-        <img
-          src={profile}
-          alt="profile"
-          style={{
-            width: "24px",
-          }}
-        />
+        <>
+          {rowData.foto_profile ? (
+            <img
+              src={rowData.foto_profile}
+              alt="profile"
+              style={{
+                width: "24px",
+              }}
+            />
+          ) : (
+            "No Image"
+          )}
+        </>
       ),
       width: 40,
       center: true,
     },
     {
       title: "Nama Lengkap",
-      key: "fullName",
+      key: "full_name",
     },
     {
       title: "Jenis Kelamin",
       key: "gender",
       center: true,
+      render: (rowData) => <p>{rowData.gender === "0" ? "Pria" : "Wanita"}</p>,
     },
     {
       title: "Kota",
@@ -61,7 +72,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory }) => {
     },
     {
       title: "Telepon",
-      key: "numberPhone",
+      key: "phone",
       center: true,
     },
     {
@@ -87,7 +98,8 @@ const SemuaPengguna = ({ setActiveStep, setHistory }) => {
           padding="0px 7px 0px 9px"
           onClick={() => {
             setActiveStep("detail");
-            setHistory("all");
+            setId_user(rowData.id_user);
+            setHistory("home");
           }}
         >
           {rowData.action}
@@ -102,6 +114,16 @@ const SemuaPengguna = ({ setActiveStep, setHistory }) => {
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState();
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const allUsers = await getAllDetail(page, limit);
+
+      setDataContent(allUsers.data.data);
+    };
+
+    fetchUsers();
+  }, [page, limit]);
 
   return (
     <Container>
@@ -353,7 +375,13 @@ const SemuaPengguna = ({ setActiveStep, setHistory }) => {
       </Title>
       <Table dataContent={dataContent} headerContent={dataHeader} />
       {/* Pagination */}
-      <Pagination count={10} currentData={10} totalData={100} page={2} />
+      <Pagination
+        count={10}
+        currentData={10}
+        totalData={100}
+        page={page}
+        onChange={(e, value) => setPage(value)}
+      />
     </Container>
   );
 };

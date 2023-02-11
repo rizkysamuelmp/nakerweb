@@ -2,9 +2,11 @@
 // --------------------------------------------------------
 
 import { styled } from "@mui/material/styles";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
+import Button from "../../../components/Button";
+import { users } from "../../../utils/api";
 
 // Asset
 import adornmentGreen from "../../../assets/img/adornment-green.png";
@@ -14,13 +16,19 @@ import adornmentOrange from "../../../assets/img/adornment-orange.png";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
-import profile from "../../../assets/img/profile-post.png";
 
-// Dummy
-import { dataContent } from "./dataDummy";
-import Button from "../../../components/Button";
+const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
+  const [pengguna, setPengguna] = useState([]);
 
-const DataPengguna = ({ setActiveStep, setHistory }) => {
+  useEffect(() => {
+    const fetchPengguna = async () => {
+      const response = await users();
+      setPengguna(response.data.data.user_list);
+    };
+
+    fetchPengguna();
+  }, []);
+
   const dataHeader = [
     {
       title: "No",
@@ -32,25 +40,32 @@ const DataPengguna = ({ setActiveStep, setHistory }) => {
       title: "Profile",
       key: "profile",
       render: (rowData) => (
-        <img
-          src={profile}
-          alt="profile"
-          style={{
-            width: "24px",
-          }}
-        />
+        <>
+          {rowData.foto_profile ? (
+            <img
+              src={rowData.foto_profile}
+              alt="profile"
+              style={{
+                width: "24px",
+              }}
+            />
+          ) : (
+            "No Image"
+          )}
+        </>
       ),
       width: 40,
       center: true,
     },
     {
       title: "Nama Lengkap",
-      key: "fullName",
+      key: "full_name",
     },
     {
       title: "Jenis Kelamin",
       key: "gender",
       center: true,
+      render: (rowData) => <p>{rowData.gender === "0" ? "Pria" : "Wanita"}</p>,
     },
     {
       title: "Kota",
@@ -59,21 +74,28 @@ const DataPengguna = ({ setActiveStep, setHistory }) => {
     },
     {
       title: "Telepon",
-      key: "numberPhone",
+      key: "phone",
       center: true,
     },
     {
       title: "Email",
       key: "email",
+      center: true,
     },
     {
-      title: "Sektor",
-      key: "sector",
+      title: "Status",
+      key: "is_status",
+      center: true,
+      render: (rowData) => (
+        <p>{rowData.is_status === "0" ? "Non Active" : "Active"}</p>
+      ),
     },
     {
       title: "Usia",
       key: "age",
+      center: true,
       width: 50,
+      render: (rowData) => <p>{rowData.age ? rowData.age + " Thn" : "-"}</p>,
     },
     {
       title: "Aksi",
@@ -85,6 +107,7 @@ const DataPengguna = ({ setActiveStep, setHistory }) => {
           padding="0px 7px 0px 9px"
           onClick={() => {
             setActiveStep("detail");
+            setId_user(rowData.id_user);
             setHistory("home");
           }}
         >
@@ -95,6 +118,8 @@ const DataPengguna = ({ setActiveStep, setHistory }) => {
       center: true,
     },
   ];
+
+  const dataContent = pengguna;
 
   return (
     <Container>
@@ -165,7 +190,11 @@ const DataPengguna = ({ setActiveStep, setHistory }) => {
       </SumaryWrap>
 
       {/* Tabel */}
-      <Table dataContent={dataContent} headerContent={dataHeader} />
+      <Table
+        dataContent={dataContent}
+        headerContent={dataHeader}
+        // onClickRow={actionClickHandler}
+      />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
         <TextSeeAll onClick={() => setActiveStep("all")}>
