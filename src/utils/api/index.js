@@ -16,6 +16,15 @@ const config = {
 };
 
 // Save Loker
+export const serviceGetDataLoker = (payload) =>
+  axios.get(`${apiUrl}/loker`, payload);
+
+export const serviceGetAllLoker = (payload) =>
+  axios.post(`${apiUrl}/loker/getAllLoker`, payload);
+
+export const serviceLokerFilter = (payload) =>
+  axios.post(`${apiUrl}/loker/filter`, payload);
+
 export const serviceLoker = (payload) =>
   axios.post(`${apiUrl}/loker/save`, payload);
 
@@ -30,9 +39,6 @@ export const serviceGetProvince = (payload) =>
 
 export const serviceGetCity = (payload) =>
   axios.post(`${apiUrl}/loker/getCity`, payload);
-
-export const serviceGetAllLoker = (payload) =>
-  axios.post(`${apiUrl}/loker/getAllLoker`, payload);
 
 // Api for pengguna
 export const users = () => axios.get(`${apiUrl}/users`);

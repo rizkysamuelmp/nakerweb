@@ -6,7 +6,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { Checkbox, FormControlLabel, IconButton } from "@mui/material";
 import PopUp from "../../../components/PopUp";
 import { Link, useHistory } from "react-router-dom";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // Asset
 import { ReactComponent as EyeLookIcon } from "../../../assets/icon/icon-eye-look.svg";

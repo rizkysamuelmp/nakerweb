@@ -11,7 +11,6 @@ import Pagination from "../../../components/Pagination";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
 import Colors from "../../../utils/helpers/colors";
-// import { dataContent } from "./dataDummy";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
@@ -24,7 +23,6 @@ import { getAllDetail } from "../../../utils/api";
 
 const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [page, setPage] = useState("1");
-  const [limit, setLimit] = useState("10");
   const [dataContent, setDataContent] = useState([]);
 
   const dataHeader = [
@@ -117,13 +115,13 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const allUsers = await getAllDetail(page, limit);
+      const allUsers = await getAllDetail(page, 10);
 
       setDataContent(allUsers.data.data);
     };
 
     fetchUsers();
-  }, [page, limit]);
+  }, [page]);
 
   return (
     <Container>

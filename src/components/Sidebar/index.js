@@ -39,6 +39,7 @@ const Sidebar = () => {
     >
       {AppRoutes.map((item, index) => (
         <Button
+          key={index}
           variant="text"
           sx={{
             p: 0,
@@ -50,7 +51,6 @@ const Sidebar = () => {
         >
           <LinkWrapper
             to={item.path}
-            key={index}
             style={{
               backgroundColor:
                 location?.pathname === item.path ? "#115AAA" : "white",

@@ -13,11 +13,15 @@ import business from "../../../assets/icon/Business.svg";
 import iconBusiness from "../../../assets/icon/bussiness-icon.png";
 import iconBusinessSuccess from "../../../assets/icon/business-icon-success.png";
 import iconBusinessDecline from "../../../assets/icon/business-icon-decline.png";
+import { useDispatch } from "react-redux";
 
 // Data Dummy
 import { infoPerusahaan } from "./DataDummy";
+import { setActiveStep } from "../../../store/actions/dataLoker";
 
-const DetailLoker = ({ setActiveStep, history }) => {
+const DetailLoker = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [confAccept, setConfAccept] = useState(false);
   const [accept, setAccept] = useState(false);
   const [confDecline, setConfDecline] = useState(false);
@@ -29,9 +33,9 @@ const DetailLoker = ({ setActiveStep, history }) => {
         <Back
           onClick={() => {
             if (history === "home") {
-              setActiveStep("page");
+              dispatch(setActiveStep("page"));
             } else {
-              setActiveStep("all");
+              dispatch(setActiveStep("all"));
             }
           }}
         >

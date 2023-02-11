@@ -1,7 +1,7 @@
 import { SET_LOADING } from "../actions/pageContainer";
 
 const initialState = {
-  isLoading: false,
+  isLoading: 0,
 };
 
 const pageContainer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const pageContainer = (state = initialState, action) => {
     case SET_LOADING:
       return {
         ...state,
-        isLoading: action.payload,
+        isLoading: action.payload ? state.isLoading + 1 : state.isLoading - 1,
       };
     default:
       return state;

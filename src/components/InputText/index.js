@@ -41,6 +41,7 @@ const InputText = ({
   placeholderStyle,
   height,
   multiline,
+  onKeyPress,
   ...input
 }) => {
   return (
@@ -48,6 +49,7 @@ const InputText = ({
       id={id}
       key={key}
       value={value}
+      onKeyPress={onKeyPress}
       onChange={onChange}
       inputRef={inputRef}
       label={label}
@@ -142,6 +144,7 @@ InputText.propTypes = {
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   onKeyDown: PropTypes.func,
+  onKeyPress: PropTypes.func,
   disabled: PropTypes.bool,
   input: PropTypes.object,
   spellCheck: PropTypes.bool,
@@ -174,6 +177,7 @@ InputText.defaultProps = {
   onBlur: () => {},
   onFocus: () => {},
   onKeyDown: () => {},
+  onKeyPress: () => {},
   input: {},
   disabled: false,
   spellCheck: false,

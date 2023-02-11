@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // Page Semua Loker
 // --------------------------------------------------------
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
@@ -14,8 +15,20 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import DropDown from "../../../components/DropDown";
 
+// Redux
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import {
+  getJobType,
+  setPagination,
+  setValueJobType,
+  setValueSector,
+  setValueStatus,
+  getLokerFilter,
+  setSearch,
+  setActiveStep,
+} from "../../../store/actions/dataLoker";
+
 // Asset
-import eye from "../../../assets/icon/Eye.svg";
 import iconSlider from "../../../assets/icon/icon-slider.png";
 import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
@@ -23,138 +36,60 @@ import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
 import iconPlus from "../../../assets/icon/icon-plus-white.svg";
 
-// Dummy Data
-import { dataContentAll } from "./DataDummy";
+const SemuaLoker = () => {
+  const dispatch = useDispatch();
 
-const SemuaLoker = ({ setActiveStep, setHistory }) => {
-  const dataHeader = [
-    {
-      title: "No",
-      key: "no",
-      width: 30,
-    },
-    {
-      title: "Posisi",
-      key: "position",
-    },
-    {
-      title: "Perusahaan",
-      key: "company",
-    },
-    {
-      title: "Lokasi",
-      key: "location",
-    },
-    {
-      title: "Tanggal Buka",
-      key: "openingDate",
-    },
-    {
-      title: "Sektor",
-      key: "sector",
-    },
-    {
-      title: "Kategori",
-      key: "category",
-    },
-    {
-      title: "Status",
-      key: "status",
-      width: 120,
-      render: (rowData) => (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {rowData.status === "Aktif" ? (
-            <div
-              style={{
-                border: "1px solid #039C40",
-                backgroundColor: "#AEF8AC",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#039C40",
-              }}
-            >
-              {rowData.status}
-            </div>
-          ) : (
-            <div
-              style={{
-                border: "1px solid #C80707",
-                backgroundColor: "#F5969633",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#C80707",
-              }}
-            >
-              {rowData.status}
-            </div>
-          )}
-        </div>
-      ),
-      center: true,
-    },
-    {
-      title: "Aksi",
-      width: 100,
-      render: (rowData) => (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            variant="contained"
-            borderRadius="5px"
-            padding="0px 7px 0px 9px"
-            onClick={() => {
-              setActiveStep("detail");
-              setHistory("all");
-            }}
-          >
-            Detail
-            <img src={eye} alt="eye" />
-          </Button>
-        </div>
-      ),
-      center: true,
-    },
-  ];
-
-  // useState
-  const [search, setSearch] = useState("");
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState();
 
+  // Get data redux
+  const {
+    allLoker,
+    headerTable,
+    pagination,
+    dropDownSector,
+    valueSector,
+    dropDownJobType,
+    valueJobType,
+    valueStatus,
+    search,
+  } = useSelector((state) => state.dataLoker, shallowEqual);
+
+  // Render pertama untuk get data
+  useEffect(() => {
+    dispatch(getLokerFilter());
+    dispatch(getJobType());
+  }, []);
+
+  // Fungsi get data pagination
+  const onChangePagination = (_, nextPage) => {
+    dispatch(setPagination({ ...pagination, page: nextPage }));
+    dispatch(getLokerFilter());
+  };
+
   return (
     <Container>
       {/* Title */}
-      <Title title="Semua Loker" withBack onBack={() => setActiveStep("page")}>
+      <Title
+        title="Semua Loker"
+        withBack
+        onBack={() => dispatch(setActiveStep("page"))}
+      >
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText
             type="text"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => dispatch(setSearch(e.target.value))}
             placeholder="pencarian"
             noPadding
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                dispatch(setPagination({ ...pagination, page: 1 }));
+                dispatch(getLokerFilter());
+              }
+            }}
             width="175px"
             borderRadius="5px"
             borderColor="#115AAA"
@@ -257,7 +192,10 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
           </Menu>
 
           {/* Icon Plus */}
-          <Button padding="12px" onClick={() => setActiveStep("formulir")}>
+          <Button
+            padding="12px"
+            onClick={() => dispatch(setActiveStep("formulir"))}
+          >
             <img alt="icon-plus" src={iconPlus} width={16} height={16} />
           </Button>
 
@@ -307,25 +245,16 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih kategori Loker :</p>
+              <p>Pilih Kategori Loker :</p>
               <DropDown
-                dropdownValue={dropDown}
-                listDropDown={[
-                  {
-                    label: "Part Time",
-                    value: 0,
-                  },
-                  {
-                    label: "Full Time",
-                    value: 0,
-                  },
-                  {
-                    label: "Freelancer",
-                    value: 0,
-                  },
-                ]}
-                placeHolder=""
-                handleChange={(e) => setDropDown(e.target.value)}
+                dropdownValue={valueJobType}
+                listDropDown={dropDownJobType}
+                placeHolder="Pilih Kategori Loker"
+                handleChange={(e) => {
+                  dispatch(setValueJobType([e.target.value]));
+                  dispatch(setPagination({ ...pagination, page: 1 }));
+                  dispatch(getLokerFilter());
+                }}
               />
             </div>
             <div
@@ -353,19 +282,14 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
             >
               <p>Pilih Sektor Loker :</p>
               <DropDown
-                dropdownValue={dropDown}
-                listDropDown={[
-                  {
-                    label: "Industri pakaian",
-                    value: 0,
-                  },
-                  {
-                    label: "Tambang Nikkel",
-                    value: 1,
-                  },
-                ]}
-                placeHolder=""
-                handleChange={(e) => setDropDown(e.target.value)}
+                dropdownValue={valueSector}
+                listDropDown={dropDownSector}
+                placeHolder="Pilih Sektor Loker"
+                handleChange={(e) => {
+                  dispatch(setValueSector([e.target.value]));
+                  dispatch(setPagination({ ...pagination, page: 1 }));
+                  dispatch(getLokerFilter());
+                }}
               />
             </div>
             <div
@@ -373,7 +297,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
             >
               <p>Pilih status Loker :</p>
               <DropDown
-                dropdownValue={dropDown}
+                dropdownValue={valueStatus}
                 listDropDown={[
                   {
                     label: "Aktif",
@@ -384,8 +308,12 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
                     value: 1,
                   },
                 ]}
-                placeHolder=""
-                handleChange={(e) => setDropDown(e.target.value)}
+                placeHolder="Pilih status Loker"
+                handleChange={(e) => {
+                  dispatch(setValueStatus([e.target.value]));
+                  dispatch(setPagination({ ...pagination, page: 1 }));
+                  dispatch(getLokerFilter());
+                }}
               />
             </div>
           </Menu>
@@ -402,8 +330,14 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
             width: "100%",
           }}
         >
-          <Table headerContent={dataHeader} dataContent={dataContentAll} />
-          <Pagination count={10} currentData={10} totalData={100} page={2} />
+          <Table headerContent={headerTable} dataContent={allLoker} />
+          <Pagination
+            count={pagination.count}
+            currentData={pagination.currentData}
+            totalData={pagination.totalData}
+            page={pagination.page}
+            onChange={onChangePagination}
+          />
         </div>
       </RowWrapper>
     </Container>

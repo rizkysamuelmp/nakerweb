@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // Page Data Loker
 // --------------------------------------------------------
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
@@ -11,29 +12,75 @@ import Chart from "../../../components/Chart";
 import ChartLine from "../../../components/ChartLine";
 
 // Redux
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import {
+  getDataLoker,
+  getLoker,
+  setActiveStep,
+} from "../../../store/actions/dataLoker";
 
 // Asset
 import imagePerson from "../../../assets/img/image-person-trending.png";
 import iconArrowRight from "../../../assets/icon/icon-arrow-right.png";
 
 // Dummy Data
-import {
-  dataChart,
-  dataContent,
-  dataHeader,
-  lokasiTrending,
-  lokerTranding,
-  sektorTrending,
-} from "./DataDummy";
-import { getDataLoker } from "../../../store/actions/dataLoker";
+import { lokasiTrending, lokerTranding, sektorTrending } from "./DataDummy";
 
-const DataLoker = ({ setActiveStep, setHistory }) => {
+const dataChart = [
+  {
+    data: [0, 0, 0],
+    backgroundColor: ["#115ABE", "#FA3E3E", "#03B74B"],
+    borderColor: ["#115ABE", "#FA3E3E", "#03B74B"],
+    borderWidth: 1,
+    label: [
+      {
+        title: "Diterima",
+        color: "#115ABE",
+      },
+      {
+        title: "Ditolak",
+        color: "#FA3E3E",
+      },
+      {
+        title: "Dilamar",
+        color: "#03B74B",
+      },
+    ],
+  },
+];
+
+const DataLoker = ({ setHistory }) => {
   const dispatch = useDispatch();
 
+  const [pieChart, setPieChart] = useState(dataChart);
+  const [totalData, setTotalData] = useState(0);
+
+  // Get data redux
+  const { lokerHome, headerTableHome, loker } = useSelector(
+    (state) => state.dataLoker,
+    shallowEqual
+  );
+
+  // Render pertama untuk get data
   useEffect(() => {
     dispatch(getDataLoker());
+    dispatch(getLoker());
   }, [dispatch]);
+
+  // Menghitung data loker untuk ditampilkan sebagai pie chart ketika data berhasil diambil
+  useEffect(() => {
+    if (Object.keys(loker).length !== 0) {
+      const { applied, rejected, accepted } = loker.total_loker;
+      const total = parseInt(applied) + parseInt(rejected) + parseInt(accepted);
+      setTotalData(total);
+      const data = [
+        (100 / total) * accepted,
+        (100 / total) * rejected,
+        (100 / total) * applied,
+      ];
+      setPieChart([{ ...dataChart[0], data: data }]);
+    }
+  }, [loker]);
 
   return (
     <Container>
@@ -48,7 +95,7 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
         </ContentWrapper>
         <ContentWrapper style={{ width: "35%" }}>
           <TitleBar>Jumlah Loker</TitleBar>
-          <Chart data={dataChart} description="Total 203" />
+          <Chart data={pieChart} description={`Total ${totalData}`} />
         </ContentWrapper>
       </RowWrapper>
 
@@ -100,7 +147,7 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
                 disablePadding
                 key={index}
                 onClick={() => {
-                  setActiveStep("detail");
+                  dispatch(setActiveStep("detail"));
                   setHistory("home");
                 }}
               >
@@ -130,10 +177,10 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
             width: "100%",
           }}
         >
-          <Table headerContent={dataHeader} dataContent={dataContent} />
+          <Table headerContent={headerTableHome} dataContent={lokerHome} />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
-            <TextSeeAll onClick={() => setActiveStep("all")}>
+            <TextSeeAll onClick={() => dispatch(setActiveStep("all"))}>
               Lihat Semua
             </TextSeeAll>
           </div>

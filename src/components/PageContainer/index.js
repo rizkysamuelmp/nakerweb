@@ -8,14 +8,22 @@ import { useHistory } from "react-router-dom";
 
 // Asset
 import liveChat from "../../assets/icon/live-chat.svg";
+import Loader from "../Loader";
+import { shallowEqual, useSelector } from "react-redux";
 
 const PageContainer = ({ children }) => {
   let history = useHistory();
-
-  const [notification, setNotification] = useState(null);
-  const isNotif = true;
-
   const location = useLocation();
+
+  const isNotif = true;
+  const [notification, setNotification] = useState(null);
+
+  const { isLoading } = useSelector(
+    ({ pageContainer }) => ({
+      isLoading: pageContainer.isLoading,
+    }),
+    shallowEqual
+  );
 
   return (
     <React.Fragment>
@@ -23,6 +31,8 @@ const PageContainer = ({ children }) => {
         onClick={(event) => setNotification(event.currentTarget)}
         isNotif={isNotif}
       />
+
+      <Loader isLoading={isLoading > 0} />
 
       {location?.pathname !== "/nakerweb/my-team" && (
         <IconButton

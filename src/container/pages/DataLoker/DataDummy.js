@@ -153,32 +153,33 @@ export const dataChart = [
 export const dataHeader = [
   {
     title: "No",
-    key: "no",
+    key: "loker_id",
     width: 30,
   },
   {
     title: "Posisi",
-    key: "position",
+    key: "job_position",
   },
   {
     title: "Perusahaan",
-    key: "company",
+    key: "name",
   },
   {
     title: "Lokasi",
-    key: "location",
+    key: "city",
   },
   {
     title: "Tanggal Buka",
-    key: "openingDate",
+    key: "start_open",
   },
   {
     title: "Sektor",
-    key: "sector",
+    key: "name",
+    render: (rowData) => <p>{rowData.level === "0" ? "Pria" : "Wanita"}</p>,
   },
   {
     title: "Kategori",
-    key: "category",
+    key: "provinice",
   },
   {
     title: "Status",
