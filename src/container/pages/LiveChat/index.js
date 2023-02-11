@@ -344,8 +344,6 @@ const InputContainer = styled("div")`
   gap: 10px;
 `;
 
-const SearchInput = styled("div")``;
-
 const Filter = styled(IconButton)`
   border: 1px solid #ffffff;
   border-radius: 50%;
@@ -495,5 +493,3 @@ const TextTime = styled("p")`
 const InputMessage = styled("div")`
   padding: 0 10px;
 `;
-
-const Message = styled("div")``;

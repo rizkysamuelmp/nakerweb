@@ -175,7 +175,6 @@ const ContentWrapper = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   whiteSpace: "nowrap",
-  minWidth: "fit-content",
 }));
 
 const TextWrapper = styled("div")(() => ({

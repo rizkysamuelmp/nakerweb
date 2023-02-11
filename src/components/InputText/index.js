@@ -6,7 +6,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
-import { useRef } from "react";
 const InputText = ({
   id,
   type,
@@ -44,7 +43,6 @@ const InputText = ({
   multiline,
   ...input
 }) => {
-  const nama = useRef("");
   return (
     <TextField
       id={id}
@@ -80,6 +78,11 @@ const InputText = ({
           borderRadius: borderRadius ? borderRadius : "10px",
           borderColor: borderColor,
           paddingLeft: noPadding && "0px",
+        },
+        "& .MuiFormHelperText-sizeMedium": {
+          position: "absolute",
+          bottom: "-20px",
+          margin: "0px",
         },
         "& .MuiInputBase-input": {
           padding: noPadding

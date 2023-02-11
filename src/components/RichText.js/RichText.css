@@ -1,0 +1,30 @@
+.wrapper-class {
+  /* border: 1px solid rgba(0, 0, 0, 0.25); */
+}
+
+.toolbar-class {
+  border: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.editor-class {
+  /* background-color: lightgray; */
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 10px 10px;
+  height: 200px;
+  min-height: 100px;
+
+  resize: vertical;
+  overflow: auto;
+  width: 100%;
+  .editorClassName {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.public-DraftStyleDefault-block {
+  margin: 0px;
+}

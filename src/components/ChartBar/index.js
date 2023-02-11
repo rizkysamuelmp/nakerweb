@@ -14,7 +14,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-// import faker from "faker";
 
 const ChartBar = ({
   isLoading,
