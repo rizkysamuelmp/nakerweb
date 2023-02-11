@@ -9,6 +9,11 @@ responseInterceptors();
 
 const devURL = "http://admin.kubu.id/api";
 const apiUrl = process.env.NODE_ENV === "production" ? devURL : devURL;
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
 
 // Save Loker
 export const serviceLoker = (payload) =>
@@ -28,3 +33,12 @@ export const serviceGetCity = (payload) =>
 
 export const serviceGetAllLoker = (payload) =>
   axios.post(`${apiUrl}/loker/getAllLoker`, payload);
+
+// Api for pengguna
+export const users = () => axios.get(`${apiUrl}/users`);
+
+export const getDetail = (id_user) =>
+  axios.post(`${apiUrl}/users/get_detail`, { id_user }, config);
+
+export const getAllDetail = (page, limit) =>
+  axios.post(`${apiUrl}/users/get_all`, { page, limit }, config);

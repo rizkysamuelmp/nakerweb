@@ -14,10 +14,11 @@ import iconEmail from "../../../assets/icon/icon-email.svg";
 import iconPassword from "../../../assets/icon/icon-password.svg";
 import LockErrorBlack from "../../../assets/img/lock-error-black.png";
 import mailBlue from "../../../assets/img/mail-blue.png";
+import { login } from "../../../store/actions/userActions";
 
 const Login = () => {
   let history = useHistory();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
@@ -25,12 +26,11 @@ const Login = () => {
   const [popUpAuth, setPopUpAuth] = useState(false);
   const [popUpEmail, setPopUpEmail] = useState(false);
 
-  const handleSubmit = () => {
-    // if (email !== "rizky@gmail.com") {
-    //   setPopUpEmail(true);
-    // } else {
-    // }
-    setPopUpAuth(true);
+  const handleSubmit = (e) => {
+    // setPopUpAuth(true);
+    e.preventDefault();
+    dispatch(login(email, password));
+    history.push("/nakerweb/dashboard");
   };
 
   return (
@@ -210,8 +210,7 @@ const Login = () => {
           <Button
             variant="contained"
             full
-            // type="submit"
-            onClick={() => history.push("/nakerweb/dashboard")}
+            type="submit"
             disabled={email === "" || password === ""}
           >
             Masuk
