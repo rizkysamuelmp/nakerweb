@@ -19,7 +19,7 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
-import { getAllDetail } from "../../../utils/api";
+import { getAllDetail, getFilterData, getSearchData } from "../../../utils/api";
 
 const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [page, setPage] = useState("1");
@@ -78,13 +78,63 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
       key: "email",
     },
     {
-      title: "Sektor",
-      key: "sector",
+      title: "Status",
+      key: "is_status",
+      width: 120,
+      render: (rowData) => (
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {rowData.is_status === "0" ? (
+            <div
+              style={{
+                border: "1px solid #039C40",
+                backgroundColor: "#AEF8AC",
+                borderRadius: "30px",
+                padding: "4px 20px",
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "13px",
+                lineHeight: "16px",
+                color: "#039C40",
+              }}
+            >
+              Aktif
+            </div>
+          ) : (
+            <div
+              style={{
+                border: "1px solid #C80707",
+                backgroundColor: "#F5969633",
+                borderRadius: "30px",
+                padding: "4px 20px",
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "13px",
+                lineHeight: "16px",
+                color: "#C80707",
+              }}
+            >
+              Tidak Aktif
+            </div>
+          )}
+        </div>
+      ),
+      center: true,
     },
     {
       title: "Usia",
       key: "age",
       width: 50,
+      center: true,
+      render: (rowData) => (
+        <span>{rowData.age ? rowData.age + " Thn" : "-"}</span>
+      ),
     },
     {
       title: "Aksi",
@@ -108,20 +158,46 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
     },
   ];
 
-  const [search, setSearch] = useState("");
+  const [keyword, setKeyword] = useState("");
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const allUsers = await getAllDetail(page, 10);
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [city, setCity] = useState("");
+  const [status, setStatus] = useState("");
 
-      setDataContent(allUsers.data.data);
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     const allUsers = await getAllDetail(page, 10);
+
+  //     setDataContent(allUsers.data.data);
+  //   };
+
+  //   fetchUsers();
+  // }, [page]);
+
+  // filter
+  useEffect(() => {
+    const fetchFilter = async () => {
+      const { data } = await getFilterData(page, gender, age, city, status);
+      setDataContent(data.data);
     };
 
-    fetchUsers();
-  }, [page]);
+    fetchFilter();
+  }, [page, gender, age, city, status]);
+
+  const searchHandler = (event) => {
+    const fetchSearchData = async () => {
+      const { data } = await getSearchData(page, keyword);
+      setDataContent(data.data);
+    };
+    if (event.key === "Enter") {
+      fetchSearchData();
+      setKeyword("");
+    }
+  };
 
   return (
     <Container>
@@ -134,9 +210,10 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
           {/* Pencarian */}
           <InputText
             type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
             placeholder="pencarian"
+            onKeyDown={searchHandler}
             noPadding
             width="175px"
             borderRadius="5px"
@@ -285,16 +362,19 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Jenis Kelamin :</p>
               <DropDown
-                dropdownValue={dropDown}
+                dropdownValue={gender}
                 listDropDown={[
                   {
                     label: "Laki-laki",
-                    value: 0,
+                    value: "0",
                   },
                   { label: "Perempuan", value: 1 },
                 ]}
                 placeHolder="Pilih Jenis Kelamin"
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => {
+                  setGender(e.target.value);
+                  setPage("1");
+                }}
               />
             </div>
             <div
@@ -302,7 +382,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Range Usia :</p>
               <DropDown
-                dropdownValue={dropDown}
+                dropdownValue={age}
                 listDropDown={[
                   {
                     label: "Usia 12 - 25 tahun",
@@ -313,7 +393,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
                   { label: "Usia 53 - 65 tahun", value: 3 },
                 ]}
                 placeHolder="Pilih Range Usia"
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => setAge(e.target.value)}
               />
             </div>
             <div
@@ -356,7 +436,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Status :</p>
               <DropDown
-                dropdownValue={dropDown}
+                dropdownValue={status}
                 listDropDown={[
                   {
                     label: "Aktif",
@@ -365,7 +445,10 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
                   { label: "Tidak Aktif", value: 1 },
                 ]}
                 placeHolder="Pilih Status Akun"
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => {
+                  setStatus(e.target.value);
+                  setPage("1");
+                }}
               />
             </div>
           </Menu>

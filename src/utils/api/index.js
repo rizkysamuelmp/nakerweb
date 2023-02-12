@@ -48,3 +48,13 @@ export const getDetail = (id_user) =>
 
 export const getAllDetail = (page, limit) =>
   axios.post(`${apiUrl}/users/get_all`, { page, limit }, config);
+
+export const getFilterData = (page, gender, age, city, status) =>
+  axios.post(
+    `${apiUrl}/users/filter`,
+    { page, limit: "10", gender, age, city, status },
+    config
+  );
+
+export const getSearchData = (page, keyword) =>
+  axios.post(`${apiUrl}/users/search`, { page, limit: "10", keyword }, config);
