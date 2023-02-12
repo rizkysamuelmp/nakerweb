@@ -58,3 +58,48 @@ export const getFilterData = (page, gender, age, city, status) =>
 
 export const getSearchData = (page, keyword) =>
   axios.post(`${apiUrl}/users/search`, { page, limit: "10", keyword }, config);
+
+<<<<<<< Updated upstream
+// API for DataProyek
+export const getDashboardDataProyek = () => axios.post(`${apiUrl}/mytim`);
+
+export const getFilterDataProyek = (
+  page,
+  category,
+  city,
+  type,
+  status,
+  keyword
+) =>
+  axios.post(
+    `${apiUrl}/mytim`,
+    {
+      page,
+      limit: "10",
+      category,
+      city,
+      type,
+      status,
+      keyword,
+    },
+    config
+  );
+
+export const requestDetail = (id_proyek) =>
+  axios.post(`${apiUrl}/mytim/request_detail`, { id_proyek }, config);
+
+export const approved = (id_proyek, action) =>
+  axios.post(`${apiUrl}/mytim/approved`, { id_proyek, action }, config);
+
+export const proyekDetail = (id_proyek) =>
+  axios.post(`${apiUrl}/mytim/proyek_detail`, { id_proyek }, config);
+
+export const tabTask = (id_proyek) =>
+  axios.post(`${apiUrl}/mytim/proyek_detail`, { id_proyek }, config);
+
+export const tabDiskusiTask = (id_proyek, page) =>
+  axios.post(`${apiUrl}/mytim/proyek_detail`, { id_proyek, page }, config);
+=======
+export const getCity = () =>
+  axios.post(`${apiUrl}/loker/getCity`, { province_id: "" }, config);
+>>>>>>> Stashed changes

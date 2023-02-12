@@ -19,7 +19,7 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
-import { getFilterData, getSearchData } from "../../../utils/api";
+import { getCity, getFilterData, getSearchData } from "../../../utils/api";
 
 const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [page, setPage] = useState("1");
@@ -161,12 +161,23 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [keyword, setKeyword] = useState("");
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
-  const [dropDown, setDropDown] = useState();
 
+  // state for filter
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [city, setCity] = useState("");
+  const [initialCity, setInitialCity] = useState(null);
   const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    const fetchCity = async () => {
+      const { data } = await getCity();
+      console.log(data.data);
+      // setInitialCity(data.data);
+    };
+
+    fetchCity();
+  }, []);
 
   useEffect(() => {
     const fetchFilter = async () => {
@@ -388,36 +399,12 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Sektor :</p>
-              <DropDown
-                dropdownValue={dropDown}
-                listDropDown={[
-                  {
-                    label: "Pabrik baju",
-                    value: 0,
-                  },
-                  { label: "Pabrik Semen", value: 1 },
-                ]}
-                placeHolder="Pilih Sektor Perusahaan"
-                handleChange={(e) => setDropDown(e.target.value)}
-              />
-            </div>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-            >
               <p>Kota :</p>
               <DropDown
-                dropdownValue={dropDown}
-                listDropDown={[
-                  {
-                    label: "Solo",
-                    value: 0,
-                  },
-                  { label: "Yogyakarta", value: 1 },
-                  { label: "Klaten", value: 2 },
-                ]}
+                dropdownValue={city}
+                listDropDown={[]}
                 placeHolder="Pilih Kota"
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => setCity(e.target.value)}
               />
             </div>
             <div
