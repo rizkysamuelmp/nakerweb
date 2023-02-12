@@ -19,7 +19,7 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
-import { getAllDetail, getFilterData, getSearchData } from "../../../utils/api";
+import { getFilterData, getSearchData } from "../../../utils/api";
 
 const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [page, setPage] = useState("1");
@@ -168,17 +168,6 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [city, setCity] = useState("");
   const [status, setStatus] = useState("");
 
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     const allUsers = await getAllDetail(page, 10);
-
-  //     setDataContent(allUsers.data.data);
-  //   };
-
-  //   fetchUsers();
-  // }, [page]);
-
-  // filter
   useEffect(() => {
     const fetchFilter = async () => {
       const { data } = await getFilterData(page, gender, age, city, status);
