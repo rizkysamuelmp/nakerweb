@@ -73,7 +73,7 @@ export const getCity = () => async (dispatch) => {
   try {
     dispatch(setLoading(true));
     const { status, data } = await serviceGetCity({
-      province_id: "11",
+      province_id: "",
     });
     dispatch(setLoading(false));
 
@@ -108,9 +108,14 @@ export const getPenggunaSearch = (keyword) => async (dispatch, getState) => {
       keyword,
     });
     console.log(data.data);
-    if (status === 200) dispatch(setAllUsers(data.data));
+    if (status === 200) {
+      dispatch(setAllUsers(data.data));
+      dispatch(setLoading(false));
+    }
+  } catch (error) {
     dispatch(setLoading(false));
-  } catch {}
+    console.log("error: ", error);
+  }
 };
 
 export const getPenggunaFilter = () => async (dispatch, getState) => {
@@ -118,8 +123,8 @@ export const getPenggunaFilter = () => async (dispatch, getState) => {
   const {
     valueGender,
     valueAge,
-    // valueCity,
-    // dropDownCity,
+    valueCity,
+    dropDownCity,
     valueStatus,
     pagination,
   } = getState().dataPengguna;
@@ -138,6 +143,8 @@ export const getPenggunaFilter = () => async (dispatch, getState) => {
     if (status === 200) {
       dispatch(setLoading(false));
       dispatch(setAllUsers(data.data));
+    } else {
+      dispatch(setLoading(false));
     }
   } catch (error) {
     console.warn("error: ", error);

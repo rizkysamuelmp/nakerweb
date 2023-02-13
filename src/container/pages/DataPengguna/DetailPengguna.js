@@ -47,7 +47,16 @@ const DetailPengguna = ({ setActiveStep, history, id_user }) => {
       <Profile>
         <img width="100%" height="225px" src={backroundUser} alt="" />
         <DetailProfile>
-          <img src={userDetail.foto_profile} width="100px" alt="" />
+          <img
+            src={userDetail.foto_profile}
+            style={{
+              width: "100px",
+              height: "100px",
+              border: "5px solid #397DED",
+              borderRadius: "100%",
+            }}
+            alt=""
+          />
           <NickName>
             <span>{userDetail.full_name}</span>
             {userDetail.is_verified === "1" && (

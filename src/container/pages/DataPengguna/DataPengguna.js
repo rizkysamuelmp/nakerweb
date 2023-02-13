@@ -32,7 +32,7 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const dataHeader = [
     {
       title: "No",
-      key: "no",
+      key: "id_user",
       width: 30,
       center: true,
     },
@@ -47,6 +47,9 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
               alt="profile"
               style={{
                 width: "24px",
+                height: "24px",
+                border: "1px solid rgba(48, 68, 241, 0.87)",
+                borderRadius: "100%",
               }}
             />
           ) : (
@@ -65,7 +68,15 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
       title: "Jenis Kelamin",
       key: "gender",
       center: true,
-      render: (rowData) => <p>{rowData.gender === "0" ? "Pria" : "Wanita"}</p>,
+      render: (rowData) => (
+        <p>
+          {rowData.gender === "0"
+            ? "Pria"
+            : rowData.gender === "1"
+            ? "Wanita"
+            : "-"}
+        </p>
+      ),
     },
     {
       title: "Kota",
