@@ -52,8 +52,8 @@ export const serviceGetAllUsers = (payload) =>
 export const servicePenggunaFilter = (payload) =>
   axios.post(`${apiUrl}/users/filter`, payload);
 
-export const getSearchData = (page, keyword) =>
-  axios.post(`${apiUrl}/users/search`, { page, limit: "10", keyword }, config);
+export const serviceGetSearchPengguna = (payload) =>
+  axios.post(`${apiUrl}/users/search`, payload);
 
 // API for DataProyek
 export const getDashboardDataProyek = () => axios.post(`${apiUrl}/mytim`);

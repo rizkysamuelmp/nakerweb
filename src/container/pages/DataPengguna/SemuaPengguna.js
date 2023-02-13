@@ -19,12 +19,12 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
-import { getSearchData } from "../../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllUsers,
   getCity,
   getPenggunaFilter,
+  getPenggunaSearch,
   setPagination,
   setValueAge,
   setValueCity,
@@ -33,9 +33,6 @@ import {
 } from "../../../store/actions/dataPengguna";
 
 const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
-  const [page, setPage] = useState(1);
-  const [dataContent, setDataContent] = useState([]);
-
   const dataHeader = [
     {
       title: "No",
@@ -173,11 +170,6 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
 
-  const [age, setAge] = useState([]);
-  const [gender, setGender] = useState([]);
-  const [selectCity, setSelectCity] = useState([]);
-  const [status, setStatus] = useState([]);
-
   // state global
   const dispatch = useDispatch();
   const {
@@ -188,6 +180,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
     dropDownCity,
     valueStatus,
     pagination,
+    filter,
   } = useSelector((state) => state.dataPengguna);
 
   useEffect(() => {
@@ -196,12 +189,12 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   }, [dispatch]);
 
   const searchHandler = (event) => {
-    const fetchSearchData = async () => {
-      const { data } = await getSearchData(page, keyword);
-      setDataContent(data.data);
-    };
     if (event.key === "Enter") {
-      fetchSearchData();
+      if (keyword !== "") {
+        dispatch(getPenggunaSearch(keyword));
+      } else {
+        dispatch(getAllUsers());
+      }
       setKeyword("");
     }
   };
@@ -209,6 +202,14 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const onChangeFilter = () => {
     dispatch(getPenggunaFilter());
     dispatch(setPagination({ ...pagination, page: 1 }));
+  };
+
+  const onChangePage = () => {
+    if (filter) {
+      dispatch(getPenggunaFilter());
+    } else {
+      dispatch(getPenggunaSearch());
+    }
   };
 
   return (
@@ -458,7 +459,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
         page={pagination.page}
         onChange={(e, value) => {
           dispatch(setPagination({ ...pagination, page: value }));
-          onChangeFilter();
+          onChangePage();
         }}
       />
     </Container>

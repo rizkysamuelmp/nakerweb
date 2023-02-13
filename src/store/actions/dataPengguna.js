@@ -1,6 +1,7 @@
 import {
   serviceGetAllUsers,
   serviceGetCity,
+  serviceGetSearchPengguna,
   servicePenggunaFilter,
 } from "../../utils/api";
 import {
@@ -11,8 +12,14 @@ import {
   SET_VALUE_CITY,
   SET_VALUE_GENDER,
   SET_VALUE_STATUS,
+  FILTER,
 } from "../constants/dataPenggunaConstants";
 import { setLoading } from "./pageContainer";
+
+export const setFilter = (payload) => ({
+  type: FILTER,
+  payload,
+});
 
 export const setAllUsers = (payload) => ({
   type: ALL_USERS,
@@ -90,12 +97,29 @@ export const getCity = () => async (dispatch) => {
   }
 };
 
+export const getPenggunaSearch = (keyword) => async (dispatch, getState) => {
+  dispatch(setFilter(true));
+  const { pagination } = getState().dataPengguna;
+  dispatch(setLoading(true));
+  try {
+    const { status, data } = await serviceGetSearchPengguna({
+      page: pagination.page,
+      limit: "10",
+      keyword,
+    });
+    console.log(data.data);
+    if (status === 200) dispatch(setAllUsers(data.data));
+    dispatch(setLoading(false));
+  } catch {}
+};
+
 export const getPenggunaFilter = () => async (dispatch, getState) => {
+  dispatch(setFilter(true));
   const {
     valueGender,
     valueAge,
-    valueCity,
-    dropDownCity,
+    // valueCity,
+    // dropDownCity,
     valueStatus,
     pagination,
   } = getState().dataPengguna;
@@ -111,8 +135,10 @@ export const getPenggunaFilter = () => async (dispatch, getState) => {
       // city: dropDownCity[valueCity[0]].kode || "",
       status: valueStatus.length === 0 ? "" : valueStatus[0],
     });
-    dispatch(setLoading(false));
-    dispatch(setAllUsers(data.data));
+    if (status === 200) {
+      dispatch(setLoading(false));
+      dispatch(setAllUsers(data.data));
+    }
   } catch (error) {
     console.warn("error: ", error);
   }

@@ -1,5 +1,6 @@
 import {
   ALL_USERS,
+  FILTER,
   SET_DROPDOWN_CITY,
   SET_PAGINATION,
   SET_VALUE_AGE,
@@ -9,6 +10,7 @@ import {
 } from "../constants/dataPenggunaConstants";
 
 const initialState = {
+  filter: false,
   allUsers: [],
   valueGender: [],
   valueAge: [],
@@ -25,6 +27,11 @@ const initialState = {
 
 const dataPenggunaReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FILTER:
+      return {
+        ...state,
+        filter: action.payload,
+      };
     case ALL_USERS:
       return {
         ...state,
