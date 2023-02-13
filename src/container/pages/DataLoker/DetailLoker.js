@@ -1,7 +1,7 @@
 // Page Detail Loker
 // --------------------------------------------------------
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "../../../components/Button";
 import PopUp from "../../../components/PopUp";
@@ -13,19 +13,46 @@ import business from "../../../assets/icon/Business.svg";
 import iconBusiness from "../../../assets/icon/bussiness-icon.png";
 import iconBusinessSuccess from "../../../assets/icon/business-icon-success.png";
 import iconBusinessDecline from "../../../assets/icon/business-icon-decline.png";
-import { useDispatch } from "react-redux";
+import { formatAmountDot } from "../../../utils/helpers";
 
-// Data Dummy
-import { infoPerusahaan } from "./DataDummy";
-import { setActiveStep } from "../../../store/actions/dataLoker";
+// Redux
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import {
+  setActiveStep,
+  executeLoker,
+  setPopupStatus,
+} from "../../../store/actions/dataLoker";
 
 const DetailLoker = ({ history }) => {
   const dispatch = useDispatch();
 
+  const { selectedData, popupStatus } = useSelector(
+    (state) => state.dataLoker,
+    shallowEqual
+  );
+
+  const {
+    name,
+    city,
+    provinice,
+    benefit,
+    cualified,
+    end_open,
+    end_salary,
+    start_salary,
+    job_position,
+    job_desc,
+    sektor,
+    status,
+  } = selectedData;
+
   const [confAccept, setConfAccept] = useState(false);
-  const [accept, setAccept] = useState(false);
   const [confDecline, setConfDecline] = useState(false);
-  const [decline, setDecline] = useState(false);
+
+  const handleClose = () => {
+    dispatch(setPopupStatus(0));
+    dispatch(setActiveStep("all"));
+  };
 
   return (
     <Container>
@@ -61,31 +88,31 @@ const DetailLoker = ({ history }) => {
             <Line>
               <Left>
                 <TextLeft>Nama Perusahaan :</TextLeft>
-                <TextRight> {infoPerusahaan.namaPerusahaan}</TextRight>
+                <TextRight> {name}</TextRight>
               </Left>
               <Right>
                 <TextLeft>Kategori :</TextLeft>
-                <TextRight> {infoPerusahaan.kategori}</TextRight>
+                <TextRight> {sektor} </TextRight>
               </Right>
             </Line>
             <Line>
               <Left>
                 <TextLeft>Alamat :</TextLeft>
-                <TextRight> {infoPerusahaan.alamat}</TextRight>
+                <TextRight> - </TextRight>
               </Left>
               <Right>
                 <TextLeft>Nama Pic :</TextLeft>
-                <TextRight> {infoPerusahaan.namaPic}</TextRight>
+                <TextRight> - </TextRight>
               </Right>
             </Line>
             <Line>
               <Left>
                 <TextLeft>Telepon :</TextLeft>
-                <TextRight> {infoPerusahaan.telepon}</TextRight>
+                <TextRight> - </TextRight>
               </Left>
               <Right>
                 <TextLeft>Email :</TextLeft>
-                <TextRight> {infoPerusahaan.email}</TextRight>
+                <TextRight> - </TextRight>
               </Right>
             </Line>
           </DetailPerusahaan>
@@ -103,33 +130,13 @@ const DetailLoker = ({ history }) => {
                 {/* Deskripsi Lowongan */}
                 <Wrapper>
                   <Title>Deskripsi Pekerjaan</Title>
-                  <DetailBody>
-                    <DetailText>Tugas & Tanggung Jawab:</DetailText>
-                    <DetailText>
-                      1. Mengirim sampel, dokumen, dll ke alamat tujuan
-                    </DetailText>
-                    <DetailText>
-                      2. Mengambil pesanan, membeli barang kebutuhan kantor
-                    </DetailText>
-                    <DetailText>
-                      3. Merawat kendaraan operasional kantor
-                    </DetailText>
-                  </DetailBody>
+                  <DetailBody>{job_desc}</DetailBody>
                 </Wrapper>
 
                 {/* Kualifikasi */}
                 <Wrapper>
                   <Title>Kualifikasi</Title>
-                  <DetailBody>
-                    <DetailText>1. Pria, Max 35th</DetailText>
-                    <DetailText>2. Memiliki SIM C aktif</DetailText>
-                    <DetailText>3. Bersedia lembur jika diperlukan</DetailText>
-                    <DetailText>
-                      4. Menguasai area Jakarta, Tangerang dan sekitarnya
-                    </DetailText>
-                    <DetailText>Jenis Pekerjaan: Penuh Waktu</DetailText>
-                    <DetailText>Gaji: Dari Rp4.250.000 per bulan</DetailText>
-                  </DetailBody>
+                  <DetailBody>{cualified}</DetailBody>
                 </Wrapper>
               </Line>
 
@@ -138,14 +145,19 @@ const DetailLoker = ({ history }) => {
                 <Wrapper>
                   <Title>Lokasi</Title>
                   <DetailBody>
-                    <DetailText>Kab. Sleman, Yogyakarta</DetailText>
+                    <DetailText style={{ textTransform: "capitalize" }}>
+                      {city?.toLowerCase()}, {provinice?.toLowerCase()}
+                    </DetailText>
                   </DetailBody>
                 </Wrapper>
                 {/* Gaji */}
                 <Wrapper>
                   <Title>Gaji</Title>
                   <DetailBody>
-                    <DetailText>Rp 1.000.000 - Rp 3.500.000</DetailText>
+                    <DetailText>
+                      Rp{formatAmountDot(start_salary) || "0,00"} - Rp
+                      {formatAmountDot(end_salary) || "0,00"}
+                    </DetailText>
                   </DetailBody>
                 </Wrapper>
               </Line>
@@ -155,7 +167,7 @@ const DetailLoker = ({ history }) => {
                 <Wrapper>
                   <Title>Posisi</Title>
                   <DetailBody>
-                    <DetailText>Supir Truck</DetailText>
+                    <DetailText>{job_position}</DetailText>
                   </DetailBody>
                 </Wrapper>
                 {/* Jenis */}
@@ -173,7 +185,7 @@ const DetailLoker = ({ history }) => {
                   <Title>Batas Pendaftaran</Title>
                   <DetailBody>
                     {/* Kualifikasi */}
-                    <DetailText>07 Agu 2022 s/d 07 Sep 2022</DetailText>
+                    <DetailText>{end_open}</DetailText>
                   </DetailBody>
                 </Wrapper>
 
@@ -181,7 +193,7 @@ const DetailLoker = ({ history }) => {
                 <Wrapper>
                   <Title>Benefit</Title>
                   <DetailBody>
-                    <DetailText>BPJS, Tunjangan, Uang Makan.</DetailText>
+                    <DetailText>{benefit}</DetailText>
                   </DetailBody>
                 </Wrapper>
               </Line>
@@ -189,65 +201,72 @@ const DetailLoker = ({ history }) => {
           </Detail>
         </InfoCard>
       </Body>
-      <FooterContainer>
-        <Button onClick={() => setConfAccept(true)}>Setujui</Button>
-        <Button color="#FA3E3E" onClick={() => setConfDecline(true)}>
-          Tolak
-        </Button>
-      </FooterContainer>
+      {status === "0" && (
+        <FooterContainer>
+          <Button variant="outlined" onClick={() => setConfDecline(true)}>
+            <p
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "15px",
+                lineHeight: "18px",
+                letterSpacing: "0.01em",
+                color: "#115AAA",
+              }}
+            >
+              Tidak
+            </p>
+          </Button>
+          <Button onClick={() => setConfAccept(true)}>Setujui</Button>
+        </FooterContainer>
+      )}
 
       {/* Popup Konfirmasi Setuju Loker */}
       <PopUp
         open={confAccept}
         buttonWord="Setujui"
+        type="choice"
         imgSrc={iconBusiness}
         onClose={() => setConfAccept(false)}
         onClickAction={() => {
           setConfAccept(false);
-          setAccept(true);
+          dispatch(executeLoker(1));
         }}
-        title="Konfirmasi Loker"
-        info="Apakah anda ingin menyetujui loker ini ?"
-      />
-
-      {/* Popup Permintaan Disetujui */}
-      <PopUp
-        open={accept}
-        buttonWord="Ok"
-        imgSrc={iconBusinessSuccess}
-        onClose={() => setAccept(false)}
-        onClickAction={() => {
-          setAccept(false);
-        }}
-        title="Permintaan Disetujui"
-        info="Permintaan publikasi loker berhasil disetujui."
+        title="Apakah anda ingin menyetujui loker ini ?"
       />
 
       {/* Popup Konfirmasi Tolak Loker */}
       <PopUp
         open={confDecline}
+        type="choice"
         buttonWord="Tolak"
         imgSrc={iconBusiness}
         onClose={() => setConfDecline(false)}
         onClickAction={() => {
           setConfDecline(false);
-          setDecline(true);
+          dispatch(executeLoker(2));
         }}
-        title="Konfirmasi Loker"
-        info="Apakah anda ingin menolak loker ini ?"
+        title="Apakah anda ingin menolak loker ini ?"
+      />
+
+      {/* Popup Permintaan Disetujui */}
+      <PopUp
+        open={popupStatus === 1 || false}
+        buttonWord="OK"
+        imgSrc={iconBusinessSuccess}
+        onClose={handleClose}
+        onClickAction={handleClose}
+        title="Loker Berhasil Disetujui"
       />
 
       {/* Popup Berhasil Ditolak */}
       <PopUp
-        open={decline}
+        open={popupStatus === 2 || false}
         buttonWord="Ok"
         imgSrc={iconBusinessDecline}
-        onClose={() => setDecline(false)}
-        onClickAction={() => {
-          setDecline(false);
-        }}
-        title="Permintaan Ditolak"
-        info="Permintaan publikasi loker berhasil ditolak."
+        onClose={handleClose}
+        onClickAction={handleClose}
+        title="Loker Berhasil Ditolak"
       />
     </Container>
   );

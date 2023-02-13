@@ -43,9 +43,19 @@ const Button = ({
         textTransform: "unset",
         width: full ? "100%" : width !== "" ? width : "fit-content",
         height: "fit-content",
-        backgroundColor: color !== "" ? color : Colors.primary.hard,
+        backgroundColor:
+          color !== ""
+            ? color
+            : variant === "contained"
+            ? Colors.primary.hard
+            : "",
         ":hover": {
-          bgcolor: color !== "" ? color : Colors.primary.hard,
+          bgcolor:
+            color !== ""
+              ? color
+              : variant === "contained"
+              ? Colors.primary.hard
+              : "",
         },
         border: border,
         padding: padding,
