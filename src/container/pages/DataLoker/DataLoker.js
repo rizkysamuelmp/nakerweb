@@ -57,7 +57,7 @@ const DataLoker = ({ setHistory }) => {
 
   // Get data redux
   const { lokerHome, headerTableHome, loker } = useSelector(
-    ({ state }) => state.dataLoker,
+    (state) => state.dataLoker,
     shallowEqual
   );
 
