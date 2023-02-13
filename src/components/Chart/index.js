@@ -169,10 +169,9 @@ const TextWrap = styled("div")(() => ({
 }));
 
 const Container = styled("div")(() => ({
-  padding: "15px",
   backgroundColor: "white",
   width: "100%",
-  height: "fit-content",
+  height: "100%",
   justifyContent: "center",
   display: "flex",
 }));
@@ -181,7 +180,6 @@ const WrapperChartLabel = styled("div")(() => ({
   display: "flex",
   gap: "20px",
   alignItems: "center",
-  height: "150px",
 }));
 
 const LabelContainer = styled("div")(() => ({

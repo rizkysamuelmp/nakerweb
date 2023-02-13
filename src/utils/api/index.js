@@ -19,6 +19,9 @@ const config = {
 export const serviceGetDataLoker = (payload) =>
   axios.get(`${apiUrl}/loker`, payload);
 
+export const serviceApproveLoker = (payload) =>
+  axios.post(`${apiUrl}/loker/approved`, payload);
+
 export const serviceGetAllLoker = (payload) =>
   axios.post(`${apiUrl}/loker/getAllLoker`, payload);
 

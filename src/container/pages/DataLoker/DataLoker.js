@@ -56,7 +56,7 @@ const DataLoker = ({ setHistory }) => {
   const [totalData, setTotalData] = useState(0);
 
   // Get data redux
-  const { lokerHome, headerTableHome, loker } = useSelector(
+  const { lokerHome, headerTableHome, loker, pagination } = useSelector(
     (state) => state.dataLoker,
     shallowEqual
   );
@@ -90,6 +90,7 @@ const DataLoker = ({ setHistory }) => {
       {/* Chart */}
       <RowWrapper>
         <ContentWrapper style={{ width: "65%" }}>
+          {/* TODO */}
           <TitleBar>Statistik Loker</TitleBar>
           <ChartLine />
         </ContentWrapper>
@@ -102,6 +103,7 @@ const DataLoker = ({ setHistory }) => {
       <RowWrapper>
         {/* Lokasi trending */}
         <ContentWrapper style={{ width: "37%" }}>
+          {/* TODO */}
           <TitleBar>Lokasi trending</TitleBar>
           <ScrollWrapper
             style={{
@@ -126,6 +128,7 @@ const DataLoker = ({ setHistory }) => {
 
         {/* Sektor trending */}
         <ContentWrapper style={{ width: "18%" }}>
+          {/* TODO */}
           <TitleBar>Sektor trending</TitleBar>
           <ScrollWrapper>
             {sektorTrending.map((item, index) => (
@@ -139,6 +142,7 @@ const DataLoker = ({ setHistory }) => {
 
         {/* Loker trending */}
         <ContentWrapper style={{ width: "45%" }}>
+          {/* TODO */}
           <TitleBar>Loker trending</TitleBar>
           <ScrollWrapper style={{ gap: "5px", paddingRight: "15px" }}>
             {lokerTranding.map((item, index) => (
@@ -179,7 +183,10 @@ const DataLoker = ({ setHistory }) => {
         >
           <Table headerContent={headerTableHome} dataContent={lokerHome} />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
+            <p style={{ color: "#7B87AF" }}>
+              Menampilkan {pagination.currentData} dari {pagination.totalData}{" "}
+              baris
+            </p>
             <TextSeeAll onClick={() => dispatch(setActiveStep("all"))}>
               Lihat Semua
             </TextSeeAll>

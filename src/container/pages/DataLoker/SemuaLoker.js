@@ -26,6 +26,8 @@ import {
   getLokerFilter,
   setSearch,
   setActiveStep,
+  getAllCity,
+  setValueCity,
 } from "../../../store/actions/dataLoker";
 
 // Asset
@@ -33,7 +35,6 @@ import iconSlider from "../../../assets/icon/icon-slider.png";
 import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
-import iconPdf from "../../../assets/icon/icon-pdf.png";
 import iconPlus from "../../../assets/icon/icon-plus-white.svg";
 
 const SemuaLoker = () => {
@@ -41,7 +42,6 @@ const SemuaLoker = () => {
 
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
-  const [dropDown, setDropDown] = useState();
 
   // Get data redux
   const {
@@ -54,12 +54,14 @@ const SemuaLoker = () => {
     valueJobType,
     valueStatus,
     search,
+    allCity,
+    valueCity,
   } = useSelector((state) => state.dataLoker, shallowEqual);
 
   // Render pertama untuk get data
   useEffect(() => {
-    dispatch(getLokerFilter());
     dispatch(getJobType());
+    dispatch(getAllCity());
   }, []);
 
   // Fungsi get data pagination
@@ -67,6 +69,12 @@ const SemuaLoker = () => {
     dispatch(setPagination({ ...pagination, page: nextPage }));
     dispatch(getLokerFilter());
   };
+
+  useEffect(() => {
+    if (search === "") {
+      dispatch(getLokerFilter());
+    }
+  }, [search]);
 
   return (
     <Container>
@@ -176,18 +184,10 @@ const SemuaLoker = () => {
           >
             <MenuItem
               onClick={() => setMenuExport(null)}
-              sx={{ padding: "8px 12px 3px 12px" }}
+              sx={{ padding: "12px" }}
             >
               <img src={iconXls} alt="icon-xls" width={24} height={24} />
               Export Excel
-            </MenuItem>
-            <div style={{ border: "1px solid #E5E5E5" }} />
-            <MenuItem
-              onClick={() => setMenuExport(null)}
-              sx={{ padding: "3px 12px 8px 12px" }}
-            >
-              <img src={iconPdf} alt="icon-pdf" width={24} height={24} />
-              Export Pdf
             </MenuItem>
           </Menu>
 
@@ -260,21 +260,16 @@ const SemuaLoker = () => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "4px" }}
             >
-              <p>Pilih lokasi Loker :</p>
+              <p>Pilih Lokasi Loker :</p>
               <DropDown
-                dropdownValue={dropDown}
-                listDropDown={[
-                  {
-                    label: "Solo",
-                    value: 0,
-                  },
-                  {
-                    label: "Yogyakarta",
-                    value: 1,
-                  },
-                ]}
-                placeHolder=""
-                handleChange={(e) => setDropDown(e.target.value)}
+                dropdownValue={valueCity}
+                listDropDown={allCity}
+                placeHolder="Pilih Lokasi Loker"
+                handleChange={(e) => {
+                  dispatch(setValueCity([e.target.value]));
+                  dispatch(setPagination({ ...pagination, page: 1 }));
+                  dispatch(getLokerFilter());
+                }}
               />
             </div>
             <div
@@ -300,12 +295,19 @@ const SemuaLoker = () => {
                 dropdownValue={valueStatus}
                 listDropDown={[
                   {
-                    label: "Aktif",
+                    label: "Semua Status",
                     value: 0,
+                    status: "",
+                  },
+                  {
+                    label: "Aktif",
+                    value: 1,
+                    status: 0,
                   },
                   {
                     label: "Tidak Aktif",
-                    value: 1,
+                    value: 2,
+                    status: 1,
                   },
                 ]}
                 placeHolder="Pilih status Loker"

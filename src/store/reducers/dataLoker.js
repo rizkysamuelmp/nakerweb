@@ -13,6 +13,10 @@ import {
   SET_HEADER_TABLE_HOME,
   SET_LOKER_HOME,
   SET_LOKER,
+  SET_ALL_CITY,
+  VALUE_CITY,
+  SET_SELECTED_DATA,
+  SET_POPUP_STATUS,
 } from "../actions/dataLoker";
 
 const initialState = {
@@ -29,16 +33,40 @@ const initialState = {
     currentData: 10,
   },
   dropDownSector: [],
-  valueSector: [],
+  valueSector: [0],
   dropDownJobType: [],
-  valueJobType: [],
-  valueStatus: [],
+  valueJobType: [0],
+  valueStatus: [0],
   search: "",
   activeStep: "page",
+  allCity: [],
+  valueCity: [0],
+  selectedData: {},
+  popupStatus: 0,
 };
 
 const dataLoker = (state = initialState, action) => {
   switch (action.type) {
+    case SET_POPUP_STATUS:
+      return {
+        ...state,
+        popupStatus: action.payload,
+      };
+    case SET_SELECTED_DATA:
+      return {
+        ...state,
+        selectedData: action.payload,
+      };
+    case VALUE_CITY:
+      return {
+        ...state,
+        valueCity: action.payload,
+      };
+    case SET_ALL_CITY:
+      return {
+        ...state,
+        allCity: action.payload,
+      };
     case SET_LOKER:
       return {
         ...state,

@@ -45,7 +45,7 @@ const PopUp = ({
         ".MuiPaper-root": {
           width: width,
           maxWidth: maxWidth,
-          borderRadius: "32px",
+          borderRadius: "20px",
           height: "fit-content",
           padding: padding,
           display: "flex",
@@ -59,7 +59,7 @@ const PopUp = ({
           justifyContent: "center",
           textAlign: "center",
           display: "flex",
-          gap: "10px",
+          gap: "40px",
           flexDirection: "column",
           padding: "0px",
         }}
@@ -78,30 +78,34 @@ const PopUp = ({
             />
           </ImageWrapper>
         )}
-        <p
-          style={{
-            fontFamily: "Inter",
-            fontWeight: 700,
-            fontSize: "17px",
-            lineHeight: "18px",
-            letterSpacing: "0.01em",
-            color: "#000000",
-          }}
-        >
-          {title}
-        </p>
-        <p
-          style={{
-            fontFamily: "Inter",
-            fontWeight: 400,
-            fontSize: "13px",
-            lineHeight: "18px",
-            letterSpacing: "0.01em",
-            color: "#000000",
-          }}
-        >
-          {info}
-        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <p
+            style={{
+              fontFamily: "Inter",
+              fontWeight: 700,
+              fontSize: "17px",
+              lineHeight: "18px",
+              letterSpacing: "0.01em",
+              color: "#000000",
+            }}
+          >
+            {title}
+          </p>
+          {info && (
+            <p
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 400,
+                fontSize: "13px",
+                lineHeight: "18px",
+                letterSpacing: "0.01em",
+                color: "#000000",
+              }}
+            >
+              {info}
+            </p>
+          )}
+        </div>
       </DialogContent>
 
       {type === "standard" && (
@@ -134,9 +138,11 @@ const PopUp = ({
           sx={{
             justifyContent: "space-between",
             padding: "0px",
+            display: "flex",
+            gap: "20px",
           }}
         >
-          <Button variant="contained" onClick={onClose} width="112px" rounded>
+          <Button variant="outlined" onClick={onClose} width="112px" full>
             <p
               style={{
                 fontFamily: "Inter",
@@ -144,7 +150,7 @@ const PopUp = ({
                 fontSize: "15px",
                 lineHeight: "18px",
                 letterSpacing: "0.01em",
-                color: "#FFFFFF",
+                color: "#115AAA",
               }}
             >
               Tidak
@@ -152,10 +158,9 @@ const PopUp = ({
           </Button>
           <Button
             variant="contained"
-            color="#C80707"
             onClick={onClickAction}
             width="112px"
-            rounded
+            full
           >
             <p
               style={{

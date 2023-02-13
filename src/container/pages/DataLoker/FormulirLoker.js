@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Button from "../../../components/Button";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
 import DropDown from "../../../components/DropDown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,11 +16,10 @@ import {
   DialogContent,
   FormControlLabel,
   IconButton,
-  TextField,
 } from "@mui/material";
 import InputText from "../../../components/InputText";
 import Compressor from "compressorjs";
-// import { useHistory } from "react-router-dom";
+import RichText from "../../../components/RichText.js";
 import {
   serviceGetCategory,
   serviceGetCity,
@@ -30,6 +28,10 @@ import {
   serviceLoker,
 } from "../../../utils/api";
 import { Controller, useForm } from "react-hook-form";
+import { formatAmountDot } from "../../../utils/helpers";
+import { setActiveStep } from "../../../store/actions/dataLoker";
+import { useDispatch } from "react-redux";
+
 // Assets
 import organization from "../../../assets/icon/Organization.svg";
 import business from "../../../assets/icon/Business.svg";
@@ -40,7 +42,7 @@ import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
 
 // Main Page
 const FormulirLoker = () => {
-  // let history = useHistory();
+  const dispatch = useDispatch();
 
   const [step, setStep] = useState("1");
   const [loading, setLoading] = useState(false);
@@ -60,6 +62,8 @@ const FormulirLoker = () => {
   const [agree, setAgree] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [kualifikasi, setKualifikasi] = useState();
+  const [deskPekerjaan, setDeskPekerjaan] = useState();
 
   // useForm function
   const { control, handleSubmit } = useForm({
@@ -197,9 +201,9 @@ const FormulirLoker = () => {
       total_employe: 0,
       sector_id: listKategori[selectKategori].sektor_id,
       email: data.email,
-      job_desc: data.deskripsiPekerjaan,
+      job_desc: JSON.stringify(deskPekerjaan),
       job_position: data.posisi,
-      cualified: data.kualifikasi,
+      cualified: JSON.stringify(kualifikasi),
       city: listKota[selectKota].kode,
       start_salary: data.minGaji,
       end_salary: data.maxGaji,
@@ -344,9 +348,15 @@ const FormulirLoker = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {step === "1" && (
           <React.Fragment>
+            <IconButton
+              style={{ padding: "0px", marginBottom: "10px" }}
+              onClick={() => dispatch(setActiveStep("all"))}
+            >
+              <IconBack />
+            </IconButton>
             <Title title="Formulir Permintaan Publikasi Loker" />
             {/* Info Perusahaan */}
-            <CardWrapper borderRadius="10px 10px 0 0">
+            <CardWrapper borderRadius="10px 10px 0 0" sx={{ mt: "20px" }}>
               <CardHead>
                 <img src={organization} alt="" width="24px" />
                 <span>Info Perusahaan</span>
@@ -623,16 +633,15 @@ const FormulirLoker = () => {
         )}
         {step === "2" && (
           <React.Fragment>
-            <div>
-              <IconButton
-                style={{ padding: "0px" }}
-                onClick={() => setStep("1")}
-              >
-                <IconBack />
-              </IconButton>
-            </div>
+            <IconButton
+              style={{ padding: "0px", marginBottom: "10px" }}
+              onClick={() => setStep("1")}
+            >
+              <IconBack />
+            </IconButton>
+
             <Title title="Formulir Permintaan Publikasi Loker" />
-            <CardWrapper borderRadius="10px">
+            <CardWrapper borderRadius="10px" sx={{ mt: "20px" }}>
               <CardHead>
                 <img src={business} alt="" width="24px" />
                 <span>Info Lowongan</span>
@@ -753,37 +762,7 @@ const FormulirLoker = () => {
                   </Wrapper>
                   <Wrapper>
                     <TitleDesc>Deskripsi Pekerjaan</TitleDesc>
-                    <Controller
-                      control={control}
-                      name="deskripsiPekerjaan"
-                      defaultValue=""
-                      rules={{
-                        required: "Silahkan Ketik Pekerjaan",
-                      }}
-                      render={({ field, fieldState: { error } }) => (
-                        <TextField
-                          value={field.value}
-                          onChange={field.onChange}
-                          inputRef={field.ref}
-                          error={error}
-                          helperText={error ? error.message : null}
-                          placeholder="Jelaskan secara rinci seperti apa pekerja yang anda ingin kan ....."
-                          multiline
-                          sx={{
-                            backgroundColor: "rgba(217, 217, 217, 0.1)",
-                          }}
-                          InputProps={{
-                            inputComponent: TextareaAutosize,
-                            inputProps: {
-                              style: {
-                                resize: "auto",
-                              },
-                              minRows: 3,
-                            },
-                          }}
-                        />
-                      )}
-                    />
+                    <RichText onConvert={(e) => setDeskPekerjaan(e)} />
                   </Wrapper>
                   {/* Batas Pendaftaran */}
                   <Wrapper>
@@ -868,37 +847,7 @@ const FormulirLoker = () => {
                   {/* Kualifikasi */}
                   <Wrapper>
                     <TitleDesc>Kualifikasi</TitleDesc>
-                    <Controller
-                      control={control}
-                      name="kualifikasi"
-                      defaultValue=""
-                      rules={{
-                        required: "Silahkan Ketik Kualifikasi",
-                      }}
-                      render={({ field, fieldState: { error } }) => (
-                        <TextField
-                          value={field.value}
-                          onChange={field.onChange}
-                          inputRef={field.ref}
-                          error={error}
-                          helperText={error ? error.message : null}
-                          placeholder="Jelaskan secara rinci seperti apa pekerja yang anda ingin kan ....."
-                          multiline
-                          sx={{
-                            backgroundColor: "rgba(217, 217, 217, 0.1)",
-                          }}
-                          InputProps={{
-                            inputComponent: TextareaAutosize,
-                            inputProps: {
-                              style: {
-                                resize: "auto",
-                              },
-                              minRows: 3,
-                            },
-                          }}
-                        />
-                      )}
-                    />
+                    <RichText onConvert={(e) => setKualifikasi(e)} />
                   </Wrapper>
                   {/* Lokasi */}
                   <Wrapper>
@@ -954,7 +903,7 @@ const FormulirLoker = () => {
                         }}
                         render={({ field, fieldState: { error } }) => (
                           <InputText
-                            value={field.value}
+                            value={formatAmountDot(field.value)}
                             onChange={field.onChange}
                             inputRef={field.ref}
                             error={error}
@@ -980,7 +929,7 @@ const FormulirLoker = () => {
                         }}
                         render={({ field, fieldState: { error } }) => (
                           <InputText
-                            value={field.value}
+                            value={formatAmountDot(field.value)}
                             onChange={field.onChange}
                             inputRef={field.ref}
                             error={error}
@@ -1124,6 +1073,7 @@ const Container = styled("div")`
 const CardWrapper = styled("div")`
   background: #ffffff;
   border-radius: ${(props) => props.borderRadius};
+  padding: 20px;
 `;
 
 const CardHead = styled("div")`
@@ -1172,10 +1122,10 @@ const ImageBackground = styled("div")(() => ({
 }));
 
 const CardBodyRight = styled("div")`
-  width: 65%;
+  width: 75%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 25px;
 `;
 
 const Line = styled("div")`
@@ -1197,7 +1147,7 @@ const FooterWrapper = styled("div")`
 `;
 
 const BodyStepTwo = styled("div")`
-  width: 50%;
+  width: 75%;
   display: flex;
   flex-direction: column;
   gap: 21px;

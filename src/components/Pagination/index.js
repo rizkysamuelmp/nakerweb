@@ -42,15 +42,12 @@ const Pagination = ({
   totalData,
   onChange,
   page,
-  language,
   showFirstButton,
   showLastButton,
 }) => (
   <Container>
     <Info>
-      {language === "id" ? "Menampilkan" : "Show"} {currentData}
-      {language === "id" ? "dari " : "from "}
-      {totalData} {language === "id" ? "Baris" : "Row"}
+      Menampilkan {currentData} dari {totalData} Baris
     </Info>
     <WrapperPagination>
       <CustomPagination
@@ -70,7 +67,6 @@ Pagination.propTypes = {
   totalData: PropTypes.number,
   onChange: PropTypes.func,
   page: PropTypes.number,
-  language: PropTypes.string,
   showFirstButton: PropTypes.bool,
   showLastButton: PropTypes.bool,
 };
@@ -81,7 +77,6 @@ Pagination.defaultProps = {
   totalData: 0,
   onChange: () => {},
   page: 1,
-  language: "id",
   showFirstButton: true,
   showLastButton: true,
 };

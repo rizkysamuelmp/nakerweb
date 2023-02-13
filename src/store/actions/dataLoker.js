@@ -1,7 +1,9 @@
 import Button from "../../components/Button";
 import {
+  serviceApproveLoker,
   serviceGetAllLoker,
   serviceGetCategory,
+  serviceGetCity,
   serviceGetDataLoker,
   serviceGetJobType,
   serviceLokerFilter,
@@ -23,6 +25,30 @@ export const SET_ACTIVE_STEP = "SET_ACTIVE_STEP";
 export const SET_HEADER_TABLE_HOME = "SET_HEADER_TABLE_HOME";
 export const SET_LOKER_HOME = "SET_LOKER_HOME";
 export const SET_LOKER = "SET_LOKER";
+export const SET_ALL_CITY = "SET_ALL_CITY";
+export const VALUE_CITY = "VALUE_CITY";
+export const SET_SELECTED_DATA = "SET_SELECTED_DATA";
+export const SET_POPUP_STATUS = "SET_POPUP_STATUS";
+
+export const setPopupStatus = (payload) => ({
+  type: SET_POPUP_STATUS,
+  payload,
+});
+
+export const setSelectedData = (payload) => ({
+  type: SET_SELECTED_DATA,
+  payload,
+});
+
+export const setValueCity = (payload) => ({
+  type: VALUE_CITY,
+  payload,
+});
+
+export const setAllCity = (payload) => ({
+  type: SET_ALL_CITY,
+  payload,
+});
 
 export const setLoker = (payload) => ({
   type: SET_LOKER,
@@ -100,8 +126,14 @@ export const getCategory = () => async (dispatch) => {
 
     if (status === 200) {
       dispatch(setSector(data.data));
-      let count = 0;
-      let sector = [];
+      let count = 1;
+      let sector = [
+        {
+          label: "Semua Sektor",
+          value: 0,
+          sektor_id: "",
+        },
+      ];
       data.data.forEach((item) => {
         sector.push({
           label: item.name,
@@ -122,8 +154,14 @@ export const getJobType = () => async (dispatch) => {
     const { status, data } = await serviceGetJobType();
 
     if (status === 200) {
-      let count = 0;
-      let sector = [];
+      let count = 1;
+      let sector = [
+        {
+          label: "Semua Kategori",
+          value: 0,
+          id: "",
+        },
+      ];
       data.data.forEach((item) => {
         sector.push({
           label: item.job_type_name,
@@ -139,7 +177,37 @@ export const getJobType = () => async (dispatch) => {
   }
 };
 
-export const getLoker = () => async (dispatch, getState) => {
+export const getAllCity = () => async (dispatch) => {
+  try {
+    const { status, data } = await serviceGetCity({
+      province_id: 0,
+    });
+
+    if (status === 200) {
+      let count = 1;
+      let allCity = [
+        {
+          kode: 0,
+          label: "Semua Kab/Kota",
+          value: 0,
+        },
+      ];
+      data.data.forEach((item) => {
+        allCity.push({
+          ...item,
+          label: item.nama,
+          value: count,
+        });
+        count = count + 1;
+      });
+      dispatch(setAllCity(allCity));
+    }
+  } catch (e) {
+    console.warn("Error : ", e);
+  }
+};
+
+export const getLoker = () => async (dispatch) => {
   try {
     dispatch(setLoading(true));
     const { status, data } = await serviceGetDataLoker({});
@@ -155,6 +223,7 @@ export const getLoker = () => async (dispatch, getState) => {
 };
 
 export const getDataLoker = () => async (dispatch, getState) => {
+  const pagination = getState().dataLoker.pagination;
   let sector = getState().dataLoker.sector;
   if (sector.length === 0) {
     await dispatch(getCategory());
@@ -217,11 +286,11 @@ export const getDataLoker = () => async (dispatch, getState) => {
                 justifyContent: "center",
               }}
             >
-              {rowData.status === "0" ? (
+              {rowData.status === "1" ? (
                 <div
                   style={{
                     border: "1px solid #039C40",
-                    backgroundColor: "#AEF8AC",
+                    backgroundColor: "#96f5bf",
                     borderRadius: "30px",
                     padding: "4px 20px",
                     fontFamily: "Inter",
@@ -229,11 +298,12 @@ export const getDataLoker = () => async (dispatch, getState) => {
                     fontSize: "13px",
                     lineHeight: "16px",
                     color: "#039C40",
+                    whiteSpace: "nowrap",
                   }}
                 >
-                  Aktif
+                  Disetujui
                 </div>
-              ) : (
+              ) : rowData.status === "2" ? (
                 <div
                   style={{
                     border: "1px solid #C80707",
@@ -245,9 +315,27 @@ export const getDataLoker = () => async (dispatch, getState) => {
                     fontSize: "13px",
                     lineHeight: "16px",
                     color: "#C80707",
+                    whiteSpace: "nowrap",
                   }}
                 >
-                  Tidak Aktif
+                  Ditolak
+                </div>
+              ) : (
+                <div
+                  style={{
+                    border: "1px solid #0061A7",
+                    backgroundColor: "#bde2fc",
+                    borderRadius: "30px",
+                    padding: "4px 20px",
+                    fontFamily: "Inter",
+                    fontWeight: 500,
+                    fontSize: "13px",
+                    lineHeight: "16px",
+                    color: "#0061A7",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Menunggu
                 </div>
               )}
             </div>
@@ -256,6 +344,15 @@ export const getDataLoker = () => async (dispatch, getState) => {
         },
       ];
       dispatch(setHeaderTableHome(dataTable));
+
+      dispatch(
+        setPagination({
+          ...pagination,
+          count: Math.ceil(data.total / 10),
+          totalData: data.total,
+          currentData: data.data.length,
+        })
+      );
     }
   } catch (e) {
     dispatch(setLoading(false));
@@ -277,6 +374,9 @@ export const getLokerFilter = () => async (dispatch, getState) => {
     valueJobType,
     dropDownSector,
     valueSector,
+    search,
+    allCity,
+    valueCity,
   } = getState().dataLoker;
 
   try {
@@ -286,8 +386,9 @@ export const getLokerFilter = () => async (dispatch, getState) => {
       limit: 10,
       sector: dropDownSector[valueSector]?.sektor_id || "",
       job_type: dropDownJobType[valueJobType[0]]?.id || "",
-      city: "",
-      status: valueStatus.length === 0 ? "" : valueStatus[0],
+      city: allCity[valueCity[0]]?.kode || "",
+      status: valueStatus[0] === 0 ? "" : valueStatus[0] === 1 ? 0 : 1,
+      keyword: search,
     });
     dispatch(setLoading(false));
 
@@ -340,11 +441,11 @@ export const getLokerFilter = () => async (dispatch, getState) => {
                 justifyContent: "center",
               }}
             >
-              {rowData.status === "0" ? (
+              {rowData.status === "1" ? (
                 <div
                   style={{
                     border: "1px solid #039C40",
-                    backgroundColor: "#AEF8AC",
+                    backgroundColor: "#96f5bf",
                     borderRadius: "30px",
                     padding: "4px 20px",
                     fontFamily: "Inter",
@@ -352,11 +453,12 @@ export const getLokerFilter = () => async (dispatch, getState) => {
                     fontSize: "13px",
                     lineHeight: "16px",
                     color: "#039C40",
+                    whiteSpace: "nowrap",
                   }}
                 >
-                  Aktif
+                  Disetujui
                 </div>
-              ) : (
+              ) : rowData.status === "2" ? (
                 <div
                   style={{
                     border: "1px solid #C80707",
@@ -368,9 +470,27 @@ export const getLokerFilter = () => async (dispatch, getState) => {
                     fontSize: "13px",
                     lineHeight: "16px",
                     color: "#C80707",
+                    whiteSpace: "nowrap",
                   }}
                 >
-                  Tidak Aktif
+                  Ditolak
+                </div>
+              ) : (
+                <div
+                  style={{
+                    border: "1px solid #0061A7",
+                    backgroundColor: "#bde2fc",
+                    borderRadius: "30px",
+                    padding: "4px 20px",
+                    fontFamily: "Inter",
+                    fontWeight: 500,
+                    fontSize: "13px",
+                    lineHeight: "16px",
+                    color: "#0061A7",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Menunggu
                 </div>
               )}
             </div>
@@ -385,7 +505,11 @@ export const getLokerFilter = () => async (dispatch, getState) => {
               variant="contained"
               borderRadius="5px"
               padding="0px 7px 0px 9px"
-              onClick={() => dispatch(setActiveStep("detail"))}
+              onClick={() => {
+                dispatch(setSelectedData(rowData));
+                dispatch(setActiveStep("detail"));
+              }}
+              style={{ whiteSpace: "nowrap" }}
             >
               Detail
               <img src={eye} alt="eye" />
@@ -399,14 +523,37 @@ export const getLokerFilter = () => async (dispatch, getState) => {
       dispatch(
         setPagination({
           ...pagination,
-          count: 3,
-          totalData: 30,
-          currentData: 10,
+          count: Math.ceil(data.total / 10),
+          totalData: data.total,
+          currentData: data.data.length,
         })
       );
     }
   } catch (e) {
     dispatch(setLoading(false));
     console.warn("Error", e);
+  }
+};
+
+export const executeLoker = (action) => async (dispatch, getState) => {
+  const selectData = getState().dataLoker.selectedData;
+  try {
+    dispatch(setLoading(true));
+    const { status, data } = await serviceApproveLoker({
+      loker_id: selectData.loker_id,
+      status: JSON.stringify(action),
+    });
+    dispatch(setLoading(false));
+
+    if (status === 200) {
+      if (data.message === "Berhasil disetujui") {
+        dispatch(setPopupStatus(1));
+      } else if (data.message === "Berhasil ditolak") {
+        dispatch(setPopupStatus(2));
+      }
+    }
+  } catch (e) {
+    dispatch(setLoading(false));
+    console.warn("Error : ", e);
   }
 };
