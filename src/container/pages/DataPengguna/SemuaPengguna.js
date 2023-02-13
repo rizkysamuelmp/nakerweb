@@ -19,7 +19,9 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
-import { getCity, getFilterData, getSearchData } from "../../../utils/api";
+import { getFilterData, getSearchData } from "../../../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import { getCity } from "../../../store/actions/dataPengguna";
 
 const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [page, setPage] = useState("1");
@@ -162,31 +164,35 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
 
-  // state for filter
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
-  const [city, setCity] = useState("");
-  const [initialCity, setInitialCity] = useState(null);
+  const [selectCity, setSelectCity] = useState([]);
   const [status, setStatus] = useState("");
 
-  useEffect(() => {
-    const fetchCity = async () => {
-      const { data } = await getCity();
-      console.log(data.data);
-      // setInitialCity(data.data);
-    };
+  // state global
+  const dispatch = useDispatch();
+  const { city } = useSelector((state) => state.dataPengguna);
 
-    fetchCity();
-  }, []);
+  useEffect(() => {
+    dispatch(getCity());
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchFilter = async () => {
-      const { data } = await getFilterData(page, gender, age, city, status);
+      const { data } = await getFilterData(
+        page,
+        gender,
+        age,
+        (city = selectCity),
+        status
+      );
       setDataContent(data.data);
     };
 
     fetchFilter();
   }, [page, gender, age, city, status]);
+
+  console.log(selectCity);
 
   const searchHandler = (event) => {
     const fetchSearchData = async () => {
@@ -401,10 +407,10 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Kota :</p>
               <DropDown
-                dropdownValue={city}
-                listDropDown={[]}
+                dropdownValue={selectCity}
+                listDropDown={city}
                 placeHolder="Pilih Kota"
-                handleChange={(e) => setCity(e.target.value)}
+                handleChange={(e) => setSelectCity(e.target.value)}
               />
             </div>
             <div
