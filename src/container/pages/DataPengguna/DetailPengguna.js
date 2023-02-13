@@ -160,7 +160,7 @@ const DetailPengguna = ({ setActiveStep, history, id_user }) => {
           </Line>
           <Line>
             <InfoData>Warga Negara</InfoData>
-            <ValueData>Indonesia</ValueData>
+            <ValueData>-</ValueData>
           </Line>
           <Line>
             <InfoData>Email</InfoData>

@@ -85,10 +85,52 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
     {
       title: "Status",
       key: "is_status",
-      center: true,
+      width: 120,
       render: (rowData) => (
-        <p>{rowData.is_status === "0" ? "Non Active" : "Active"}</p>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {rowData.is_status === "0" ? (
+            <div
+              style={{
+                border: "1px solid #039C40",
+                backgroundColor: "#AEF8AC",
+                borderRadius: "30px",
+                padding: "4px 20px",
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "13px",
+                lineHeight: "16px",
+                color: "#039C40",
+              }}
+            >
+              Aktif
+            </div>
+          ) : (
+            <div
+              style={{
+                border: "1px solid #C80707",
+                backgroundColor: "#F5969633",
+                borderRadius: "30px",
+                padding: "4px 20px",
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "13px",
+                lineHeight: "16px",
+                color: "#C80707",
+              }}
+            >
+              Tidak Aktif
+            </div>
+          )}
+        </div>
       ),
+      center: true,
     },
     {
       title: "Usia",

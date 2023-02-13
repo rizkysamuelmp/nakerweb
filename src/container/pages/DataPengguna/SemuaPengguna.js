@@ -19,12 +19,20 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
-import { getAllDetail } from "../../../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllUsers,
+  getCity,
+  getPenggunaFilter,
+  getPenggunaSearch,
+  setPagination,
+  setValueAge,
+  setValueCity,
+  setValueGender,
+  setValueStatus,
+} from "../../../store/actions/dataPengguna";
 
 const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
-  const [page, setPage] = useState("1");
-  const [dataContent, setDataContent] = useState([]);
-
   const dataHeader = [
     {
       title: "No",
@@ -78,13 +86,63 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
       key: "email",
     },
     {
-      title: "Sektor",
-      key: "sector",
+      title: "Status",
+      key: "is_status",
+      width: 120,
+      render: (rowData) => (
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {rowData.is_status === "0" ? (
+            <div
+              style={{
+                border: "1px solid #039C40",
+                backgroundColor: "#AEF8AC",
+                borderRadius: "30px",
+                padding: "4px 20px",
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "13px",
+                lineHeight: "16px",
+                color: "#039C40",
+              }}
+            >
+              Aktif
+            </div>
+          ) : (
+            <div
+              style={{
+                border: "1px solid #C80707",
+                backgroundColor: "#F5969633",
+                borderRadius: "30px",
+                padding: "4px 20px",
+                fontFamily: "Inter",
+                fontWeight: 500,
+                fontSize: "13px",
+                lineHeight: "16px",
+                color: "#C80707",
+              }}
+            >
+              Tidak Aktif
+            </div>
+          )}
+        </div>
+      ),
+      center: true,
     },
     {
       title: "Usia",
       key: "age",
       width: 50,
+      center: true,
+      render: (rowData) => (
+        <span>{rowData.age ? rowData.age + " Thn" : "-"}</span>
+      ),
     },
     {
       title: "Aksi",
@@ -108,20 +166,51 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
     },
   ];
 
-  const [search, setSearch] = useState("");
+  const [keyword, setKeyword] = useState("");
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
-  const [dropDown, setDropDown] = useState();
+
+  // state global
+  const dispatch = useDispatch();
+  const {
+    allUsers,
+    valueGender,
+    valueAge,
+    valueCity,
+    dropDownCity,
+    valueStatus,
+    pagination,
+    filter,
+  } = useSelector((state) => state.dataPengguna);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const allUsers = await getAllDetail(page, 10);
+    dispatch(getAllUsers());
+    dispatch(getCity());
+  }, [dispatch]);
 
-      setDataContent(allUsers.data.data);
-    };
+  const searchHandler = (event) => {
+    if (event.key === "Enter") {
+      if (keyword !== "") {
+        dispatch(getPenggunaSearch(keyword));
+      } else {
+        dispatch(getAllUsers());
+      }
+      setKeyword("");
+    }
+  };
 
-    fetchUsers();
-  }, [page]);
+  const onChangeFilter = () => {
+    dispatch(getPenggunaFilter());
+    dispatch(setPagination({ ...pagination, page: 1 }));
+  };
+
+  const onChangePage = () => {
+    if (filter) {
+      dispatch(getPenggunaFilter());
+    } else {
+      dispatch(getPenggunaSearch());
+    }
+  };
 
   return (
     <Container>
@@ -134,9 +223,10 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
           {/* Pencarian */}
           <InputText
             type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
             placeholder="pencarian"
+            onKeyDown={searchHandler}
             noPadding
             width="175px"
             borderRadius="5px"
@@ -247,6 +337,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
           >
             <img src={iconSlider} alt="icon-slider" width={24} height={24} />
           </Button>
+          {/* Filter */}
           <Menu
             id="menu-appbar"
             anchorEl={menuFilter}
@@ -285,16 +376,19 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Jenis Kelamin :</p>
               <DropDown
-                dropdownValue={dropDown}
+                dropdownValue={valueGender}
                 listDropDown={[
                   {
                     label: "Laki-laki",
-                    value: 0,
+                    value: "0",
                   },
-                  { label: "Perempuan", value: 1 },
+                  { label: "Perempuan", value: "1" },
                 ]}
                 placeHolder="Pilih Jenis Kelamin"
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => {
+                  dispatch(setValueGender([e.target.value]));
+                  onChangeFilter();
+                }}
               />
             </div>
             <div
@@ -302,35 +396,21 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Range Usia :</p>
               <DropDown
-                dropdownValue={dropDown}
+                dropdownValue={valueAge}
                 listDropDown={[
                   {
                     label: "Usia 12 - 25 tahun",
                     value: 0,
                   },
-                  { label: "Usia 26 - 39 tahun", value: 1 },
-                  { label: "Usia 40 - 52 tahun", value: 2 },
-                  { label: "Usia 53 - 65 tahun", value: 3 },
+                  { label: "Usia 26 - 39 tahun", value: "1" },
+                  { label: "Usia 40 - 52 tahun", value: "2" },
+                  { label: "Usia 53 - 65 tahun", value: "3" },
                 ]}
                 placeHolder="Pilih Range Usia"
-                handleChange={(e) => setDropDown(e.target.value)}
-              />
-            </div>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-            >
-              <p>Sektor :</p>
-              <DropDown
-                dropdownValue={dropDown}
-                listDropDown={[
-                  {
-                    label: "Pabrik baju",
-                    value: 0,
-                  },
-                  { label: "Pabrik Semen", value: 1 },
-                ]}
-                placeHolder="Pilih Sektor Perusahaan"
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => {
+                  dispatch(setValueAge([e.target.value]));
+                  onChangeFilter();
+                }}
               />
             </div>
             <div
@@ -338,17 +418,13 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Kota :</p>
               <DropDown
-                dropdownValue={dropDown}
-                listDropDown={[
-                  {
-                    label: "Solo",
-                    value: 0,
-                  },
-                  { label: "Yogyakarta", value: 1 },
-                  { label: "Klaten", value: 2 },
-                ]}
+                dropdownValue={valueCity}
+                listDropDown={dropDownCity}
                 placeHolder="Pilih Kota"
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => {
+                  dispatch(setValueCity([e.target.value]));
+                  onChangeFilter();
+                }}
               />
             </div>
             <div
@@ -356,29 +432,35 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Status :</p>
               <DropDown
-                dropdownValue={dropDown}
+                dropdownValue={valueStatus}
                 listDropDown={[
                   {
                     label: "Aktif",
-                    value: 0,
+                    value: "0",
                   },
-                  { label: "Tidak Aktif", value: 1 },
+                  { label: "Tidak Aktif", value: "1" },
                 ]}
                 placeHolder="Pilih Status Akun"
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => {
+                  dispatch(setValueStatus([e.target.value]));
+                  onChangeFilter();
+                }}
               />
             </div>
           </Menu>
         </div>
       </Title>
-      <Table dataContent={dataContent} headerContent={dataHeader} />
+      <Table dataContent={allUsers} headerContent={dataHeader} />
       {/* Pagination */}
       <Pagination
         count={10}
         currentData={10}
         totalData={100}
-        page={page}
-        onChange={(e, value) => setPage(value)}
+        page={pagination.page}
+        onChange={(e, value) => {
+          dispatch(setPagination({ ...pagination, page: value }));
+          onChangePage();
+        }}
       />
     </Container>
   );
