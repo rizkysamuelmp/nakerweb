@@ -1,7 +1,7 @@
 // Page Data Grup
 // --------------------------------------------------------
 
-import React from "react";
+import React, { useEffect } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
@@ -17,13 +17,16 @@ import iconCalendar from "../../../assets/icon/icon-calendar.png";
 
 // Dummy Data
 import { dataContent } from "./DataDummy";
+import { useDispatch, useSelector } from "react-redux";
+import { getDasboardGrup } from "../../../store/actions/dataGrupActions";
 
 const DataLoker = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
     {
       title: "No",
-      key: "no",
-      width: 30,
+      key: "group_id",
+      width: 20,
+      center: true,
     },
     {
       title: "Profile",
@@ -35,22 +38,25 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
     },
     {
       title: "Nama Grup",
-      key: "groupName",
+      key: "group_name",
+      center: true,
     },
     {
       title: "Jenis Group",
-      key: "groupType",
+      key: "category_name",
+      center: true,
     },
     {
       title: "Pembuat Grup",
-      key: "groupCreator",
+      key: "full_name",
+      center: true,
     },
     {
       title: "Anggota",
       render: (rowData) => (
         <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
           <IconGroup />
-          <p>{rowData.member}</p>
+          <p>{rowData.total_member}</p>
         </div>
       ),
     },
@@ -60,11 +66,12 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
     },
     {
       title: "Tanggal Dibuat",
-      key: "dateCreated",
+      key: "create_at",
     },
     {
       title: "Postingan",
-      key: "totalPost",
+      key: "total_post",
+      center: true,
     },
     {
       title: "Aksi",
@@ -118,6 +125,14 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
       ],
     },
   ];
+
+  const { dashboardGrup } = useSelector((state) => state.dataGrup);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDasboardGrup());
+  }, [dispatch]);
 
   return (
     <Container>
@@ -198,7 +213,10 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
             width: "100%",
           }}
         >
-          <Table headerContent={dataHeader} dataContent={dataContent} />
+          <Table
+            headerContent={dataHeader}
+            dataContent={dashboardGrup.list_grup}
+          />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
             <p
