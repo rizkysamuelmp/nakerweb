@@ -1,8 +1,10 @@
 import {
   ALL_USERS,
+  DASHBOARD_USERS,
   FILTER,
   SET_DROPDOWN_CITY,
   SET_PAGINATION,
+  SET_SEARCH,
   SET_VALUE_AGE,
   SET_VALUE_CITY,
   SET_VALUE_GENDER,
@@ -10,7 +12,9 @@ import {
 } from "../constants/dataPenggunaConstants";
 
 const initialState = {
+  dashboardUsers: [],
   filter: false,
+  search: false,
   allUsers: [],
   valueGender: [],
   valueAge: [],
@@ -27,10 +31,20 @@ const initialState = {
 
 const dataPenggunaReducer = (state = initialState, action) => {
   switch (action.type) {
+    case DASHBOARD_USERS:
+      return {
+        ...state,
+        dashboardUsers: action.payload,
+      };
     case FILTER:
       return {
         ...state,
         filter: action.payload,
+      };
+    case SET_SEARCH:
+      return {
+        ...state,
+        search: action.payload,
       };
     case ALL_USERS:
       return {

@@ -36,7 +36,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const dataHeader = [
     {
       title: "No",
-      key: "no",
+      key: "id_user",
       width: 30,
       center: true,
     },
@@ -51,6 +51,9 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
               alt="profile"
               style={{
                 width: "24px",
+                height: "24px",
+                border: "1px solid rgba(48, 68, 241, 0.87)",
+                borderRadius: "100%",
               }}
             />
           ) : (
@@ -69,7 +72,15 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
       title: "Jenis Kelamin",
       key: "gender",
       center: true,
-      render: (rowData) => <p>{rowData.gender === "0" ? "Pria" : "Wanita"}</p>,
+      render: (rowData) => (
+        <p>
+          {rowData.gender === "0"
+            ? "Pria"
+            : rowData.gender === "1"
+            ? "Wanita"
+            : "-"}
+        </p>
+      ),
     },
     {
       title: "Kota",
@@ -208,7 +219,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
     if (filter) {
       dispatch(getPenggunaFilter());
     } else {
-      dispatch(getPenggunaSearch());
+      dispatch(getAllUsers());
     }
   };
 
@@ -399,12 +410,12 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
                 dropdownValue={valueAge}
                 listDropDown={[
                   {
-                    label: "Usia 12 - 25 tahun",
-                    value: 0,
+                    label: "< 15 Thn",
+                    value: "0",
                   },
-                  { label: "Usia 26 - 39 tahun", value: "1" },
-                  { label: "Usia 40 - 52 tahun", value: "2" },
-                  { label: "Usia 53 - 65 tahun", value: "3" },
+                  { label: "15->17 Thn", value: "1" },
+                  { label: "18 ->55 Thn", value: "2" },
+                  { label: ">56", value: "3" },
                 ]}
                 placeHolder="Pilih Range Usia"
                 handleChange={(e) => {
@@ -421,7 +432,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
                 dropdownValue={valueCity}
                 listDropDown={dropDownCity}
                 placeHolder="Pilih Kota"
-                handleChange={(e) => {
+                handleChange={(e, kode) => {
                   dispatch(setValueCity([e.target.value]));
                   onChangeFilter();
                 }}
@@ -458,6 +469,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
         totalData={100}
         page={pagination.page}
         onChange={(e, value) => {
+          console.log(value);
           dispatch(setPagination({ ...pagination, page: value }));
           onChangePage();
         }}

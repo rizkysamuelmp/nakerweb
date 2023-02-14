@@ -44,7 +44,8 @@ export const serviceGetCity = (payload) =>
   axios.post(`${apiUrl}/loker/getCity`, payload);
 
 // Api for pengguna
-export const users = () => axios.get(`${apiUrl}/users`);
+export const serviceDashboardUsers = (payload) =>
+  axios.get(`${apiUrl}/users`, payload);
 
 export const getDetail = (id_user) =>
   axios.post(`${apiUrl}/users/get_detail`, { id_user }, config);
