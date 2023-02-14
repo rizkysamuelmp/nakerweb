@@ -26,3 +26,12 @@ export const formatAmountDot = (input = "") => {
     .replace(/[^0-9]/g, "")
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
 };
+
+export const isJSONString = (string) => {
+  try {
+    JSON.parse(string);
+  } catch (e) {
+    return false;
+  }
+  return true;
+};

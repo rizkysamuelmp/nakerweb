@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import React, { useEffect, useState } from "react";
 import Button from "../../../components/Button";
 import { logo, social } from "../../../assets/img";
 import InputText from "../../../components/InputText";
@@ -6,7 +8,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { Checkbox, FormControlLabel, IconButton } from "@mui/material";
 import PopUp from "../../../components/PopUp";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { actionLogin } from "../../../store/actions/pageContainer";
 
 // Asset
 import { ReactComponent as EyeLookIcon } from "../../../assets/icon/icon-eye-look.svg";
@@ -14,11 +17,16 @@ import iconEmail from "../../../assets/icon/icon-email.svg";
 import iconPassword from "../../../assets/icon/icon-password.svg";
 import LockErrorBlack from "../../../assets/img/lock-error-black.png";
 import mailBlue from "../../../assets/img/mail-blue.png";
-import { login } from "../../../store/actions/userActions";
 
 const Login = () => {
   let history = useHistory();
   const dispatch = useDispatch();
+
+  const isToken = localStorage.getItem("token");
+  const { isLogin, isLoading, message } = useSelector(
+    (state) => state.pageContainer,
+    shallowEqual
+  );
 
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
@@ -26,11 +34,19 @@ const Login = () => {
   const [popUpAuth, setPopUpAuth] = useState(false);
   const [popUpEmail, setPopUpEmail] = useState(false);
 
+  useEffect(() => {
+    if (isLogin && isToken) {
+      history.push("/nakerweb/dashboard");
+    }
+    if (!isLogin || !isToken) {
+      history.push("/nakerweb/login");
+      localStorage.removeItem("token");
+    }
+  }, [isLogin]);
+
   const handleSubmit = (e) => {
-    // setPopUpAuth(true);
     e.preventDefault();
-    dispatch(login(email, password));
-    history.push("/nakerweb/dashboard");
+    dispatch(actionLogin(email, password));
   };
 
   return (
@@ -52,8 +68,8 @@ const Login = () => {
           alignItems: "center",
           padding: "10px",
           width: "400px",
-          marginBottom: "80px",
-          gap: "10px",
+          marginBottom: "120px",
+          gap: "20px",
         }}
       >
         <img src={logo} alt="logo" height={250} width={250} />
@@ -72,10 +88,11 @@ const Login = () => {
             fontWeight: "500",
             lineHeight: "18px",
             letterSpacing: "0.01em",
-            color: "#7E7474",
+            textAlign: "center",
+            color: message ? "#d32f2f" : "#7E7474",
           }}
         >
-          Silahkan masukkan email dan kata sandi anda
+          {message ? message : "Silahkan masukkan email dan kata sandi anda"}
         </p>
         <form
           style={{
@@ -88,7 +105,7 @@ const Login = () => {
         >
           <div>
             <label
-              for="email"
+              htmlFor="email"
               style={{
                 fontWeight: "400",
                 fontSize: "13px",
@@ -108,7 +125,6 @@ const Login = () => {
               }}
             />
             <InputText
-              key="email"
               endIcon
               type="text"
               value={email}
@@ -119,7 +135,7 @@ const Login = () => {
           </div>
           <div>
             <label
-              for="password"
+              htmlFor="password"
               style={{
                 fontWeight: "400",
                 fontSize: "13px",
@@ -139,9 +155,9 @@ const Login = () => {
               }}
             />
             <InputText
-              key="password"
               endIcon
               value={password}
+              error={message === "Nomor atau kata sandi salah."}
               type={hidePassword ? "password" : "text"}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Masukkan kata sandi"
@@ -211,7 +227,8 @@ const Login = () => {
             variant="contained"
             full
             type="submit"
-            disabled={email === "" || password === ""}
+            isLoading={isLoading}
+            disabled={email === "" || password === "" || isLoading}
           >
             Masuk
           </Button>

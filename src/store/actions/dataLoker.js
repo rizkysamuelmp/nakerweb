@@ -5,11 +5,13 @@ import {
   serviceGetCategory,
   serviceGetCity,
   serviceGetDataLoker,
+  serviceGetDetailLoker,
   serviceGetJobType,
   serviceLokerFilter,
 } from "../../utils/api";
 import { setLoading } from "./pageContainer";
 import eye from "../../assets/icon/Eye.svg";
+import moment from "moment";
 
 export const SET_ALL_LOKER = "SET_ALL_LOKER";
 export const SET_SECTOR = "SET_SECTOR";
@@ -29,6 +31,12 @@ export const SET_ALL_CITY = "SET_ALL_CITY";
 export const VALUE_CITY = "VALUE_CITY";
 export const SET_SELECTED_DATA = "SET_SELECTED_DATA";
 export const SET_POPUP_STATUS = "SET_POPUP_STATUS";
+export const SET_DETAIL_LOKER = "SET_DETAIL_LOKER";
+
+export const setDetailLoker = (payload) => ({
+  type: SET_DETAIL_LOKER,
+  payload,
+});
 
 export const setPopupStatus = (payload) => ({
   type: SET_POPUP_STATUS,
@@ -222,6 +230,33 @@ export const getLoker = () => async (dispatch) => {
   }
 };
 
+export const getDetailLoker = () => async (dispatch, getState) => {
+  const { loker_id } = getState().dataLoker.selectedData;
+  let sector = getState().dataLoker.sector;
+  if (sector.length === 0) {
+    await dispatch(getCategory());
+    sector = getState().dataLoker.sector;
+  }
+
+  try {
+    dispatch(setLoading(true));
+    const { status, data } = await serviceGetDetailLoker({
+      loker_id,
+    });
+    dispatch(setLoading(false));
+
+    if (status === 200) {
+      dispatch(
+        setDetailLoker({ ...data.data.info_loker, ...data.data.info_pic })
+      );
+      dispatch(setActiveStep("detail"));
+    }
+  } catch (e) {
+    dispatch(setLoading(false));
+    console.warn("Error", e);
+  }
+};
+
 export const getDataLoker = () => async (dispatch, getState) => {
   const pagination = getState().dataLoker.pagination;
   let sector = getState().dataLoker.sector;
@@ -261,17 +296,15 @@ export const getDataLoker = () => async (dispatch, getState) => {
         {
           title: "Tanggal Buka",
           key: "start_open",
+          render: (rowData) => <p>{moment(rowData).format("DD MMMM YYYY")}</p>,
         },
         {
           title: "Sektor",
-          key: "level",
-          render: (rowData) => (
-            <p>{sector.find((item) => item.sektor_id === "1")?.name}</p>
-          ),
+          key: "sektor",
         },
         {
           title: "Kategori",
-          key: "provinice",
+          key: "type",
         },
         {
           title: "Status",
@@ -377,6 +410,7 @@ export const getLokerFilter = () => async (dispatch, getState) => {
     search,
     allCity,
     valueCity,
+    activeStep,
   } = getState().dataLoker;
 
   try {
@@ -416,17 +450,15 @@ export const getLokerFilter = () => async (dispatch, getState) => {
         {
           title: "Tanggal Buka",
           key: "start_open",
+          render: (rowData) => <p>{moment(rowData).format("DD MMMM YYYY")}</p>,
         },
         {
           title: "Sektor",
-          key: "level",
-          render: (rowData) => (
-            <p>{sector.find((item) => item.sektor_id === "1")?.name}</p>
-          ),
+          key: "sektor",
         },
         {
           title: "Kategori",
-          key: "provinice",
+          key: "type",
         },
         {
           title: "Status",
@@ -507,7 +539,7 @@ export const getLokerFilter = () => async (dispatch, getState) => {
               padding="0px 7px 0px 9px"
               onClick={() => {
                 dispatch(setSelectedData(rowData));
-                dispatch(setActiveStep("detail"));
+                dispatch(getDetailLoker());
               }}
               style={{ whiteSpace: "nowrap" }}
             >
@@ -528,6 +560,10 @@ export const getLokerFilter = () => async (dispatch, getState) => {
           currentData: data.data.length,
         })
       );
+
+      if (activeStep === "page") {
+        dispatch(setActiveStep("all"));
+      }
     }
   } catch (e) {
     dispatch(setLoading(false));

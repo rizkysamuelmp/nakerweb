@@ -1,28 +1,23 @@
 import { Button, styled } from "@mui/material";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import AppRoutes from "../../config/routes";
+import { setIsLogin } from "../../store/actions/pageContainer";
+import { useDispatch } from "react-redux";
 
 // Assets
 import logout from "../../assets/icon/icon-logout.png";
 
-// Style
-const LinkWrapper = styled(Link)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: Overpass, san-serif;
-  color: #0e0000;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 19.5px;
-  padding: 10px 16px;
-  text-decoration: none;
-  width: 100%;
-`;
-
 const Sidebar = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const location = useLocation();
+
+  const handleLogout = () => {
+    dispatch(setIsLogin(false));
+    history.push("/nakerweb/login");
+    localStorage.removeItem("token");
+  };
 
   return (
     <div
@@ -75,14 +70,43 @@ const Sidebar = () => {
           width: "100%",
           justifyContent: "start",
         }}
+        onClick={() => handleLogout()}
       >
-        <LinkWrapper to="/nakerweb/login">
+        <LogotButton>
           <p>Keluar</p>
           <img alt="logout" src={logout} width={24} height={24} />
-        </LinkWrapper>
+        </LogotButton>
       </Button>
     </div>
   );
 };
+
+// Style
+const LogotButton = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Overpass, san-serif;
+  color: #0e0000;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 19.5px;
+  padding: 10px 16px;
+  text-decoration: none;
+  width: 100%;
+`;
+const LinkWrapper = styled(Link)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Overpass, san-serif;
+  color: #0e0000;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 19.5px;
+  padding: 10px 16px;
+  text-decoration: none;
+  width: 100%;
+`;
 
 export default Sidebar;

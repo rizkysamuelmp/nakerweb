@@ -16,14 +16,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-const ChartLine = ({
-  isLoading,
-  description,
-  title,
-  datasets,
-  options,
-  labels,
-}) => {
+const ChartLine = ({ datasets, options, labels }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -48,18 +41,12 @@ const ChartLine = ({
 };
 
 ChartLine.propTypes = {
-  isLoading: PropTypes.bool,
-  description: PropTypes.string,
-  title: PropTypes.string,
   datasets: PropTypes.array,
   labels: PropTypes.array,
   options: PropTypes.object,
 };
 
 ChartLine.defaultProps = {
-  isLoading: false,
-  description: "230 Pengguna",
-  title: "",
   datasets: [
     {
       label: "Dataset 1",

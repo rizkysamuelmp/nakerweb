@@ -2,7 +2,7 @@
 // --------------------------------------------------------
 
 import { styled } from "@mui/material/styles";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
 import Button from "../../../components/Button";
@@ -19,8 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDashboardUsers } from "../../../store/actions/dataPengguna";
 
 const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
-  const [pengguna, setPengguna] = useState([]);
-
   const dispatch = useDispatch();
   const { dashboardUsers } = useSelector((state) => state.dataPengguna);
 
@@ -170,8 +168,6 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
       center: true,
     },
   ];
-
-  const dataContent = [];
 
   return (
     <Container>

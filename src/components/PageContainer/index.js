@@ -1,29 +1,42 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { IconButton, Menu } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 import Notification from "../../components/Notification";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
+import Loader from "../Loader";
+import { shallowEqual, useSelector } from "react-redux";
 
 // Asset
 import liveChat from "../../assets/icon/live-chat.svg";
-import Loader from "../Loader";
-import { shallowEqual, useSelector } from "react-redux";
 
 const PageContainer = ({ children }) => {
   let history = useHistory();
   const location = useLocation();
 
+  const idLocale = require("moment/locale/id");
+  moment.locale("id", idLocale);
+
   const isNotif = true;
   const [notification, setNotification] = useState(null);
+  const isToken = localStorage.getItem("token");
 
-  const { isLoading } = useSelector(
+  const { isLoading, isLogin } = useSelector(
     ({ pageContainer }) => ({
       isLoading: pageContainer.isLoading,
     }),
     shallowEqual
   );
+
+  useEffect(() => {
+    if (!isLogin && !isToken) {
+      localStorage.removeItem("token");
+      history.push("/nakerweb/login");
+    }
+  }, []);
 
   return (
     <React.Fragment>

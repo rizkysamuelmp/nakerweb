@@ -70,12 +70,6 @@ const SemuaLoker = () => {
     dispatch(getLokerFilter());
   };
 
-  useEffect(() => {
-    if (search === "") {
-      dispatch(getLokerFilter());
-    }
-  }, [search]);
-
   return (
     <Container>
       {/* Title */}
@@ -89,7 +83,12 @@ const SemuaLoker = () => {
           <InputText
             type="text"
             value={search}
-            onChange={(e) => dispatch(setSearch(e.target.value))}
+            onChange={(e) => {
+              dispatch(setSearch(e.target.value));
+              if (e.target.value === "") {
+                dispatch(getLokerFilter());
+              }
+            }}
             placeholder="pencarian"
             noPadding
             onKeyPress={(e) => {

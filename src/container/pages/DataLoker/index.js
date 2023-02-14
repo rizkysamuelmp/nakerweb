@@ -30,6 +30,21 @@ const Page = () => {
     };
   }, []);
 
+  // const stringToDateFormat = (dateStr, dateFormat) => {
+  //   if (!dateStr) return "";
+  //   const date = new Date(dateStr);
+  //   if (isValid(date)) {
+  //     return format(new Date(dateStr), dateFormat);
+  //   } else {
+  //     return "";
+  //   }
+  // };
+
+  // console.warn(
+  //   "Isi data : ",
+  //   stringToDateFormat("2022-12-21", "dd MMMM yyyy HH:mm:ss")
+  // );
+
   return (
     <PageContainer>
       <Container>

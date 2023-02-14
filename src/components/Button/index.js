@@ -38,7 +38,7 @@ const Button = ({
       disabled={disabled}
       disableElevation
       sx={{
-        display: "inline-block",
+        display: "flex",
         outline: 0,
         textTransform: "unset",
         width: full ? "100%" : width !== "" ? width : "fit-content",
@@ -68,11 +68,7 @@ const Button = ({
       {...others}
     >
       {isLoading ? (
-        <CircularProgress
-          size="1rem"
-          color="secondary"
-          style={{ display: "flex" }}
-        />
+        <CircularProgress size="1.5rem" color="secondary" />
       ) : (
         <div
           style={{

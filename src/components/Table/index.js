@@ -13,7 +13,7 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
         backgroundColor: "#115ABE",
         color: "white",
         width: "100%",
-        borderRadius: "10px 10px 0px 0px",
+        borderRadius: "10px 10px 20px 20px",
         minWidth: "fit-content",
       }}
     >
@@ -22,9 +22,10 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          padding: "10px",
+          padding: "10px 20px",
           paddingBottom: "10px !important",
           height: "50px",
+          gap: "20px",
         }}
       >
         {headerContent.map((headerItem, index) => (
@@ -59,8 +60,9 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "10px",
+          paddingBottom: "15px",
           backgroundColor: "white",
+          borderRadius: "0px 0px 10px 10px",
         }}
       >
         {dataContent.map((item, dataIindex) => (
@@ -74,7 +76,9 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
               display: "flex",
               justifyContent: "space-between",
               width: "100%",
-              gap: "10px",
+              gap: "20px",
+              padding: "0px 20px",
+              backgroundColor: dataIindex % 2 === 1 ? "aliceblue" : "",
             }}
             key={dataIindex}
           >

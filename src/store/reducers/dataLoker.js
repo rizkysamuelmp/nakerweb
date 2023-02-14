@@ -17,6 +17,7 @@ import {
   VALUE_CITY,
   SET_SELECTED_DATA,
   SET_POPUP_STATUS,
+  SET_DETAIL_LOKER,
 } from "../actions/dataLoker";
 
 const initialState = {
@@ -43,10 +44,16 @@ const initialState = {
   valueCity: [0],
   selectedData: {},
   popupStatus: 0,
+  detailLoker: null,
 };
 
 const dataLoker = (state = initialState, action) => {
   switch (action.type) {
+    case SET_DETAIL_LOKER:
+      return {
+        ...state,
+        detailLoker: action.payload,
+      };
     case SET_POPUP_STATUS:
       return {
         ...state,

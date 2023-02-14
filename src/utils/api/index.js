@@ -16,6 +16,9 @@ const config = {
 };
 
 // Save Loker
+export const serviceLogin = (payload) => axios.post(`${apiUrl}/login`, payload);
+
+// Save Loker
 export const serviceGetDataLoker = (payload) =>
   axios.get(`${apiUrl}/loker`, payload);
 
@@ -24,6 +27,9 @@ export const serviceApproveLoker = (payload) =>
 
 export const serviceGetAllLoker = (payload) =>
   axios.post(`${apiUrl}/loker/getAllLoker`, payload);
+
+export const serviceGetDetailLoker = (payload) =>
+  axios.post(`${apiUrl}/loker/getDetail`, payload);
 
 export const serviceLokerFilter = (payload) =>
   axios.post(`${apiUrl}/loker/filter`, payload);

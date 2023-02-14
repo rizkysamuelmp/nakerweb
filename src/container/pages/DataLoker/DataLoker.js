@@ -15,16 +15,15 @@ import ChartLine from "../../../components/ChartLine";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {
   getDataLoker,
+  getDetailLoker,
   getLoker,
-  setActiveStep,
+  getLokerFilter,
+  setSelectedData,
 } from "../../../store/actions/dataLoker";
 
 // Asset
 import imagePerson from "../../../assets/img/image-person-trending.png";
 import iconArrowRight from "../../../assets/icon/icon-arrow-right.png";
-
-// Dummy Data
-import { lokasiTrending, lokerTranding, sektorTrending } from "./DataDummy";
 
 const dataChart = [
   {
@@ -54,6 +53,8 @@ const DataLoker = ({ setHistory }) => {
 
   const [pieChart, setPieChart] = useState(dataChart);
   const [totalData, setTotalData] = useState(0);
+  const [labelStat, setLabelStat] = useState([]);
+  const [datasets, setDataSets] = useState([]);
 
   // Get data redux
   const { lokerHome, headerTableHome, loker, pagination } = useSelector(
@@ -79,6 +80,19 @@ const DataLoker = ({ setHistory }) => {
         (100 / total) * applied,
       ];
       setPieChart([{ ...dataChart[0], data: data }]);
+
+      const label = loker.statistik.map((item) => item.name);
+      setLabelStat(label);
+
+      const dataStat = [
+        {
+          label: "Dataset 1",
+          data: loker.statistik.map((item) => item.total),
+          borderColor: "#0D5EB9",
+          backgroundColor: "#0D5EB9",
+        },
+      ];
+      setDataSets(dataStat);
     }
   }, [loker]);
 
@@ -90,9 +104,8 @@ const DataLoker = ({ setHistory }) => {
       {/* Chart */}
       <RowWrapper>
         <ContentWrapper style={{ width: "65%" }}>
-          {/* TODO */}
           <TitleBar>Statistik Loker</TitleBar>
-          <ChartLine />
+          <ChartLine labels={labelStat} datasets={datasets} />
         </ContentWrapper>
         <ContentWrapper style={{ width: "35%" }}>
           <TitleBar>Jumlah Loker</TitleBar>
@@ -103,8 +116,7 @@ const DataLoker = ({ setHistory }) => {
       <RowWrapper>
         {/* Lokasi trending */}
         <ContentWrapper style={{ width: "37%" }}>
-          {/* TODO */}
-          <TitleBar>Lokasi trending</TitleBar>
+          <TitleBar>Lokasi Trending</TitleBar>
           <ScrollWrapper
             style={{
               flexDirection: "row",
@@ -115,11 +127,11 @@ const DataLoker = ({ setHistory }) => {
               paddingRight: "15px",
             }}
           >
-            {lokasiTrending.map((item, index) => (
+            {loker?.trend_location?.map((item, index) => (
               <div key={index}>
                 <TextWrapper>
-                  <TextName>{item.name}</TextName>
-                  <TextDetail>{item.detail}</TextDetail>
+                  <TextName>{item.city}</TextName>
+                  <TextDetail>{item.total}</TextDetail>
                 </TextWrapper>
               </div>
             ))}
@@ -128,13 +140,12 @@ const DataLoker = ({ setHistory }) => {
 
         {/* Sektor trending */}
         <ContentWrapper style={{ width: "18%" }}>
-          {/* TODO */}
-          <TitleBar>Sektor trending</TitleBar>
+          <TitleBar>Sektor Trending</TitleBar>
           <ScrollWrapper>
-            {sektorTrending.map((item, index) => (
+            {loker?.trend_sector?.map((item, index) => (
               <TextWrapper key={index}>
                 <TextName>{item.name}</TextName>
-                <TextDetail>{item.detail}</TextDetail>
+                <TextDetail>{item.total}</TextDetail>
               </TextWrapper>
             ))}
           </ScrollWrapper>
@@ -142,16 +153,16 @@ const DataLoker = ({ setHistory }) => {
 
         {/* Loker trending */}
         <ContentWrapper style={{ width: "45%" }}>
-          {/* TODO */}
-          <TitleBar>Loker trending</TitleBar>
+          <TitleBar>Loker Trending</TitleBar>
           <ScrollWrapper style={{ gap: "5px", paddingRight: "15px" }}>
-            {lokerTranding.map((item, index) => (
+            {loker?.trend_loker?.map((item, index) => (
               <List
                 aria-label="contacts"
                 disablePadding
                 key={index}
                 onClick={() => {
-                  dispatch(setActiveStep("detail"));
+                  dispatch(setSelectedData(item));
+                  dispatch(getDetailLoker());
                   setHistory("home");
                 }}
               >
@@ -159,8 +170,8 @@ const DataLoker = ({ setHistory }) => {
                   <ContentWrap>
                     <img alt="person-trending" src={imagePerson} />
                     <TextWrapper>
-                      <TextName>{item.name}</TextName>
-                      <TextDetail>{item.detail}</TextDetail>
+                      <TextName>{item.job_position}</TextName>
+                      <TextDetail>{item.total}</TextDetail>
                     </TextWrapper>
                   </ContentWrap>
                   <img alt="arrow-right" src={iconArrowRight} />
@@ -187,7 +198,7 @@ const DataLoker = ({ setHistory }) => {
               Menampilkan {pagination.currentData} dari {pagination.totalData}{" "}
               baris
             </p>
-            <TextSeeAll onClick={() => dispatch(setActiveStep("all"))}>
+            <TextSeeAll onClick={() => dispatch(getLokerFilter())}>
               Lihat Semua
             </TextSeeAll>
           </div>
