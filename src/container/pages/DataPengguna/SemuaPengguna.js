@@ -219,7 +219,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
     if (filter) {
       dispatch(getPenggunaFilter());
     } else {
-      dispatch(getPenggunaSearch());
+      dispatch(getAllUsers());
     }
   };
 
@@ -433,7 +433,6 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
                 listDropDown={dropDownCity}
                 placeHolder="Pilih Kota"
                 handleChange={(e, kode) => {
-                  console.log(e.target);
                   dispatch(setValueCity([e.target.value]));
                   onChangeFilter();
                 }}
@@ -470,6 +469,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
         totalData={100}
         page={pagination.page}
         onChange={(e, value) => {
+          console.log(value);
           dispatch(setPagination({ ...pagination, page: value }));
           onChangePage();
         }}

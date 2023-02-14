@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
 import Button from "../../../components/Button";
-import { users } from "../../../utils/api";
 
 // Asset
 import adornmentGreen from "../../../assets/img/adornment-green.png";
@@ -16,18 +15,18 @@ import adornmentOrange from "../../../assets/img/adornment-orange.png";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getDashboardUsers } from "../../../store/actions/dataPengguna";
 
 const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [pengguna, setPengguna] = useState([]);
 
-  useEffect(() => {
-    const fetchPengguna = async () => {
-      const response = await users();
-      setPengguna(response.data.data.user_list);
-    };
+  const dispatch = useDispatch();
+  const { dashboardUsers } = useSelector((state) => state.dataPengguna);
 
-    fetchPengguna();
-  }, []);
+  useEffect(() => {
+    dispatch(getDashboardUsers());
+  }, [dispatch]);
 
   const dataHeader = [
     {
@@ -172,7 +171,7 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
     },
   ];
 
-  const dataContent = pengguna;
+  const dataContent = [];
 
   return (
     <Container>
@@ -244,7 +243,7 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
 
       {/* Tabel */}
       <Table
-        dataContent={dataContent}
+        dataContent={dashboardUsers.user_list}
         headerContent={dataHeader}
         // onClickRow={actionClickHandler}
       />

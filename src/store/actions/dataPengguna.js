@@ -1,4 +1,5 @@
 import {
+  serviceDashboardUsers,
   serviceGetAllUsers,
   serviceGetCity,
   serviceGetSearchPengguna,
@@ -13,8 +14,15 @@ import {
   SET_VALUE_GENDER,
   SET_VALUE_STATUS,
   FILTER,
+  SET_SEARCH,
+  DASHBOARD_USERS,
 } from "../constants/dataPenggunaConstants";
 import { setLoading } from "./pageContainer";
+
+export const setDashboardUsers = (payload) => ({
+  type: DASHBOARD_USERS,
+  payload,
+});
 
 export const setFilter = (payload) => ({
   type: FILTER,
@@ -51,15 +59,31 @@ export const setValueStatus = (payload) => ({
   payload,
 });
 
+export const setSearch = (payload) => ({
+  type: SET_SEARCH,
+  payload,
+});
+
 export const setPagination = (payload) => ({
   type: SET_PAGINATION,
   payload,
 });
 
-export const getAllUsers = () => async (dispatch) => {
+export const getDashboardUsers = () => async (dispatch) => {
+  try {
+    dispatch(setLoading(true));
+    const { status, data } = await serviceDashboardUsers({});
+    if (status === 200) {
+      dispatch(setDashboardUsers(data.data));
+      dispatch(setLoading(false));
+    }
+  } catch {}
+};
+
+export const getAllUsers = () => async (dispatch, getState) => {
   try {
     const { status, data } = await serviceGetAllUsers({
-      page: 1,
+      page: getState().dataPengguna.pagination.page,
       limit: 10,
     });
 
@@ -98,7 +122,7 @@ export const getCity = () => async (dispatch) => {
 };
 
 export const getPenggunaSearch = (keyword) => async (dispatch, getState) => {
-  dispatch(setFilter(true));
+  dispatch(setSearch(true));
   const { pagination } = getState().dataPengguna;
   dispatch(setLoading(true));
   try {
@@ -111,6 +135,7 @@ export const getPenggunaSearch = (keyword) => async (dispatch, getState) => {
     if (status === 200) {
       dispatch(setAllUsers(data.data));
       dispatch(setLoading(false));
+    } else {
     }
   } catch (error) {
     dispatch(setLoading(false));
@@ -120,6 +145,7 @@ export const getPenggunaSearch = (keyword) => async (dispatch, getState) => {
 
 export const getPenggunaFilter = () => async (dispatch, getState) => {
   dispatch(setFilter(true));
+  console.log("filter");
   const {
     valueGender,
     valueAge,
@@ -136,8 +162,7 @@ export const getPenggunaFilter = () => async (dispatch, getState) => {
       limit: 10,
       gender: valueGender.length === 0 ? "" : valueGender[0],
       age: valueAge.length === 0 ? "" : valueAge[0],
-      city: "",
-      // city: dropDownCity[valueCity[0]].kode || "",
+      city: valueCity.length === 0 ? "" : dropDownCity[valueCity[0]].kode,
       status: valueStatus.length === 0 ? "" : valueStatus[0],
     });
     if (status === 200) {
