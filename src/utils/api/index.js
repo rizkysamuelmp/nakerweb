@@ -65,6 +65,28 @@ export const servicePenggunaFilter = (payload) =>
 export const serviceGetSearchPengguna = (payload) =>
   axios.post(`${apiUrl}/users/search`, payload);
 
+// API for Data Grup
+export const serviceGetDashboardGrup = (payload) =>
+  axios.get(`${apiUrl}/grup`, payload);
+
+export const serviceGetAllGrup = (payload) =>
+  axios.post(`${apiUrl}/grup/get_all`, payload);
+
+export const serviceGetSearchGrup = (payload) =>
+  axios.post(`${apiUrl}/grup/search`, payload);
+
+export const serviceGetRequestDetailGrup = (payload) =>
+  axios.post(`${apiUrl}/grup/request_detail`, payload);
+
+export const serviceGetDetailGrup = (payload) =>
+  axios.post(`${apiUrl}/grup/grup_detail`, payload);
+
+export const serviceGetApprovedGrup = (payload) =>
+  axios.post(`${apiUrl}/grup/approved`, payload);
+
+export const serviceGetActionlGrup = (payload) =>
+  axios.post(`${apiUrl}/grup/action`, payload);
+
 // API for DataProyek
 export const getDashboardDataProyek = () => axios.post(`${apiUrl}/mytim`);
 

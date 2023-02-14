@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
@@ -23,25 +23,32 @@ import iconPdf from "../../../assets/icon/icon-pdf.png";
 import { dataContent } from "./DataDummy";
 import profilePost from "../../../assets/img/profile-post.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllGrup } from "../../../store/actions/dataGrupActions";
 
 const SemuaLoker = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
     {
       title: "No",
-      key: "no",
+      key: "group_id",
       width: 30,
     },
     {
       title: "Profile",
       width: 60,
       center: true,
-      render: () => (
-        <img alt="profile-chat" src={profilePost} height={24} width={24} />
+      render: (rowData) => (
+        <img
+          alt="profile-chat"
+          src={rowData.group_cover}
+          height={24}
+          width={24}
+        />
       ),
     },
     {
       title: "Nama Grup",
-      key: "groupName",
+      key: "group_name",
     },
     {
       title: "Jenis Group",
@@ -53,10 +60,11 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
     },
     {
       title: "Anggota",
+      center: true,
       render: (rowData) => (
-        <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "3px", justifyContent: "center" }}>
           <IconGroup />
-          <p>{rowData.member}</p>
+          <p>{rowData.total_member}</p>
         </div>
       ),
     },
@@ -70,7 +78,8 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
     },
     {
       title: "Postingan",
-      key: "totalPost",
+      key: "total_post",
+      center: true,
     },
     {
       title: "Status",
@@ -85,7 +94,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
             justifyContent: "center",
           }}
         >
-          {rowData.status === "Aktif" ? (
+          {rowData.group_status === "0" ? (
             <div
               style={{
                 border: "1px solid #039C40",
@@ -99,9 +108,9 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
                 color: "#039C40",
               }}
             >
-              {rowData.status}
+              Aktif
             </div>
-          ) : rowData.status === "Tidak Aktif" ? (
+          ) : rowData.group_status === "1" ? (
             <div
               style={{
                 border: "1px solid #C80707",
@@ -115,7 +124,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
                 color: "#C80707",
               }}
             >
-              {rowData.status}
+              Tidak Aktif
             </div>
           ) : (
             <div
@@ -131,7 +140,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
                 color: "#2C4AE9",
               }}
             >
-              {rowData.status}
+              {rowData.group_status}
             </div>
           )}
         </div>
@@ -172,6 +181,13 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
+
+  const dispatch = useDispatch();
+  const { allGrup } = useSelector((state) => state.dataGrup);
+
+  useEffect(() => {
+    dispatch(getAllGrup());
+  }, [dispatch]);
 
   return (
     <Container>
@@ -387,7 +403,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
             width: "100%",
           }}
         >
-          <Table headerContent={dataHeader} dataContent={dataContent} />
+          <Table headerContent={dataHeader} dataContent={allGrup} />
           <Pagination count={10} currentData={10} totalData={100} page={2} />
         </div>
       </RowWrapper>
