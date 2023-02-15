@@ -12,6 +12,7 @@ import {
 import { setLoading } from "./pageContainer";
 import eye from "../../assets/icon/Eye.svg";
 import moment from "moment";
+import { capFirstLetter } from "../../utils/helpers";
 
 export const SET_ALL_LOKER = "SET_ALL_LOKER";
 export const SET_SECTOR = "SET_SECTOR";
@@ -203,7 +204,7 @@ export const getAllCity = () => async (dispatch) => {
       data.data.forEach((item) => {
         allCity.push({
           ...item,
-          label: item.nama,
+          label: capFirstLetter(item.nama),
           value: count,
         });
         count = count + 1;

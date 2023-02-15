@@ -5,7 +5,7 @@
 import DesignSystem from "./DesignSystem";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
-import DataGrup from "./DataGrup";
+import DataGroup from "./DataGroup";
 import DataProyek from "./DataProyek";
 import DataMyTeam from "./DataMyTeam";
 
@@ -13,7 +13,7 @@ export {
   DesignSystem,
   Login,
   ForgotPassword,
-  DataGrup,
+  DataGroup,
   DataProyek,
   DataMyTeam,
 };

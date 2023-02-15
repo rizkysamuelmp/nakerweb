@@ -10,6 +10,8 @@ import Colors from "../../../utils/helpers/colors";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import DropDown from "../../../components/DropDown";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { getAllGrup, setActiveStep } from "../../../store/actions/dataGroup";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
@@ -18,15 +20,11 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
-
-// Dummy Data
-import { dataContent } from "./DataDummy";
-import profilePost from "../../../assets/img/profile-post.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllGrup } from "../../../store/actions/dataGrupActions";
 
-const SemuaLoker = ({ setActiveStep, setHistory }) => {
+const SemuaGroup = ({ setHistory }) => {
+  const dispatch = useDispatch();
+
   const dataHeader = [
     {
       title: "No",
@@ -163,7 +161,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
             borderRadius="5px"
             padding="0px 7px 0px 9px"
             onClick={() => {
-              setActiveStep("detail");
+              dispatch(setActiveStep("detail"));
               setHistory("all");
             }}
           >
@@ -182,8 +180,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
 
-  const dispatch = useDispatch();
-  const { allGrup } = useSelector((state) => state.dataGrup);
+  const { allGroup } = useSelector((state) => state.dataGroup, shallowEqual);
 
   useEffect(() => {
     dispatch(getAllGrup());
@@ -192,7 +189,11 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
   return (
     <Container>
       {/* Title */}
-      <Title title="Semua Grup" withBack onBack={() => setActiveStep("page")}>
+      <Title
+        title="Semua Grup"
+        withBack
+        onBack={() => dispatch(setActiveStep("page"))}
+      >
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
           <InputText
@@ -349,7 +350,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
               <p>Pilih jenis grup :</p>
               <DropDown
                 dropdownValue={dropDown}
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => setDropDown([e.target.value])}
                 listDropDown={[
                   {
                     label: "Publik",
@@ -363,7 +364,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
               <p>Pilih Kategori grup :</p>
               <DropDown
                 dropdownValue={dropDown}
-                handleChange={(e) => setDropDown(e.target.value)}
+                handleChange={(e) => setDropDown([e.target.value])}
                 listDropDown={[
                   {
                     label: "Perusahaan",
@@ -403,7 +404,7 @@ const SemuaLoker = ({ setActiveStep, setHistory }) => {
             width: "100%",
           }}
         >
-          <Table headerContent={dataHeader} dataContent={allGrup} />
+          <Table headerContent={dataHeader} dataContent={allGroup} />
           <Pagination count={10} currentData={10} totalData={100} page={2} />
         </div>
       </RowWrapper>
@@ -430,4 +431,4 @@ const RowWrapper = styled("div")(() => ({
   width: "100%",
 }));
 
-export default SemuaLoker;
+export default SemuaGroup;

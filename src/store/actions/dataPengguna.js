@@ -6,6 +6,7 @@ import {
   serviceGetSearchPengguna,
   servicePenggunaFilter,
 } from "../../utils/api";
+import { capFirstLetter } from "../../utils/helpers";
 import {
   ALL_USERS,
   SET_DROPDOWN_CITY,
@@ -144,7 +145,7 @@ export const getCity = () => async (dispatch) => {
       data.data.forEach((item) => {
         allCity.push({
           ...item,
-          label: item.nama,
+          label: capFirstLetter(item.nama),
           value: count,
         });
         count = count + 1;

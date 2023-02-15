@@ -18,11 +18,11 @@ const PageContainer = ({ children }) => {
   const location = useLocation();
 
   const idLocale = require("moment/locale/id");
-  moment.locale("id", idLocale);
+  moment.updateLocale("id", idLocale);
 
   const isNotif = true;
-  const [notification, setNotification] = useState(null);
   const isToken = localStorage.getItem("token");
+  const [notification, setNotification] = useState(null);
 
   const { isLoading, isLogin } = useSelector(
     ({ pageContainer }) => ({

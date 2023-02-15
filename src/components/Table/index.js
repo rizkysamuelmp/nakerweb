@@ -77,7 +77,7 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
               justifyContent: "space-between",
               width: "100%",
               gap: "20px",
-              padding: "0px 20px",
+              padding: "10px 20px",
               backgroundColor: dataIindex % 2 === 1 ? "aliceblue" : "",
             }}
             key={dataIindex}
@@ -95,7 +95,6 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
                     alignItems: headerItem.center ? "center" : "flex-start",
                     justifyContent: "center",
                     border: "none",
-
                     fontFamily: "Inter",
                     fontWeight: 400,
                     fontSize: "13px",
@@ -105,7 +104,7 @@ const Table = ({ headerContent, dataContent, onClickRow }) => {
                 >
                   {headerItem?.render
                     ? headerItem?.render(item, dataIindex)
-                    : item[headerItem.key]}
+                    : item[headerItem.key] || "-"}
                 </div>
               </React.Fragment>
             ))}

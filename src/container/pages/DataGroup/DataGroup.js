@@ -1,13 +1,21 @@
 // Page Data Grup
 // --------------------------------------------------------
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
 import Button from "../../../components/Button";
 import Chart from "../../../components/Chart";
 import ChartBar from "../../../components/ChartBar";
+import moment from "moment";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getDasboardGroup,
+  setActiveStep,
+} from "../../../store/actions/dataGroup";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
@@ -15,12 +23,37 @@ import profilePost from "../../../assets/img/profile-post.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
 import iconCalendar from "../../../assets/icon/icon-calendar.png";
 
-// Dummy Data
-import { dataContent } from "./DataDummy";
-import { useDispatch, useSelector } from "react-redux";
-import { getDasboardGrup } from "../../../store/actions/dataGrupActions";
+const initialPieChart = [
+  {
+    data: [45, 25, 35],
+    backgroundColor: ["#115ABE", "#FFBF0B", "#FA3E3E"],
+    borderColor: ["#115ABE", "#FFBF0B", "#FA3E3E"],
+    borderWidth: 1,
+    label: [
+      {
+        title: "Aktif",
+        color: "#115ABE",
+      },
+      {
+        title: "Menunggu",
+        color: "#FFBF0B",
+      },
+      {
+        title: "Ditolak",
+        color: "#FA3E3E",
+      },
+    ],
+  },
+];
 
-const DataLoker = ({ setActiveStep, setHistory }) => {
+const DataGroup = ({ setHistory }) => {
+  const dispatch = useDispatch();
+
+  const { dashboardGroup } = useSelector((state) => state.dataGroup);
+
+  const [pieChart, setPieChart] = useState(initialPieChart);
+  const [datasets, setDataSet] = useState([]);
+
   const dataHeader = [
     {
       title: "No",
@@ -39,17 +72,14 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
     {
       title: "Nama Grup",
       key: "group_name",
-      center: true,
     },
     {
       title: "Jenis Group",
       key: "category_name",
-      center: true,
     },
     {
       title: "Pembuat Grup",
       key: "full_name",
-      center: true,
     },
     {
       title: "Anggota",
@@ -59,18 +89,19 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
           <p>{rowData.total_member}</p>
         </div>
       ),
+      center: true,
     },
     {
       title: "Username",
-      key: "username",
+      key: "full_name",
     },
     {
       title: "Tanggal Dibuat",
-      key: "create_at",
+      render: (rowData) => <p>{moment(rowData).format("DD MMM YYYY")}</p>,
     },
     {
       title: "Postingan",
-      key: "total_post",
+      render: (rowData) => <p>{rowData.total_post} Post</p>,
       center: true,
     },
     {
@@ -90,7 +121,7 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
             borderRadius="5px"
             padding="0px 7px 0px 9px"
             onClick={() => {
-              setActiveStep("detail");
+              dispatch(setActiveStep("detail"));
               setHistory("home");
             }}
           >
@@ -103,36 +134,46 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
     },
   ];
 
-  const dataChart = [
-    {
-      data: [45, 25, 35],
-      backgroundColor: ["#115ABE", "#FFBF0B", "#FA3E3E"],
-      borderColor: ["#115ABE", "#FFBF0B", "#FA3E3E"],
-      borderWidth: 1,
-      label: [
-        {
-          title: "Aktif",
-          color: "#115ABE",
-        },
-        {
-          title: "Menunggu",
-          color: "#FFBF0B",
-        },
-        {
-          title: "Ditolak",
-          color: "#FA3E3E",
-        },
-      ],
-    },
-  ];
-
-  const { dashboardGrup } = useSelector((state) => state.dataGrup);
-
-  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getDasboardGroup());
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getDasboardGrup());
-  }, [dispatch]);
+    if (Object.keys(dashboardGroup).length !== 0) {
+      const { Aktif, Menunggu, Tolak } = dashboardGroup.total_grup[0];
+      const total = parseInt(Aktif) + parseInt(Menunggu) + parseInt(Tolak);
+      const data = [
+        (100 / total) * Aktif,
+        (100 / total) * Menunggu,
+        (100 / total) * Tolak,
+      ];
+      setPieChart([{ ...initialPieChart[0], data: data }]);
+
+      const mapDataSet = [
+        {
+          label: "Perusahaan",
+          data: dashboardGroup.chart.map((item) => parseInt(item.Perusahaan)),
+          backgroundColor: "#FFBF0B",
+          pointStyle: "rectRounded",
+        },
+        {
+          label: "Komunitas",
+          data: dashboardGroup.chart.map((item) => parseInt(item.Komunitas)),
+          backgroundColor: "#F86C6C",
+          pointStyle: "rectRounded",
+        },
+        {
+          label: "Serikat Pekerja",
+          data: dashboardGroup.chart.map((item) =>
+            parseInt(item["Serikat Pekerja"])
+          ),
+          backgroundColor: "#03B74B",
+          pointStyle: "rectRounded",
+        },
+      ];
+      setDataSet(mapDataSet);
+    }
+  }, [dashboardGroup]);
 
   return (
     <Container>
@@ -159,7 +200,9 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
                   lineHeight: "24px",
                 }}
               >
-                150
+                {dashboardGroup?.total_grup
+                  ? dashboardGroup?.total_grup[0]?.total_grup
+                  : 0}
               </p>
             </div>
             <div
@@ -193,13 +236,20 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
           </div>
 
           {/* Chart Bar */}
-          <ChartBar />
+          <ChartBar datasets={datasets} />
         </ContentWrapper>
 
         {/* Chart Donat */}
         <ContentWrapper style={{ width: "35%" }}>
           <TitleBar>Jumlah Status Grup</TitleBar>
-          <Chart data={dataChart} description="230 Pengguna" />
+          <Chart
+            data={pieChart}
+            description={
+              dashboardGroup?.total_grup
+                ? `${dashboardGroup?.total_grup[0]?.total_grup} Grup`
+                : "0 Grup"
+            }
+          />
         </ContentWrapper>
       </RowWrapper>
 
@@ -215,7 +265,7 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
         >
           <Table
             headerContent={dataHeader}
-            dataContent={dashboardGrup.list_grup}
+            dataContent={dashboardGroup.list_grup}
           />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
@@ -228,7 +278,7 @@ const DataLoker = ({ setActiveStep, setHistory }) => {
                 color: "#115AAA",
                 cursor: "pointer",
               }}
-              onClick={() => setActiveStep("all")}
+              onClick={() => dispatch(setActiveStep("all"))}
             >
               Lihat Semua
             </p>
@@ -274,4 +324,4 @@ const TitleBar = styled("p")(() => ({
   color: "#000000",
 }));
 
-export default DataLoker;
+export default DataGroup;

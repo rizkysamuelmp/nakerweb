@@ -27,7 +27,7 @@ import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
 // Dummy
 import { dataChart1, dataChart2, dataChart3, lokerTranding } from "./DataDummy";
 
-const ProfilGrup = ({ setActiveStep }) => {
+const ProfilGroup = () => {
   const [menuEdit, setMenuEdit] = useState(null);
   const [popupConfirm, setPopupConfirm] = useState(false);
   const [popupDelete, setPopupDelete] = useState(false);
@@ -37,7 +37,7 @@ const ProfilGrup = ({ setActiveStep }) => {
     <Container>
       <IconButton
         style={{ position: "absolute", zIndex: 100 }}
-        onClick={() => setActiveStep("detail")}
+        onClick={() => dispatch(setActiveStep("detail"))}
       >
         <IconBack />
       </IconButton>
@@ -210,7 +210,7 @@ const ProfilGrup = ({ setActiveStep }) => {
             <ScrollWrapper style={{ gap: "5px", paddingRight: "15px" }}>
               {lokerTranding.map((item, index) => (
                 <List aria-label="contacts" disablePadding key={index}>
-                  <ItemCustom onClick={() => setActiveStep("all")}>
+                  <ItemCustom onClick={() => dispatch(setActiveStep("all"))}>
                     <ContentWrap>
                       <img alt="person-trending" src={imagePerson} />
                       <TextWrapper>
@@ -451,4 +451,4 @@ const TitleBar = styled("p")(() => ({
   color: "#000000",
 }));
 
-export default ProfilGrup;
+export default ProfilGroup;

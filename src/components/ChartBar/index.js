@@ -15,14 +15,7 @@ import {
   Legend,
 } from "chart.js";
 
-const ChartBar = ({
-  isLoading,
-  description,
-  title,
-  options,
-  datasets,
-  labels,
-}) => {
+const ChartBar = ({ options, datasets, labels }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -40,18 +33,12 @@ const ChartBar = ({
 };
 
 ChartBar.propTypes = {
-  isLoading: PropTypes.bool,
-  description: PropTypes.string,
-  title: PropTypes.string,
   options: PropTypes.object,
   datasets: PropTypes.array,
   labels: PropTypes.array,
 };
 
 ChartBar.defaultProps = {
-  isLoading: false,
-  description: "230 Pengguna",
-  title: "",
   labels: [
     "January",
     "February",

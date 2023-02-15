@@ -2,7 +2,7 @@ import {
   DesignSystem,
   Login,
   ForgotPassword,
-  DataGrup,
+  DataGroup,
   DataProyek,
   DataMyTeam,
 } from "../container/pages";
@@ -84,7 +84,7 @@ const AppRoutes = [
     id: 3,
     nameComponent: "Data Grup",
     path: "/nakerweb/data-grup",
-    component: DataGrup,
+    component: DataGroup,
     exact: true,
   },
   {

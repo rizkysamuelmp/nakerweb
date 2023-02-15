@@ -6,6 +6,10 @@ import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 
+// Redux
+import { useDispatch } from "react-redux";
+import { setActiveStep } from "../../../store/actions/dataGroup";
+
 // Asset
 import bannerImage from "../../../assets/img/banner-image.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_grup.svg";
@@ -16,7 +20,9 @@ import PopUp from "../../../components/PopUp";
 import deleteGroup from "../../../assets/img/group-delete.png";
 import groupSuccess from "../../../assets/img/group-success.png";
 
-const DetailGrup = ({ setActiveStep, history }) => {
+const DetailGroup = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [poupKonfSetuju, setPopUpKonfSetuju] = useState(false);
   const [poUpSetuju, setPopUpSetuju] = useState(false);
   const [popUpKonfTolak, setPopKonfTolak] = useState(false);
@@ -30,9 +36,9 @@ const DetailGrup = ({ setActiveStep, history }) => {
         withBack
         onBack={() => {
           if (history === "home") {
-            setActiveStep("page");
+            dispatch(setActiveStep("page"));
           } else {
-            setActiveStep("all");
+            dispatch(setActiveStep("all"));
           }
         }}
       />
@@ -260,7 +266,11 @@ const DetailGrup = ({ setActiveStep, history }) => {
           </Button>
         </div>
         <div style={{ width: "40%" }}>
-          <Button full color="#039C40" onClick={() => setActiveStep("grup")}>
+          <Button
+            full
+            color="#039C40"
+            onClick={() => dispatch(setActiveStep("grup"))}
+          >
             <p
               style={{ fontWeight: 600, fontSize: "18px", lineHeight: "22px" }}
             >
@@ -366,4 +376,4 @@ const TitleBar = styled("p")(() => ({
   alignItems: "center",
 }));
 
-export default DetailGrup;
+export default DetailGroup;

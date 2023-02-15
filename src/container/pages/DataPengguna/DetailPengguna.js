@@ -134,11 +134,11 @@ const DetailPengguna = ({ history }) => {
             <img src={customer} alt="" />
             <LeftText>Data Diri</LeftText>
           </Left>
-          <Right>
+          {/* <Right>
             <IconButton style={{ width: "30px", height: "30px" }}>
               <img src={pencil} alt="" width="30px" />
             </IconButton>
-          </Right>
+          </Right> */}
         </HeaderBioData>
         <DetailBioData>
           <Line>

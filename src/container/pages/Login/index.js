@@ -30,7 +30,7 @@ const Login = () => {
 
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("admin@kubu.id");
   const [popUpAuth, setPopUpAuth] = useState(false);
   const [popUpEmail, setPopUpEmail] = useState(false);
 
