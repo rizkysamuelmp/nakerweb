@@ -389,12 +389,16 @@ const SemuaPengguna = ({ setHistory, setId_user }) => {
                 dropdownValue={age}
                 listDropDown={[
                   {
-                    label: "< 15 Thn",
-                    value: "0",
+                    label: "Semua Usia",
+                    value: 0,
                   },
-                  { label: "15->17 Thn", value: "1" },
-                  { label: "18 ->55 Thn", value: "2" },
-                  { label: ">56", value: "3" },
+                  {
+                    label: "< 15 Thn",
+                    value: 1,
+                  },
+                  { label: "15 -> 17 Thn", value: 2 },
+                  { label: "18 -> 55 Thn", value: 3 },
+                  { label: "> 56", value: 4 },
                 ]}
                 placeHolder="Pilih Range Usia"
                 handleChange={(e) => {

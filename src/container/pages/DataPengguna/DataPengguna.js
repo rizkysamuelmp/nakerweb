@@ -6,6 +6,11 @@ import React, { useEffect } from "react";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
 import Button from "../../../components/Button";
+import {
+  getDashboardUsers,
+  getDetailDataPengguna,
+  setActiveStep,
+} from "../../../store/actions/dataPengguna";
 
 // Asset
 import adornmentGreen from "../../../assets/img/adornment-green.png";
@@ -16,11 +21,6 @@ import adornmentOrange from "../../../assets/img/adornment-orange.png";
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getDashboardUsers,
-  getDetailDataPengguna,
-  setActiveStep,
-} from "../../../store/actions/dataPengguna";
 
 const DataPengguna = ({ setHistory, setId_user }) => {
   const dispatch = useDispatch();
