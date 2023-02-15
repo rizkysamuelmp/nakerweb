@@ -1,13 +1,15 @@
 // Page Data Proyek
 // --------------------------------------------------------
 
-import React from "react";
+import React, { useEffect } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
 import Button from "../../../components/Button";
 import Chart from "../../../components/Chart";
 import ChartBar from "../../../components/ChartBar";
+import { useDispatch, useSelector } from "react-redux";
+import { getDashboardDataProyek } from "../../../store/actions/dataPtoyek";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
@@ -22,7 +24,7 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
     {
       title: "No",
-      key: "no",
+      key: "id_proyek",
       width: 20,
       center: true,
     },
@@ -30,22 +32,33 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
       title: "Profile",
       width: 50,
       center: true,
-      render: () => (
-        <img alt="profile-chat" src={profilePost} height={24} width={24} />
+      render: (rowData) => (
+        <img
+          alt="profile-chat"
+          src={rowData.cover}
+          style={{
+            width: "24px",
+            height: "24px",
+            borderRadius: " 100%",
+          }}
+        />
       ),
     },
     {
       title: "Nama Proyek",
       width: 250,
-      key: "projectName",
+      key: "nama_proyek",
     },
     {
       title: "Jenis Proyek",
-      key: "projectType",
+      key: "privacy",
+      render: (rowData) => (
+        <span>{rowData.privacy === "1" ? "Private" : "Public"}</span>
+      ),
     },
     {
       title: "Pembuat Proyek",
-      key: "projectCreator",
+      key: "full_name",
     },
     {
       title: "Member",
@@ -53,13 +66,13 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
       render: (rowData) => (
         <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
           <IconGroup />
-          <p>{rowData.member}</p>
+          <p>{rowData.total_member}</p>
         </div>
       ),
     },
     {
       title: "Tanggal Dibuat",
-      key: "dateCreated",
+      key: "create_at",
     },
     {
       title: "Status",
@@ -179,6 +192,15 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
     },
   ];
 
+  const dispatch = useDispatch();
+  const { list_proyek } = useSelector(
+    (state) => state.dataProyek.dashboardProyek
+  );
+
+  useEffect(() => {
+    dispatch(getDashboardDataProyek());
+  }, [dispatch]);
+
   return (
     <Container>
       {/* Title */}
@@ -275,7 +297,7 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
             width: "100%",
           }}
         >
-          <Table headerContent={dataHeader} dataContent={dataContent} />
+          <Table headerContent={dataHeader} dataContent={list_proyek} />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
             <p

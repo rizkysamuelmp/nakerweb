@@ -2,6 +2,7 @@ import {
   serviceDashboardUsers,
   serviceGetAllUsers,
   serviceGetCity,
+  serviceGetDetailDataPengguna,
   serviceGetSearchPengguna,
   servicePenggunaFilter,
 } from "../../utils/api";
@@ -19,18 +20,37 @@ import {
 } from "../constants/dataPenggunaConstants";
 import { setLoading } from "./pageContainer";
 
+export const ACTIVE_STATE = "ACTIVE_STATE";
+export const DETAIL_DATA_PENGGUNA = "DETAIL_DATA_PENGGUNA";
+export const STATUS_DETAIL = "STATUS_DETAIL";
+
+export const setActiveStep = (payload) => ({
+  type: ACTIVE_STATE,
+  payload,
+});
+
 export const setDashboardUsers = (payload) => ({
   type: DASHBOARD_USERS,
   payload,
 });
 
-export const setFilter = (payload) => ({
-  type: FILTER,
+export const setAllUsers = (payload) => ({
+  type: ALL_USERS,
   payload,
 });
 
-export const setAllUsers = (payload) => ({
-  type: ALL_USERS,
+export const setDetailDataPengguna = (payload) => ({
+  type: DETAIL_DATA_PENGGUNA,
+  payload,
+});
+
+export const setStatusDetail = (payload) => ({
+  type: STATUS_DETAIL,
+  payload,
+});
+
+export const setFilter = (payload) => ({
+  type: FILTER,
   payload,
 });
 
@@ -93,30 +113,45 @@ export const getAllUsers = () => async (dispatch, getState) => {
   }
 };
 
+export const getDetailDataPengguna = (id_user) => async (dispatch) => {
+  dispatch(setLoading(true));
+  const { status, data } = await serviceGetDetailDataPengguna({
+    id_user,
+  });
+
+  dispatch(setLoading(false));
+  if (status === 200) {
+    dispatch(setDetailDataPengguna(data.data));
+    dispatch(setActiveStep("detail"));
+  }
+};
+
 export const getCity = () => async (dispatch) => {
   try {
-    dispatch(setLoading(true));
     const { status, data } = await serviceGetCity({
-      province_id: "",
+      province_id: 0,
     });
-    dispatch(setLoading(false));
 
     if (status === 200) {
-      const list = [];
-      let number = 0;
+      let count = 1;
+      let allCity = [
+        {
+          kode: 0,
+          label: "Semua Kab/Kota",
+          value: 0,
+        },
+      ];
       data.data.forEach((item) => {
-        list.push({
+        allCity.push({
+          ...item,
           label: item.nama,
-          value: number,
-          kode: item.kode,
-          provinsi_code: item.province,
+          value: count,
         });
-        number = number + 1;
+        count = count + 1;
       });
-      dispatch(setDropDownCity(list));
+      dispatch(setDropDownCity(allCity));
     }
   } catch (e) {
-    dispatch(setLoading(false));
     console.warn("Error : ", e);
   }
 };
@@ -124,54 +159,46 @@ export const getCity = () => async (dispatch) => {
 export const getPenggunaSearch = (keyword) => async (dispatch, getState) => {
   dispatch(setSearch(true));
   const { pagination } = getState().dataPengguna;
-  dispatch(setLoading(true));
-  try {
-    const { status, data } = await serviceGetSearchPengguna({
-      page: pagination.page,
-      limit: "10",
-      keyword,
-    });
-    console.log(data.data);
-    if (status === 200) {
-      dispatch(setAllUsers(data.data));
-      dispatch(setLoading(false));
-    } else {
-    }
-  } catch (error) {
+  const { status, data } = await serviceGetSearchPengguna({
+    page: pagination.page,
+    limit: "10",
+    keyword,
+  });
+  if (status === 200) {
+    dispatch(setAllUsers(data.data));
     dispatch(setLoading(false));
-    console.log("error: ", error);
   }
 };
 
-export const getPenggunaFilter = () => async (dispatch, getState) => {
-  dispatch(setFilter(true));
-  console.log("filter");
-  const {
-    valueGender,
-    valueAge,
-    valueCity,
-    dropDownCity,
-    valueStatus,
-    pagination,
-  } = getState().dataPengguna;
-  dispatch(setLoading(true));
+export const getPenggunaFilter =
+  (pages, gender, age, isStatus, valueCity) => async (dispatch, getState) => {
+    dispatch(setLoading(true));
+    const { dropDownCity } = getState().dataPengguna;
 
-  try {
-    const { status, data } = await servicePenggunaFilter({
-      page: pagination.page,
-      limit: 10,
-      gender: valueGender.length === 0 ? "" : valueGender[0],
-      age: valueAge.length === 0 ? "" : valueAge[0],
-      city: valueCity.length === 0 ? "" : dropDownCity[valueCity[0]].kode,
-      status: valueStatus.length === 0 ? "" : valueStatus[0],
-    });
-    if (status === 200) {
+    try {
+      const { status, data } = await servicePenggunaFilter({
+        page: pages,
+        limit: 10,
+        gender:
+          gender.length === 0 ? "" : gender[0] > 0 ? `${gender[0] - 1}` : "",
+        age: age.length === 0 ? "" : age[0],
+        city: dropDownCity.length === 0 ? "" : dropDownCity[valueCity[0]].kode,
+        status:
+          isStatus.length === 0
+            ? ""
+            : isStatus[0] > 0
+            ? `${isStatus[0] - 1}`
+            : "",
+      });
+
+      if (dropDownCity.length === 0) dispatch(getCity());
       dispatch(setLoading(false));
-      dispatch(setAllUsers(data.data));
-    } else {
-      dispatch(setLoading(false));
+      if (status === 200) {
+        dispatch(setAllUsers(data.data));
+      } else {
+        dispatch(setLoading(false));
+      }
+    } catch (error) {
+      console.warn("error: ", error);
     }
-  } catch (error) {
-    console.warn("error: ", error);
-  }
-};
+  };

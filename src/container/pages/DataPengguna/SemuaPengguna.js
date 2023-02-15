@@ -19,20 +19,16 @@ import iconExport from "../../../assets/icon/icon-export.png";
 import iconSearch from "../../../assets/icon/icon-search.png";
 import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {
   getAllUsers,
-  getCity,
+  getDetailDataPengguna,
   getPenggunaFilter,
   getPenggunaSearch,
-  setPagination,
-  setValueAge,
-  setValueCity,
-  setValueGender,
-  setValueStatus,
+  setActiveStep,
 } from "../../../store/actions/dataPengguna";
 
-const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
+const SemuaPengguna = ({ setHistory, setId_user }) => {
   const dataHeader = [
     {
       title: "No",
@@ -164,9 +160,8 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
           borderRadius="5px"
           padding="0px 7px 0px 9px"
           onClick={() => {
-            setActiveStep("detail");
-            setId_user(rowData.id_user);
-            setHistory("home");
+            dispatch(getDetailDataPengguna(rowData.id_user));
+            setHistory("all");
           }}
         >
           {rowData.action}
@@ -181,23 +176,23 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
 
+  // state for filter
+  const [pages, setPages] = useState(1);
+  const [gender, setGender] = useState([]);
+  const [age, setAge] = useState([]);
+  const [valueCity, setValueCity] = useState([]);
+  const [isStatus, setIsStatus] = useState([]);
+
   // state global
   const dispatch = useDispatch();
-  const {
-    allUsers,
-    valueGender,
-    valueAge,
-    valueCity,
-    dropDownCity,
-    valueStatus,
-    pagination,
-    filter,
-  } = useSelector((state) => state.dataPengguna);
+  const { allUsers, dropDownCity } = useSelector(
+    (state) => state.dataPengguna,
+    shallowEqual
+  );
 
   useEffect(() => {
-    dispatch(getAllUsers());
-    dispatch(getCity());
-  }, [dispatch]);
+    dispatch(getPenggunaFilter(pages, gender, age, isStatus, valueCity));
+  }, [dispatch, pages, gender, age, isStatus, valueCity]);
 
   const searchHandler = (event) => {
     if (event.key === "Enter") {
@@ -206,20 +201,6 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
       } else {
         dispatch(getAllUsers());
       }
-      setKeyword("");
-    }
-  };
-
-  const onChangeFilter = () => {
-    dispatch(getPenggunaFilter());
-    dispatch(setPagination({ ...pagination, page: 1 }));
-  };
-
-  const onChangePage = () => {
-    if (filter) {
-      dispatch(getPenggunaFilter());
-    } else {
-      dispatch(getAllUsers());
     }
   };
 
@@ -228,7 +209,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
       <Title
         title="Semua Pengguna"
         withBack
-        onBack={() => setActiveStep("home")}
+        onBack={() => dispatch(setActiveStep("page"))}
       >
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
           {/* Pencarian */}
@@ -387,18 +368,21 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Jenis Kelamin :</p>
               <DropDown
-                dropdownValue={valueGender}
+                dropdownValue={gender}
                 listDropDown={[
                   {
-                    label: "Laki-laki",
-                    value: "0",
+                    label: "Semua Jenis Kelamin",
+                    value: 0,
                   },
-                  { label: "Perempuan", value: "1" },
+                  {
+                    label: "Laki-laki",
+                    value: 1,
+                  },
+                  { label: "Perempuan", value: 2 },
                 ]}
                 placeHolder="Pilih Jenis Kelamin"
-                handleChange={(e) => {
-                  dispatch(setValueGender([e.target.value]));
-                  onChangeFilter();
+                handleChange={(e, value) => {
+                  setGender([e.target.value]);
                 }}
               />
             </div>
@@ -407,7 +391,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Range Usia :</p>
               <DropDown
-                dropdownValue={valueAge}
+                dropdownValue={age}
                 listDropDown={[
                   {
                     label: "< 15 Thn",
@@ -419,8 +403,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
                 ]}
                 placeHolder="Pilih Range Usia"
                 handleChange={(e) => {
-                  dispatch(setValueAge([e.target.value]));
-                  onChangeFilter();
+                  setAge([e.target.value]);
                 }}
               />
             </div>
@@ -433,8 +416,7 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
                 listDropDown={dropDownCity}
                 placeHolder="Pilih Kota"
                 handleChange={(e, kode) => {
-                  dispatch(setValueCity([e.target.value]));
-                  onChangeFilter();
+                  setValueCity([e.target.value]);
                 }}
               />
             </div>
@@ -443,18 +425,21 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             >
               <p>Status :</p>
               <DropDown
-                dropdownValue={valueStatus}
+                dropdownValue={isStatus}
                 listDropDown={[
                   {
-                    label: "Aktif",
+                    label: "Semua Status",
                     value: "0",
                   },
-                  { label: "Tidak Aktif", value: "1" },
+                  {
+                    label: "Aktif",
+                    value: "1",
+                  },
+                  { label: "Tidak Aktif", value: "2" },
                 ]}
                 placeHolder="Pilih Status Akun"
                 handleChange={(e) => {
-                  dispatch(setValueStatus([e.target.value]));
-                  onChangeFilter();
+                  setIsStatus([e.target.value]);
                 }}
               />
             </div>
@@ -467,11 +452,9 @@ const SemuaPengguna = ({ setActiveStep, setHistory, setId_user }) => {
         count={10}
         currentData={10}
         totalData={100}
-        page={pagination.page}
+        page={pages}
         onChange={(e, value) => {
-          console.log(value);
-          dispatch(setPagination({ ...pagination, page: value }));
-          onChangePage();
+          setPages(value);
         }}
       />
     </Container>

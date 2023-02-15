@@ -1,7 +1,7 @@
 // Page Semua Proyek
 // --------------------------------------------------------
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
 import Table from "../../../components/Table";
@@ -23,15 +23,18 @@ import iconXls from "../../../assets/icon/icon-xls.png";
 import iconPdf from "../../../assets/icon/icon-pdf.png";
 
 // Dummy Data
-import { dataContent } from "./DataDummy";
-import profilePost from "../../../assets/img/profile-post.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getDetailDataProyek,
+  getFilterDataProyek,
+} from "../../../store/actions/dataPtoyek";
 
 const SemuaProyek = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
     {
       title: "No",
-      key: "no",
+      key: "id_proyek",
       width: 20,
       center: true,
     },
@@ -39,18 +42,29 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
       title: "Profile",
       width: 50,
       center: true,
-      render: () => (
-        <img alt="profile-chat" src={profilePost} height={24} width={24} />
+      render: (rowData) => (
+        <img
+          alt="profile-chat"
+          src={rowData.cover}
+          style={{
+            width: "24px",
+            height: "24px",
+            borderRadius: "24px",
+          }}
+        />
       ),
     },
     {
       title: "Nama Proyek",
       width: 250,
-      key: "projectName",
+      key: "nama_proyek",
     },
     {
       title: "Jenis Proyek",
-      key: "projectType",
+      key: "privacy",
+      render: (rowData) => (
+        <span>{rowData.privacy === "1" ? "Private" : "Public"}</span>
+      ),
     },
     {
       title: "Pembuat Proyek",
@@ -62,13 +76,13 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
       render: (rowData) => (
         <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
           <IconGroup />
-          <p>{rowData.member}</p>
+          <p>{rowData.total_member}</p>
         </div>
       ),
     },
     {
       title: "Tanggal Dibuat",
-      key: "dateCreated",
+      key: "create_at",
     },
     {
       title: "Status",
@@ -138,7 +152,7 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
     {
       title: "Aksi",
       width: 100,
-      render: () => (
+      render: (rowData) => (
         <div
           style={{
             display: "flex",
@@ -153,6 +167,7 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
             padding="0px 7px 0px 9px"
             onClick={() => {
               setActiveStep("info");
+              dispatch(getDetailDataProyek(rowData.id_proyek));
               setHistory("all");
             }}
           >
@@ -168,7 +183,19 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
   const [search, setSearch] = useState("");
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
-  const [dropDown, setDropDown] = useState(0);
+
+  // state for filter
+  const [gender, setGender] = useState([""]);
+  const [kategori, setKategori] = useState([""]);
+  const [isStatus, setIsStatus] = useState([""]);
+  const [pages, setPages] = useState(1);
+
+  const dispatch = useDispatch();
+  const { allData } = useSelector((state) => state.dataProyek);
+
+  useEffect(() => {
+    dispatch(getFilterDataProyek(gender, kategori, isStatus, pages));
+  }, [dispatch, gender, kategori, isStatus, pages]);
 
   return (
     <Container>
@@ -329,8 +356,8 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
             >
               <p>Pilih jenis grup :</p>
               <DropDown
-                dropdownValue={dropDown}
-                handleChange={(e) => setDropDown(e.target.value)}
+                dropdownValue={gender}
+                handleChange={(e) => setGender([e.target.value])}
                 listDropDown={[
                   {
                     label: "Publik",
@@ -345,8 +372,8 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
             >
               <p>Pilih Kategori grup :</p>
               <DropDown
-                dropdownValue={dropDown}
-                handleChange={(e) => setDropDown(e.target.value)}
+                dropdownValue={kategori}
+                handleChange={(e) => setKategori([e.target.value])}
                 listDropDown={[
                   {
                     label: "Perusahaan",
@@ -362,8 +389,8 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
             >
               <p>Pilih status grup :</p>
               <DropDown
-                dropdownValue={dropDown}
-                handleChange={(e) => setDropDown(e.target.value)}
+                dropdownValue={isStatus}
+                handleChange={(e) => setIsStatus([e.target.value])}
                 listDropDown={[
                   {
                     label: "Aktif",
@@ -388,8 +415,16 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
             width: "100%",
           }}
         >
-          <Table headerContent={dataHeader} dataContent={dataContent} />
-          <Pagination count={10} currentData={10} totalData={100} page={2} />
+          <Table headerContent={dataHeader} dataContent={allData} />
+          <Pagination
+            count={10}
+            currentData={10}
+            totalData={100}
+            page={pages}
+            onChange={(e, value) => {
+              setPages(value);
+            }}
+          />
         </div>
       </RowWrapper>
     </Container>
