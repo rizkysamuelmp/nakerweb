@@ -62,17 +62,19 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
     {
       title: "Jenis Proyek",
       key: "privacy",
+      center: true,
       render: (rowData) => (
         <span>{rowData.privacy === "1" ? "Private" : "Public"}</span>
       ),
     },
     {
       title: "Pembuat Proyek",
-      key: "projectCreator",
+      key: "full_name",
     },
     {
       title: "Member",
       width: 70,
+      center: true,
       render: (rowData) => (
         <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
           <IconGroup />
@@ -83,6 +85,8 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
     {
       title: "Tanggal Dibuat",
       key: "create_at",
+      center: true,
+      render: (rowData) => <p>{rowData.create_at.split(" ", 1)}</p>,
     },
     {
       title: "Status",
