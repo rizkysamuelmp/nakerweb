@@ -182,7 +182,7 @@ export const getPenggunaFilter =
         gender:
           gender.length === 0 ? "" : gender[0] > 0 ? `${gender[0] - 1}` : "",
         age: age.length === 0 ? "" : age[0],
-        city: dropDownCity.length === 0 ? "" : dropDownCity[valueCity[0]].kode,
+        city: dropDownCity[valueCity[0]]?.kode || "",
         status:
           isStatus.length === 0
             ? ""
