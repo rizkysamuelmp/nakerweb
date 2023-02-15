@@ -10,7 +10,6 @@ import { setActiveStep } from "../../../store/actions/dataPengguna";
 import backroundUser from "../../../assets/img/backgroundUser.png";
 import verifiedAccount from "../../../assets/icon/verifiedAccount.svg";
 import customer from "../../../assets/icon/customer.svg";
-import pencil from "../../../assets/icon/pencil.svg";
 import barBlue from "../../../assets/img/bar-blue.png";
 import barYellow from "../../../assets/img/bar-yellow.png";
 import barRed from "../../../assets/img/bar-red.png";
@@ -48,7 +47,6 @@ const DetailPengguna = ({ history }) => {
             style={{
               width: "100px",
               height: "100px",
-              border: "5px solid #397DED",
               borderRadius: "100%",
             }}
             alt=""
@@ -234,13 +232,13 @@ const LeftText = styled("span")`
   color: #000000;
 `;
 
-const Right = styled("div")`
-  background-color: #d9d9d9;
-  border-radius: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+// const Right = styled("div")`
+//   background-color: #d9d9d9;
+//   border-radius: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
 const DetailBioData = styled("div")`
   margin: 19px 0;

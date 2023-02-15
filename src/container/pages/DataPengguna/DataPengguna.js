@@ -6,6 +6,11 @@ import React, { useEffect } from "react";
 import Table from "../../../components/Table";
 import Title from "../../../components/Title";
 import Button from "../../../components/Button";
+import {
+  getDashboardUsers,
+  getDetailDataPengguna,
+  setActiveStep,
+} from "../../../store/actions/dataPengguna";
 
 // Asset
 import adornmentGreen from "../../../assets/img/adornment-green.png";
@@ -16,11 +21,6 @@ import adornmentOrange from "../../../assets/img/adornment-orange.png";
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getDashboardUsers,
-  getDetailDataPengguna,
-  setActiveStep,
-} from "../../../store/actions/dataPengguna";
 
 const DataPengguna = ({ setHistory, setId_user }) => {
   const dispatch = useDispatch();
@@ -49,12 +49,15 @@ const DataPengguna = ({ setHistory, setId_user }) => {
               style={{
                 width: "24px",
                 height: "24px",
-                border: "1px solid rgba(48, 68, 241, 0.87)",
                 borderRadius: "100%",
               }}
             />
           ) : (
-            "No Image"
+            <DefaultImgContainer>
+              <DefaultImg>
+                {rowData.full_name.slice(0, 1).toUpperCase()}
+              </DefaultImg>
+            </DefaultImgContainer>
           )}
         </>
       ),
@@ -82,16 +85,6 @@ const DataPengguna = ({ setHistory, setId_user }) => {
     {
       title: "Kota",
       key: "city",
-      center: true,
-    },
-    {
-      title: "Telepon",
-      key: "phone",
-      center: true,
-    },
-    {
-      title: "Email",
-      key: "email",
       center: true,
     },
     {
@@ -164,7 +157,7 @@ const DataPengguna = ({ setHistory, setId_user }) => {
             setHistory("page");
           }}
         >
-          {rowData.action}
+          Detail
           <img src={eye} alt="eye" />
         </Button>
       ),
@@ -255,6 +248,22 @@ const DataPengguna = ({ setHistory, setId_user }) => {
     </Container>
   );
 };
+
+const DefaultImgContainer = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  background-color: #00d53b;
+  border-radius: 100%;
+`;
+
+const DefaultImg = styled("p")`
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+`;
 
 const TextSeeAll = styled("p")(() => ({
   fontFamily: "Inter",

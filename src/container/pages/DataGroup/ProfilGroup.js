@@ -24,10 +24,16 @@ import iconArrowRight from "../../../assets/icon/icon-arrow-right.png";
 import groupSuccess from "../../../assets/img/group-success.png";
 import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
 
+// Redux
+import { setActiveStep } from "../../../store/actions/dataGroup";
+import { useDispatch } from "react-redux";
+
 // Dummy
 import { dataChart1, dataChart2, dataChart3, lokerTranding } from "./DataDummy";
 
 const ProfilGroup = () => {
+  const dispatch = useDispatch();
+
   const [menuEdit, setMenuEdit] = useState(null);
   const [popupConfirm, setPopupConfirm] = useState(false);
   const [popupDelete, setPopupDelete] = useState(false);

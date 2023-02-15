@@ -7,23 +7,21 @@ import {
   servicePenggunaFilter,
 } from "../../utils/api";
 import { capFirstLetter } from "../../utils/helpers";
-import {
-  ALL_USERS,
-  SET_DROPDOWN_CITY,
-  SET_PAGINATION,
-  SET_VALUE_AGE,
-  SET_VALUE_CITY,
-  SET_VALUE_GENDER,
-  SET_VALUE_STATUS,
-  FILTER,
-  SET_SEARCH,
-  DASHBOARD_USERS,
-} from "../constants/dataPenggunaConstants";
 import { setLoading } from "./pageContainer";
 
 export const ACTIVE_STATE = "ACTIVE_STATE";
 export const DETAIL_DATA_PENGGUNA = "DETAIL_DATA_PENGGUNA";
 export const STATUS_DETAIL = "STATUS_DETAIL";
+export const DASHBOARD_USERS = "DASHBOARD_USERS";
+export const ALL_USERS = "ALL_USERS";
+export const FILTER = "FILTER";
+export const SET_VALUE_GENDER = "SET_VALUE_GENDER";
+export const SET_VALUE_AGE = "VALUE_AGE";
+export const SET_VALUE_CITY = "VALUE_CITY";
+export const SET_DROPDOWN_CITY = "SET_DROPDOWN_CITY";
+export const SET_VALUE_STATUS = "SET_VALUE_STATUS";
+export const SET_SEARCH = "SET_SEARCH";
+export const SET_PAGINATION = "SET_PAGINATION";
 
 export const setActiveStep = (payload) => ({
   type: ACTIVE_STATE,
@@ -182,7 +180,7 @@ export const getPenggunaFilter =
         limit: 10,
         gender:
           gender.length === 0 ? "" : gender[0] > 0 ? `${gender[0] - 1}` : "",
-        age: age.length === 0 ? "" : age[0],
+        age: age.length === 0 ? "" : age[0] > 0 ? `${age[0] - 1}` : "",
         city: dropDownCity[valueCity[0]]?.kode || "",
         status:
           isStatus.length === 0
