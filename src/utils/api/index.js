@@ -53,8 +53,8 @@ export const serviceGetCity = (payload) =>
 export const serviceDashboardUsers = (payload) =>
   axios.get(`${apiUrl}/users`, payload);
 
-export const getDetail = (id_user) =>
-  axios.post(`${apiUrl}/users/get_detail`, { id_user }, config);
+export const serviceGetDetailDataPengguna = (payload) =>
+  axios.post(`${apiUrl}/users/get_detail`, payload);
 
 export const serviceGetAllUsers = (payload) =>
   axios.post(`${apiUrl}/users/get_all`, payload);
@@ -88,41 +88,23 @@ export const serviceGetActionlGrup = (payload) =>
   axios.post(`${apiUrl}/grup/action`, payload);
 
 // API for DataProyek
-export const getDashboardDataProyek = () => axios.post(`${apiUrl}/mytim`);
+export const serviceGetDashboardDataProyek = (payload) =>
+  axios.get(`${apiUrl}/mytim`, payload);
 
-export const getFilterDataProyek = (
-  page,
-  category,
-  city,
-  type,
-  status,
-  keyword
-) =>
-  axios.post(
-    `${apiUrl}/mytim`,
-    {
-      page,
-      limit: "10",
-      category,
-      city,
-      type,
-      status,
-      keyword,
-    },
-    config
-  );
+export const serviceGetFilterDataProyek = (payload) =>
+  axios.post(`${apiUrl}/mytim/filter`, payload);
 
-export const requestDetail = (id_proyek) =>
-  axios.post(`${apiUrl}/mytim/request_detail`, { id_proyek }, config);
+export const serviceRequestDetail = (payload) =>
+  axios.post(`${apiUrl}/mytim/request_detail`, payload);
 
-export const approved = (id_proyek, action) =>
-  axios.post(`${apiUrl}/mytim/approved`, { id_proyek, action }, config);
+export const serviceApproved = (payload) =>
+  axios.post(`${apiUrl}/mytim/approved`, payload);
 
-export const proyekDetail = (id_proyek) =>
-  axios.post(`${apiUrl}/mytim/proyek_detail`, { id_proyek }, config);
+export const serviceProyekDetail = (payload) =>
+  axios.post(`${apiUrl}/mytim/proyek_detail`, payload);
 
-export const tabTask = (id_proyek) =>
-  axios.post(`${apiUrl}/mytim/tab_task`, { id_proyek }, config);
+export const serviceTabTask = (payload) =>
+  axios.post(`${apiUrl}/mytim/tab_task`, payload);
 
-export const tabDiskusiTask = (id_proyek, page) =>
-  axios.post(`${apiUrl}/mytim/tab_diskusi_task`, { id_proyek, page }, config);
+export const serviceTabDiskusiTask = (payload) =>
+  axios.post(`${apiUrl}/mytim/tab_diskusi_task`, payload);

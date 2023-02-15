@@ -1,4 +1,9 @@
 import {
+  ACTIVE_STATE,
+  DETAIL_DATA_PENGGUNA,
+  STATUS_DETAIL,
+} from "../actions/dataPengguna";
+import {
   ALL_USERS,
   DASHBOARD_USERS,
   FILTER,
@@ -12,7 +17,10 @@ import {
 } from "../constants/dataPenggunaConstants";
 
 const initialState = {
+  statusDetail: "",
+  activeStep: "page",
   dashboardUsers: [],
+  userDetail: {},
   filter: false,
   search: false,
   allUsers: [],
@@ -31,10 +39,25 @@ const initialState = {
 
 const dataPenggunaReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ACTIVE_STATE:
+      return {
+        ...state,
+        activeStep: action.payload,
+      };
     case DASHBOARD_USERS:
       return {
         ...state,
         dashboardUsers: action.payload,
+      };
+    case DETAIL_DATA_PENGGUNA:
+      return {
+        ...state,
+        userDetail: action.payload,
+      };
+    case STATUS_DETAIL:
+      return {
+        ...state,
+        statusDetail: action.payload,
       };
     case FILTER:
       return {

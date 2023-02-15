@@ -16,9 +16,13 @@ import adornmentOrange from "../../../assets/img/adornment-orange.png";
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { getDashboardUsers } from "../../../store/actions/dataPengguna";
+import {
+  getDashboardUsers,
+  getDetailDataPengguna,
+  setActiveStep,
+} from "../../../store/actions/dataPengguna";
 
-const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
+const DataPengguna = ({ setHistory, setId_user }) => {
   const dispatch = useDispatch();
   const { dashboardUsers } = useSelector((state) => state.dataPengguna);
 
@@ -156,9 +160,8 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
           borderRadius="5px"
           padding="0px 7px 0px 9px"
           onClick={() => {
-            setActiveStep("detail");
-            setId_user(rowData.id_user);
-            setHistory("home");
+            dispatch(getDetailDataPengguna(rowData.id_user));
+            setHistory("page");
           }}
         >
           {rowData.action}
@@ -183,10 +186,10 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             style={{ borderRadius: "10px 0px 0px 10px" }}
           />
           <ContentWrap>
-            <TitleSummary>Selesai</TitleSummary>
+            <TitleSummary>Aktif</TitleSummary>
             <TextWrap>
-              <DetailSummary>Total Tiket</DetailSummary>
-              <ValueSummary>260</ValueSummary>
+              <DetailSummary>Total Aktif</DetailSummary>
+              <ValueSummary>{dashboardUsers.total_active}</ValueSummary>
             </TextWrap>
           </ContentWrap>
         </Sumary>
@@ -198,10 +201,10 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             style={{ borderRadius: "10px 0px 0px 10px" }}
           />
           <ContentWrap>
-            <TitleSummary>Baru</TitleSummary>
+            <TitleSummary>Nonaktif</TitleSummary>
             <TextWrap>
-              <DetailSummary>Total Tiket</DetailSummary>
-              <ValueSummary>260</ValueSummary>
+              <DetailSummary>Total Nonaktif</DetailSummary>
+              <ValueSummary>{dashboardUsers.total_nonactive}</ValueSummary>
             </TextWrap>
           </ContentWrap>
         </Sumary>
@@ -213,10 +216,10 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             style={{ borderRadius: "10px 0px 0px 10px" }}
           />
           <ContentWrap>
-            <TitleSummary>Menunggu</TitleSummary>
+            <TitleSummary>Pria</TitleSummary>
             <TextWrap>
-              <DetailSummary>Total Tiket</DetailSummary>
-              <ValueSummary>260</ValueSummary>
+              <DetailSummary>Total Pria</DetailSummary>
+              <ValueSummary>{dashboardUsers.male}</ValueSummary>
             </TextWrap>
           </ContentWrap>
         </Sumary>
@@ -228,10 +231,10 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
             style={{ borderRadius: "10px 0px 0px 10px" }}
           />
           <ContentWrap>
-            <TitleSummary>Sudah Di jawab</TitleSummary>
+            <TitleSummary>Wanita</TitleSummary>
             <TextWrap>
-              <DetailSummary>Total Tiket</DetailSummary>
-              <ValueSummary>260</ValueSummary>
+              <DetailSummary>Total Wanita</DetailSummary>
+              <ValueSummary>{dashboardUsers.famale}</ValueSummary>
             </TextWrap>
           </ContentWrap>
         </Sumary>
@@ -245,7 +248,7 @@ const DataPengguna = ({ setActiveStep, setHistory, setId_user }) => {
       />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <p style={{ color: "#7B87AF" }}>Menampilkan 10 dari 500 baris</p>
-        <TextSeeAll onClick={() => setActiveStep("all")}>
+        <TextSeeAll onClick={() => dispatch(setActiveStep("all"))}>
           Lihat Semua
         </TextSeeAll>
       </div>

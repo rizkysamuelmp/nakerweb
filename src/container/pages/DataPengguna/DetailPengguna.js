@@ -1,9 +1,10 @@
 // Page Detail Pengguna
 // --------------------------------------------------------
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import { IconButton } from "@mui/material";
+import { setActiveStep } from "../../../store/actions/dataPengguna";
 
 // Assets
 import backroundUser from "../../../assets/img/backgroundUser.png";
@@ -16,29 +17,24 @@ import barRed from "../../../assets/img/bar-red.png";
 import barPurple from "../../../assets/img/bar-purple.png";
 import barGreen from "../../../assets/img/bar-green.png";
 import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
-import { getDetail } from "../../../utils/api";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
-const DetailPengguna = ({ setActiveStep, history, id_user }) => {
-  const [userDetail, setUserDetail] = useState({});
-
-  useEffect(() => {
-    const fetchPengguna = async () => {
-      const response = await getDetail(id_user);
-      setUserDetail(response.data.data);
-    };
-
-    fetchPengguna();
-  }, [id_user]);
+const DetailPengguna = ({ history }) => {
+  const { userDetail } = useSelector(
+    (state) => state.dataPengguna,
+    shallowEqual
+  );
+  const dispatch = useDispatch();
 
   return (
     <Container>
       <IconButton
         style={{ position: "absolute", zIndex: 100 }}
         onClick={() => {
-          if (history === "home") {
-            setActiveStep("home");
+          if (history === "page") {
+            dispatch(setActiveStep("page"));
           } else {
-            setActiveStep("all");
+            dispatch(setActiveStep("all"));
           }
         }}
       >
