@@ -49,7 +49,6 @@ const DataPengguna = ({ setHistory, setId_user }) => {
               style={{
                 width: "24px",
                 height: "24px",
-                border: "1px solid rgba(48, 68, 241, 0.87)",
                 borderRadius: "100%",
               }}
             />
@@ -86,16 +85,6 @@ const DataPengguna = ({ setHistory, setId_user }) => {
     {
       title: "Kota",
       key: "city",
-      center: true,
-    },
-    {
-      title: "Telepon",
-      key: "phone",
-      center: true,
-    },
-    {
-      title: "Email",
-      key: "email",
       center: true,
     },
     {

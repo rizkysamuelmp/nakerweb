@@ -48,7 +48,6 @@ const DetailPengguna = ({ history }) => {
             style={{
               width: "100px",
               height: "100px",
-              border: "5px solid #397DED",
               borderRadius: "100%",
             }}
             alt=""
