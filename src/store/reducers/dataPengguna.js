@@ -14,7 +14,7 @@ import {
   SET_VALUE_CITY,
   SET_VALUE_GENDER,
   SET_VALUE_STATUS,
-} from "../constants/dataPenggunaConstants";
+} from "../actions/dataPengguna";
 
 const initialState = {
   statusDetail: "",

@@ -54,7 +54,11 @@ const DataPengguna = ({ setHistory, setId_user }) => {
               }}
             />
           ) : (
-            "No Image"
+            <DefaultImgContainer>
+              <DefaultImg>
+                {rowData.full_name.slice(0, 1).toUpperCase()}
+              </DefaultImg>
+            </DefaultImgContainer>
           )}
         </>
       ),
@@ -164,7 +168,7 @@ const DataPengguna = ({ setHistory, setId_user }) => {
             setHistory("page");
           }}
         >
-          {rowData.action}
+          Detail
           <img src={eye} alt="eye" />
         </Button>
       ),
@@ -255,6 +259,22 @@ const DataPengguna = ({ setHistory, setId_user }) => {
     </Container>
   );
 };
+
+const DefaultImgContainer = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  background-color: #00d53b;
+  border-radius: 100%;
+`;
+
+const DefaultImg = styled("p")`
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+`;
 
 const TextSeeAll = styled("p")(() => ({
   fontFamily: "Inter",

@@ -53,7 +53,11 @@ const SemuaPengguna = ({ setHistory, setId_user }) => {
               }}
             />
           ) : (
-            "No Image"
+            <DefaultImgContainer>
+              <DefaultImg>
+                {rowData.full_name.slice(0, 1).toUpperCase()}
+              </DefaultImg>
+            </DefaultImgContainer>
           )}
         </>
       ),
@@ -82,15 +86,6 @@ const SemuaPengguna = ({ setHistory, setId_user }) => {
       title: "Kota",
       key: "city",
       center: true,
-    },
-    {
-      title: "Telepon",
-      key: "phone",
-      center: true,
-    },
-    {
-      title: "Email",
-      key: "email",
     },
     {
       title: "Status",
@@ -164,7 +159,7 @@ const SemuaPengguna = ({ setHistory, setId_user }) => {
             setHistory("all");
           }}
         >
-          {rowData.action}
+          Detail
           <img src={eye} alt="eye" />
         </Button>
       ),
@@ -383,6 +378,7 @@ const SemuaPengguna = ({ setHistory, setId_user }) => {
                 placeHolder="Pilih Jenis Kelamin"
                 handleChange={(e, value) => {
                   setGender([e.target.value]);
+                  setPages(1);
                 }}
               />
             </div>
@@ -404,6 +400,7 @@ const SemuaPengguna = ({ setHistory, setId_user }) => {
                 placeHolder="Pilih Range Usia"
                 handleChange={(e) => {
                   setAge([e.target.value]);
+                  setPages(1);
                 }}
               />
             </div>
@@ -417,6 +414,7 @@ const SemuaPengguna = ({ setHistory, setId_user }) => {
                 placeHolder="Pilih Kota"
                 handleChange={(e, kode) => {
                   setValueCity([e.target.value]);
+                  setPages(1);
                 }}
               />
             </div>
@@ -440,6 +438,7 @@ const SemuaPengguna = ({ setHistory, setId_user }) => {
                 placeHolder="Pilih Status Akun"
                 handleChange={(e) => {
                   setIsStatus([e.target.value]);
+                  setPages(1);
                 }}
               />
             </div>
@@ -462,6 +461,22 @@ const SemuaPengguna = ({ setHistory, setId_user }) => {
 };
 
 // Style
+const DefaultImgContainer = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  background-color: #00d53b;
+  border-radius: 100%;
+`;
+
+const DefaultImg = styled("p")`
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+`;
+
 const Container = styled("div")`
   display: flex;
   flex-direction: column;
