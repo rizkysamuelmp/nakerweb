@@ -30,19 +30,30 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
     },
     {
       title: "Profile",
-      width: 50,
-      center: true,
+      key: "profile",
       render: (rowData) => (
-        <img
-          alt="profile-chat"
-          src={rowData.cover}
-          style={{
-            width: "24px",
-            height: "24px",
-            borderRadius: " 100%",
-          }}
-        />
+        <>
+          {rowData.cover ? (
+            <img
+              src={rowData.cover}
+              alt="profile"
+              style={{
+                width: "24px",
+                height: "24px",
+                borderRadius: "100%",
+              }}
+            />
+          ) : (
+            <DefaultImgContainer>
+              <DefaultImg>
+                {rowData.full_name.slice(0, 1).toUpperCase()}
+              </DefaultImg>
+            </DefaultImgContainer>
+          )}
+        </>
       ),
+      width: 40,
+      center: true,
     },
     {
       title: "Nama Proyek",
@@ -52,6 +63,7 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
     {
       title: "Jenis Proyek",
       key: "privacy",
+      center: true,
       render: (rowData) => (
         <span>{rowData.privacy === "1" ? "Private" : "Public"}</span>
       ),
@@ -63,6 +75,7 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
     {
       title: "Member",
       width: 70,
+      center: true,
       render: (rowData) => (
         <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
           <IconGroup />
@@ -73,6 +86,8 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
     {
       title: "Tanggal Dibuat",
       key: "create_at",
+      center: true,
+      render: (rowData) => <p>{rowData.create_at.split(" ", 1)}</p>,
     },
     {
       title: "Status",
@@ -319,6 +334,22 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
     </Container>
   );
 };
+
+const DefaultImgContainer = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  background-color: #00d53b;
+  border-radius: 100%;
+`;
+
+const DefaultImg = styled("p")`
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+`;
 
 const Container = styled("div")(() => ({
   display: "flex",
