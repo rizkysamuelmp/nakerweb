@@ -16,7 +16,7 @@ const Sidebar = () => {
   const handleLogout = () => {
     dispatch(setIsLogin(false));
     history.push("/nakerweb/login");
-    localStorage.removeItem("token");
+    localStorage.removeItem("dataUser");
   };
 
   return (

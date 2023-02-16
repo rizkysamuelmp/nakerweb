@@ -21,7 +21,7 @@ const PageContainer = ({ children }) => {
   moment.updateLocale("id", idLocale);
 
   const isNotif = true;
-  const isToken = localStorage.getItem("token");
+  const dataUser = localStorage.getItem("dataUser");
   const [notification, setNotification] = useState(null);
 
   const { isLoading, isLogin } = useSelector(
@@ -32,8 +32,8 @@ const PageContainer = ({ children }) => {
   );
 
   useEffect(() => {
-    if (!isLogin && !isToken) {
-      localStorage.removeItem("token");
+    if (!isLogin && !dataUser) {
+      localStorage.removeItem("dataUser");
       history.push("/nakerweb/login");
     }
   }, []);

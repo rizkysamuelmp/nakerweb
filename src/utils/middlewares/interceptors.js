@@ -4,23 +4,15 @@ import axios from "axios";
 export const requestInterceptors = async () => {
   await axios.interceptors.request.use(
     (config) => {
-      // config.withCredentials = process.env.NODE_ENV !== 'production';
       config.headers["Content-Type"] = "text/plain";
       config.headers["Access-Control-Allow-Headers"] = "Content-Type";
       config.headers["Access-Control-Allow-Origin"] = "*";
       config.headers["Access-Control-Allow-Methods"] = "POST,GET";
-      // config.headers["Access-Control-Allow-Origin"] = "*";
-      // config.headers["Access-Control-Allow-Credentials"] = true;
 
-      // const dataUser = JSON.parse(dataUserString);
-      // if (dataUser && dataUser.access_token) {
-      // config.headers.Authorization = `Bearer ${dataUser.access_token}`;
-      // }
-      // const accessToken = getLocalStorage("accessToken");
-      // if (accessToken) {
-      // console.warn(accessToken);
-      //   config.headers.Authorization = `Bearer ${accessToken}`;
-      // }
+      const dataUser = JSON.parse(localStorage.getItem("dataUser"));
+      if (dataUser) {
+        config.headers.Authorization = `Bearer ${dataUser.token}`;
+      }
       return config;
     },
     (err) => {
@@ -36,6 +28,7 @@ export const responseInterceptors = async () => {
       if (isHtml) {
         // Store.dispatch({ type: SET_ERROR_WAF, payload: response });
       }
+      console.warn("Isi response : ", response);
 
       // if (
       //   response.data.opstatus === 9001 ||
@@ -55,6 +48,7 @@ export const responseInterceptors = async () => {
       // eslint-disable-next-line prefer-promise-reject-errors
       // Promise.reject({ ...error.response });
       {
+        console.warn("Isi error.response : ", error.response);
         // console.warn(error.response, "ini error");
         if (error.response.status === 401) {
           // handleLogoutMiddleware();

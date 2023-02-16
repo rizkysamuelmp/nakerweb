@@ -26,7 +26,7 @@ export const actionLogin = (email, password) => async (dispatch) => {
     if (status === 200) {
       dispatch(setLoading(false));
       if (data.status) {
-        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("dataUser", JSON.stringify(data));
         dispatch(setIsLogin(true));
       } else {
         dispatch(setMessage(data.message));

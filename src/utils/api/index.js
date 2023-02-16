@@ -7,7 +7,7 @@ import {
 requestInterceptors();
 responseInterceptors();
 
-const devURL = "http://admin.kubu.id/api";
+const devURL = "http://admin.dev.kubu.id/api";
 const apiUrl = process.env.NODE_ENV === "production" ? devURL : devURL;
 const config = {
   headers: {

@@ -22,7 +22,7 @@ const Login = () => {
   let history = useHistory();
   const dispatch = useDispatch();
 
-  const isToken = localStorage.getItem("token");
+  const dataUser = localStorage.getItem("dataUser");
   const { isLogin, isLoading, message } = useSelector(
     (state) => state.pageContainer,
     shallowEqual
@@ -30,17 +30,17 @@ const Login = () => {
 
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
-  const [email, setEmail] = useState("admin@kubu.id");
+  const [email, setEmail] = useState("");
   const [popUpAuth, setPopUpAuth] = useState(false);
   const [popUpEmail, setPopUpEmail] = useState(false);
 
   useEffect(() => {
-    if (isLogin && isToken) {
+    if (isLogin && dataUser) {
       history.push("/nakerweb/dashboard");
     }
-    if (!isLogin || !isToken) {
+    if (!isLogin || !dataUser) {
       history.push("/nakerweb/login");
-      localStorage.removeItem("token");
+      localStorage.removeItem("dataUser");
     }
   }, [isLogin]);
 
