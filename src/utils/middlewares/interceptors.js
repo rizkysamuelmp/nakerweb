@@ -28,7 +28,7 @@ export const responseInterceptors = async () => {
       if (isHtml) {
         // Store.dispatch({ type: SET_ERROR_WAF, payload: response });
       }
-      console.warn("Isi response : ", response);
+      // console.warn("Isi response : ", response);
 
       // if (
       //   response.data.opstatus === 9001 ||

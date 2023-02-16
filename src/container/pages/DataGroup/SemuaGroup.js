@@ -11,7 +11,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import DropDown from "../../../components/DropDown";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getAllGrup, setActiveStep } from "../../../store/actions/dataGroup";
+import {
+  getAllGrup,
+  getDetailGrup,
+  getRequestGrup,
+  setActiveStep,
+} from "../../../store/actions/dataGroup";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
@@ -72,12 +77,15 @@ const SemuaGroup = ({ setHistory }) => {
     },
     {
       title: "Tanggal Dibuat",
-      key: "dateCreated",
+      key: "create_at",
+      center: true,
+      render: (rowData) => <p>{rowData.create_at.split(" ", 1)}</p>,
     },
     {
       title: "Postingan",
       key: "total_post",
       center: true,
+      render: (rowData) => <p>{rowData.total_post + " Post"}</p>,
     },
     {
       title: "Status",
@@ -92,7 +100,7 @@ const SemuaGroup = ({ setHistory }) => {
             justifyContent: "center",
           }}
         >
-          {rowData.group_status === "0" ? (
+          {rowData.group_status === "1" ? (
             <div
               style={{
                 border: "1px solid #039C40",
@@ -108,7 +116,7 @@ const SemuaGroup = ({ setHistory }) => {
             >
               Aktif
             </div>
-          ) : rowData.group_status === "1" ? (
+          ) : rowData.group_status === "3" ? (
             <div
               style={{
                 border: "1px solid #C80707",
@@ -138,7 +146,7 @@ const SemuaGroup = ({ setHistory }) => {
                 color: "#2C4AE9",
               }}
             >
-              {rowData.group_status}
+              Di Tolak
             </div>
           )}
         </div>
@@ -147,7 +155,7 @@ const SemuaGroup = ({ setHistory }) => {
     {
       title: "Aksi",
       width: 100,
-      render: () => (
+      render: (rowData) => (
         <div
           style={{
             display: "flex",
@@ -161,8 +169,8 @@ const SemuaGroup = ({ setHistory }) => {
             borderRadius="5px"
             padding="0px 7px 0px 9px"
             onClick={() => {
-              dispatch(setActiveStep("detail"));
-              setHistory("all");
+              // dispatch(setActiveStep("detail"));
+              actionHandler(rowData.group_id, rowData.group_status);
             }}
           >
             Detail
@@ -180,11 +188,26 @@ const SemuaGroup = ({ setHistory }) => {
   const [menuFilter, setMenuFilter] = useState(null);
   const [dropDown, setDropDown] = useState(0);
 
+  // state for filter
+  // const [jenisGrup, setJenisGrup] = useState([]);
+  // const [kategoriGrup, setKategoriGrup] = useState([]);
+  // const [isStatus, setIsStatus] = useState([]);
+  const [page, setPage] = useState(1);
+
   const { allGroup } = useSelector((state) => state.dataGroup, shallowEqual);
 
   useEffect(() => {
-    dispatch(getAllGrup());
-  }, [dispatch]);
+    dispatch(getAllGrup(page));
+  }, [dispatch, page]);
+
+  const actionHandler = (group_id, group_status) => {
+    if (group_status === "1" || group_status === "4") {
+      dispatch(getDetailGrup(group_id));
+    } else {
+      dispatch(getRequestGrup(group_id));
+    }
+    setHistory("all");
+  };
 
   return (
     <Container>
@@ -405,7 +428,7 @@ const SemuaGroup = ({ setHistory }) => {
           }}
         >
           <Table headerContent={dataHeader} dataContent={allGroup} />
-          <Pagination count={10} currentData={10} totalData={100} page={2} />
+          <Pagination count={10} currentData={10} totalData={100} page={page} />
         </div>
       </RowWrapper>
     </Container>

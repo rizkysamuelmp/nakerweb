@@ -4,17 +4,16 @@
 import React, { useState } from "react";
 import Title from "../../../components/Title";
 import { styled } from "@mui/material/styles";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
+// import TextareaAutosize from "@mui/material/TextareaAutosize";
 
 // Redux
-import { useDispatch } from "react-redux";
-import { setActiveStep } from "../../../store/actions/dataGroup";
+import { useDispatch, useSelector } from "react-redux";
+import { actionRequest, setActiveStep } from "../../../store/actions/dataGroup";
 
 // Asset
 import bannerImage from "../../../assets/img/banner-image.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_grup.svg";
 import { ReactComponent as IconUser } from "../../../assets/icon/icon_user.svg";
-import profilePost from "../../../assets/img/profile-post.png";
 import Button from "../../../components/Button";
 import PopUp from "../../../components/PopUp";
 import deleteGroup from "../../../assets/img/group-delete.png";
@@ -28,6 +27,10 @@ const DetailGroup = ({ history }) => {
   const [popUpKonfTolak, setPopKonfTolak] = useState(false);
   const [popUpTolak, setPopUpTolak] = useState(false);
 
+  const { user_info, grup_info } = useSelector(
+    (state) => state.dataGroup.requestDetail
+  );
+
   return (
     <Container>
       {/* Title */}
@@ -35,7 +38,7 @@ const DetailGroup = ({ history }) => {
         title="Data Grup"
         withBack
         onBack={() => {
-          if (history === "home") {
+          if (history === "page") {
             dispatch(setActiveStep("page"));
           } else {
             dispatch(setActiveStep("all"));
@@ -80,7 +83,7 @@ const DetailGroup = ({ history }) => {
               lineHeight: "18px",
             }}
           >
-            <p>Grup di buat oleh @arifandi</p>
+            {/* <p>Grup di buat oleh @{user_info.full_name}</p> */}
           </div>
         </div>
       </RowWrapper>
@@ -102,23 +105,23 @@ const DetailGroup = ({ history }) => {
           >
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ width: "150px" }}>Nama grup</p>
-              <p>: Syarikat Indonesia</p>
+              <p>: {grup_info.group_name}</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ width: "150px" }}>Kategori grup</p>
-              <p>: Syarikat pekerja</p>
+              <p>: {grup_info.category_name}</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ width: "150px" }}>Jenis grup</p>
-              <p>: Publik</p>
+              <p>: {grup_info.group_privacy === "1" ? "Private" : "Public"}</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ width: "150px" }}>Tanggal dibuat</p>
-              <p>: 06 Agustus 2022</p>
+              <p>: {grup_info.create_at}</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ minWidth: "150px" }}>Deskripsi</p>:
-              <TextareaAutosize
+              {/* <TextareaAutosize
                 aria-label="minimum height"
                 minRows={8}
                 style={{
@@ -129,8 +132,45 @@ const DetailGroup = ({ history }) => {
                   borderRadius: "10px",
                   padding: "10px",
                 }}
-              />
+              /> */}
+              {/* <p>{grup_info.group_about}</p> */}
             </div>
+          </div>
+
+          <div
+            style={{
+              // width: "60%",
+              display: "flex",
+              padding: "20px 20px 0 20px",
+              justifyContent: "space-between",
+            }}
+          >
+            {grup_info.group_status === "2" && (
+              <>
+                <Button onClick={() => setPopUpKonfSetuju(true)}>
+                  <p
+                    style={{
+                      fontWeight: 600,
+                      fontSize: "18px",
+                      lineHeight: "22px",
+                    }}
+                  >
+                    Setujui
+                  </p>
+                </Button>
+                <Button color="#E20000" onClick={() => setPopKonfTolak(true)}>
+                  <p
+                    style={{
+                      fontWeight: 600,
+                      fontSize: "18px",
+                      lineHeight: "22px",
+                    }}
+                  >
+                    Tolak
+                  </p>
+                </Button>
+              </>
+            )}
           </div>
         </ContentWrapper>
 
@@ -148,7 +188,15 @@ const DetailGroup = ({ history }) => {
               fontWeight: 500,
             }}
           >
-            <img alt="profile-post" src={profilePost} height={70} width={70} />
+            <img
+              alt="profile-post"
+              src={user_info.foto_profile}
+              style={{
+                height: "70px",
+                width: "70px",
+                borderRadius: "100%",
+              }}
+            />
             <div
               style={{ display: "flex", gap: "4px", flexDirection: "column" }}
             >
@@ -163,7 +211,7 @@ const DetailGroup = ({ history }) => {
               >
                 Username
               </p>
-              <p>@arifandi</p>
+              <p>@{user_info.full_name}</p>
             </div>
           </div>
 
@@ -189,7 +237,7 @@ const DetailGroup = ({ history }) => {
               >
                 Nama Lengkap
               </p>
-              <p>Muh. Arifandi</p>
+              <p>{user_info.full_name}</p>
             </div>
             <div
               style={{ display: "flex", gap: "4px", flexDirection: "column" }}
@@ -205,7 +253,7 @@ const DetailGroup = ({ history }) => {
               >
                 Email
               </p>
-              <p>arif76440@gmail.com</p>
+              <p>{user_info.email}</p>
             </div>
             <div
               style={{ display: "flex", gap: "4px", flexDirection: "column" }}
@@ -240,45 +288,26 @@ const DetailGroup = ({ history }) => {
               <p>Indonesia</p>
             </div>
           </div>
+          <div style={{ width: "100%" }}>
+            <Button
+              full
+              color="#039C40"
+              onClick={() => dispatch(setActiveStep("grup"))}
+            >
+              <p
+                style={{
+                  fontWeight: 600,
+                  fontSize: "18px",
+                  lineHeight: "22px",
+                }}
+              >
+                Tampilkan profile lengkap
+              </p>
+            </Button>
+          </div>
         </ContentWrapper>
       </RowWrapper>
-      <RowWrapper>
-        <div
-          style={{
-            width: "60%",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Button onClick={() => setPopUpKonfSetuju(true)}>
-            <p
-              style={{ fontWeight: 600, fontSize: "18px", lineHeight: "22px" }}
-            >
-              Setujui
-            </p>
-          </Button>
-          <Button color="#E20000" onClick={() => setPopKonfTolak(true)}>
-            <p
-              style={{ fontWeight: 600, fontSize: "18px", lineHeight: "22px" }}
-            >
-              Tolak
-            </p>
-          </Button>
-        </div>
-        <div style={{ width: "40%" }}>
-          <Button
-            full
-            color="#039C40"
-            onClick={() => dispatch(setActiveStep("grup"))}
-          >
-            <p
-              style={{ fontWeight: 600, fontSize: "18px", lineHeight: "22px" }}
-            >
-              Tampilkan profile lengkap
-            </p>
-          </Button>
-        </div>
-      </RowWrapper>
+      <RowWrapper></RowWrapper>
 
       {/* Konfirmasi Persetujuan */}
       <PopUp
@@ -291,6 +320,7 @@ const DetailGroup = ({ history }) => {
         onClickAction={() => {
           setPopUpKonfSetuju(false);
           setPopUpSetuju(true);
+          dispatch(actionRequest(grup_info.group_id, 1));
         }}
         title="Konfirmasi Persetujuan"
         info="Apakah anda yakin ingin setujui permintaan ini ?"
@@ -303,7 +333,9 @@ const DetailGroup = ({ history }) => {
         padding="60px 30px 25px 30px"
         imgSrc={groupSuccess}
         onClose={() => setPopUpSetuju(false)}
-        onClickAction={() => setPopUpSetuju(false)}
+        onClickAction={() => {
+          setPopUpSetuju(false);
+        }}
         title="Permintaan Disetujui"
         info="Permintaan pembuatan grup berhasil disetujui."
       />
@@ -317,6 +349,7 @@ const DetailGroup = ({ history }) => {
         onClose={() => setPopKonfTolak(false)}
         onClickAction={() => {
           setPopKonfTolak(false);
+          dispatch(actionRequest(grup_info.group_id, 3));
           setPopUpTolak(true);
         }}
         title="Konfirmasi"

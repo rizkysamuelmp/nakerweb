@@ -13,12 +13,8 @@ import { getDashboardDataProyek } from "../../../store/actions/dataPtoyek";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
-import profilePost from "../../../assets/img/profile-post.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
 import iconCalendar from "../../../assets/icon/icon-calendar.png";
-
-// Dummy Data
-import { dataContent } from "./DataDummy";
 
 const DataProyek = ({ setActiveStep, setHistory }) => {
   const dataHeader = [

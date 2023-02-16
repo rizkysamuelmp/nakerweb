@@ -24,7 +24,7 @@ const Page = () => {
         {activeStep === "page" && <DataGroup setHistory={setHistory} />}
         {activeStep === "all" && <SemuaGroup setHistory={setHistory} />}
         {activeStep === "detail" && <DetailGroup history={history} />}
-        {activeStep === "grup" && <ProfilGroup />}
+        {activeStep === "grup" && <ProfilGroup history={history} />}
       </Container>
     </PageContainer>
   );

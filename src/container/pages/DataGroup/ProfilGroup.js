@@ -26,12 +26,12 @@ import { ReactComponent as IconBack } from "../../../assets/icon/icon-back.svg";
 
 // Redux
 import { setActiveStep } from "../../../store/actions/dataGroup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // Dummy
-import { dataChart1, dataChart2, dataChart3, lokerTranding } from "./DataDummy";
+import { lokerTranding } from "./DataDummy";
 
-const ProfilGroup = () => {
+const ProfilGroup = ({ history }) => {
   const dispatch = useDispatch();
 
   const [menuEdit, setMenuEdit] = useState(null);
@@ -39,11 +39,99 @@ const ProfilGroup = () => {
   const [popupDelete, setPopupDelete] = useState(false);
   const [popupUpdate, setPopupUpdate] = useState(false);
 
+  const { detailGrup } = useSelector((state) => state.dataGroup);
+
+  const dataChart1 = [
+    {
+      data: [
+        detailGrup.total_all["Belum Disetujui"],
+        detailGrup.total_all.Aktif,
+        detailGrup.total_all.Doblokir,
+      ],
+      backgroundColor: ["#FFBF0B", "#03B74B", "#FE4747"],
+      borderColor: ["#FFBF0B", "#03B74B", "#FE4747"],
+      borderWidth: 1,
+      label: [
+        {
+          title: "Belum Disetujui",
+          color: "#FFBF0B",
+        },
+        {
+          title: "Aktif",
+          color: "#03B74B",
+        },
+        {
+          title: "Ditolak/Diblokir",
+          color: "#FE4747",
+        },
+      ],
+    },
+  ];
+
+  const dataChart2 = [
+    {
+      data: [detailGrup.gender.Pria, detailGrup.gender.Wanita],
+      backgroundColor: ["#FFBF0B", "#FA3E3E"],
+      borderColor: ["#FFBF0B", "#FA3E3E"],
+      borderWidth: 1,
+      label: [
+        {
+          title: "Pria",
+          color: "#FFBF0B",
+        },
+        {
+          title: "Wanita",
+          color: "#FA3E3E",
+        },
+      ],
+    },
+  ];
+
+  const dataChart3 = [
+    {
+      data: [
+        detailGrup.age.dewasa,
+        detailGrup.age.muda,
+        detailGrup.age.anak,
+        detailGrup.age.tua,
+      ],
+      backgroundColor: ["#115ABE", "#03B74B", "#FFBF0B", "#FA3E3E"],
+      borderColor: ["#115ABE", "#03B74B", "#FFBF0B", "#FA3E3E"],
+      borderWidth: 1,
+      label: [
+        {
+          title: "Dewasa",
+          color: "#115ABE",
+        },
+        {
+          title: "Muda",
+          color: "#03B74B",
+        },
+        {
+          title: "Anak-anak",
+          color: "#FFBF0B",
+        },
+        {
+          title: "Pensiun",
+          color: "#FA3E3E",
+        },
+      ],
+    },
+  ];
+
+  console.log(history);
+
   return (
     <Container>
       <IconButton
         style={{ position: "absolute", zIndex: 100 }}
-        onClick={() => dispatch(setActiveStep("detail"))}
+        onClick={() => {
+          if (history === "page") {
+            dispatch(setActiveStep("page"));
+          } else {
+            dispatch(setActiveStep("all"));
+          }
+        }}
       >
         <IconBack />
       </IconButton>
@@ -164,7 +252,7 @@ const ProfilGroup = () => {
                     lineHeight: "24px",
                   }}
                 >
-                  1000
+                  {detailGrup.post.Postingan}
                 </p>
               </ItemWrap>
               <ItemWrap>
@@ -184,7 +272,7 @@ const ProfilGroup = () => {
                     lineHeight: "24px",
                   }}
                 >
-                  1000
+                  {detailGrup.post.Komentar}
                 </p>
               </ItemWrap>
               <ItemWrap>
@@ -204,7 +292,7 @@ const ProfilGroup = () => {
                     lineHeight: "24px",
                   }}
                 >
-                  1000
+                  {detailGrup.post.Like}
                 </p>
               </ItemWrap>
             </InfoWrap>
@@ -245,7 +333,7 @@ const ProfilGroup = () => {
             <ChartWrap>
               <Chart
                 data={dataChart1}
-                description="Total : 100"
+                description={`Total : ${detailGrup.total_all.total}`}
                 title="Semua"
               />
               <Chart
@@ -255,7 +343,7 @@ const ProfilGroup = () => {
               />
               <Chart
                 data={dataChart3}
-                description="Total : 100"
+                description={`Total : ${detailGrup.age.total}`}
                 title="Rentang Usia"
               />
             </ChartWrap>

@@ -14,12 +14,13 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDasboardGroup,
+  getDetailGrup,
+  getRequestGrup,
   setActiveStep,
 } from "../../../store/actions/dataGroup";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
-import profilePost from "../../../assets/img/profile-post.png";
 import { ReactComponent as IconGroup } from "../../../assets/icon/icon_group.svg";
 import iconCalendar from "../../../assets/icon/icon-calendar.png";
 
@@ -65,8 +66,15 @@ const DataGroup = ({ setHistory }) => {
       title: "Profile",
       width: 60,
       center: true,
-      render: () => (
-        <img alt="profile-chat" src={profilePost} height={24} width={24} />
+      render: (rowData) => (
+        <>
+          <img
+            alt="profile-chat"
+            src={rowData.group_cover}
+            height={24}
+            width={24}
+          />
+        </>
       ),
     },
     {
@@ -107,7 +115,7 @@ const DataGroup = ({ setHistory }) => {
     {
       title: "Aksi",
       width: 100,
-      render: () => (
+      render: (rowData) => (
         <div
           style={{
             display: "flex",
@@ -121,8 +129,7 @@ const DataGroup = ({ setHistory }) => {
             borderRadius="5px"
             padding="0px 7px 0px 9px"
             onClick={() => {
-              dispatch(setActiveStep("detail"));
-              setHistory("home");
+              actionHandler(rowData.group_id, rowData.group_status);
             }}
           >
             Detail
@@ -137,6 +144,15 @@ const DataGroup = ({ setHistory }) => {
   useEffect(() => {
     dispatch(getDasboardGroup());
   }, [dispatch]);
+
+  const actionHandler = (group_id, group_status) => {
+    if (group_status === "1" || group_status === "4") {
+      dispatch(getDetailGrup(group_id));
+    } else {
+      dispatch(getRequestGrup(group_id));
+    }
+    setHistory("page");
+  };
 
   useEffect(() => {
     if (Object.keys(dashboardGroup).length !== 0) {

@@ -174,7 +174,7 @@ export const dataChart2 = [
 
 export const dataChart3 = [
   {
-    data: [25, 25, 25, 25],
+    data: [1, 2, 3, 4],
     backgroundColor: ["#115ABE", "#03B74B", "#FFBF0B", "#FA3E3E"],
     borderColor: ["#115ABE", "#03B74B", "#FFBF0B", "#FA3E3E"],
     borderWidth: 1,
