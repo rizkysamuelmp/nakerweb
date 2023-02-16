@@ -18,6 +18,10 @@ const config = {
 // Save Loker
 export const serviceLogin = (payload) => axios.post(`${apiUrl}/login`, payload);
 
+// Api Dashboard
+export const serviceDashboard = (payload) =>
+  axios.get(`${apiUrl}/dashboard`, payload);
+
 // Save Loker
 export const serviceGetDataLoker = (payload) =>
   axios.get(`${apiUrl}/loker`, payload);

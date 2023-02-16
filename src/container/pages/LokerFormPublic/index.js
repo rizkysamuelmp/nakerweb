@@ -189,6 +189,10 @@ const FormulirLoker = () => {
   }
   // API Save Loker
   async function saveLoker(data) {
+    const dataCut = JSON.stringify(deskPekerjaan)?.slice(10);
+    const dataCutFinal = dataCut?.substring(0, dataCut?.length - 1);
+    console.warn("Isi dataCutFinal : ", dataCutFinal);
+
     const payload = {
       name: data.namaPerusahaan,
       address: data.alamat,
@@ -198,7 +202,7 @@ const FormulirLoker = () => {
       total_employe: 0,
       sector_id: listKategori[selectKategori].sektor_id,
       email: data.email,
-      job_desc: JSON.stringify(deskPekerjaan),
+      job_desc: dataCutFinal,
       job_position: data.posisi,
       cualified: JSON.stringify(kualifikasi),
       city: listKota[selectKota].kode,

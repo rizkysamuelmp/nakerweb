@@ -28,7 +28,6 @@ export const responseInterceptors = async () => {
       if (isHtml) {
         // Store.dispatch({ type: SET_ERROR_WAF, payload: response });
       }
-      console.warn("Isi response : ", response);
 
       // if (
       //   response.data.opstatus === 9001 ||
@@ -48,7 +47,6 @@ export const responseInterceptors = async () => {
       // eslint-disable-next-line prefer-promise-reject-errors
       // Promise.reject({ ...error.response });
       {
-        console.warn("Isi error.response : ", error.response);
         // console.warn(error.response, "ini error");
         if (error.response.status === 401) {
           localStorage.removeItem("dataUser");

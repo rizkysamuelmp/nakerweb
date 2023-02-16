@@ -50,7 +50,7 @@ const Summary = ({ data }) => {
             <img alt="profile" src={curriculum} />
           </ImageWrapper>
           <TextWrapper>
-            <Title>Data Blue Colar</Title>
+            <Title>Data Loker</Title>
             <Info>Total Loker</Info>
           </TextWrapper>
         </ContentWrapper>
@@ -149,10 +149,10 @@ Summary.propTypes = {
 
 Summary.defaultProps = {
   data: {
-    user: 230,
-    group: 230,
-    blueCoral: 230,
-    myTeam: 230,
+    user: 0,
+    group: 0,
+    blueCoral: 0,
+    myTeam: 0,
   },
 };
 

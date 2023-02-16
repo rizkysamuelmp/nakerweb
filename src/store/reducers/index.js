@@ -5,6 +5,7 @@ import dataLoker from "./dataLoker";
 import dataPengguna from "./dataPengguna";
 import dataGroup from "./dataGroup";
 import { dataProyek } from "./dataProyek";
+import dashboard from "./dashboard";
 
 export default combineReducers({
   pageContainer: pageContainer,
@@ -12,4 +13,5 @@ export default combineReducers({
   dataPengguna: dataPengguna,
   dataGroup: dataGroup,
   dataProyek: dataProyek,
+  dashboard: dashboard,
 });

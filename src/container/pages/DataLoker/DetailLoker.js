@@ -108,15 +108,19 @@ const DetailLoker = ({ history }) => {
                   {/* Deskripsi Lowongan */}
                   <Wrapper>
                     <Label>Deskripsi Pekerjaan</Label>
-                    {isJSONString(detailLoker?.job_desc) ? (
+                    {isJSONString(
+                      `{"__html":` + `${detailLoker?.job_desc}` + `}`
+                    ) ? (
                       <div
                         style={{ padding: "0px 40px" }}
                         dangerouslySetInnerHTML={JSON.parse(
-                          detailLoker?.job_desc
+                          `{"__html":` + `${detailLoker?.job_desc}` + `}`
                         )}
                       />
                     ) : (
-                      <DetailBody>{detailLoker?.job_desc}</DetailBody>
+                      <DetailBody>
+                        {`{"__html":` + `${detailLoker?.job_desc}` + `}`}
+                      </DetailBody>
                     )}
                   </Wrapper>
 

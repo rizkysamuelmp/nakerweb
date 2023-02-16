@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Title from "../../../components/Title";
 import List from "@mui/material/List";
@@ -11,63 +11,161 @@ import arrowRight from "../../../assets/icon/arrow-right.svg";
 import profile from "../../../assets/img/profile.png";
 import survey from "../../../assets/icon/survey.svg";
 
+// Redux
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+
 // Dummy Data
 import { notification } from "./DataDummy";
 import Chart from "../../../components/Chart";
+import { getDataDashboard } from "../../../store/actions/dashboard";
+
+const initChartUser = [
+  {
+    data: [0, 0, 0],
+    backgroundColor: ["#FFBF0B", "#03B74B", "#FE4747"],
+    borderColor: ["#FFBF0B", "#03B74B", "#FE4747"],
+    borderWidth: 1,
+    label: [
+      {
+        title: "Pengguna Diblokir",
+        detail: "0 Pengguna",
+        color: "#FFBF0B",
+      },
+      {
+        title: "Pengguna Belum verifikasi",
+        detail: "0 Pengguna",
+        color: "#03B74B",
+      },
+      {
+        title: "Pengguna terverifikasi",
+        detail: "0 Pengguna",
+        color: "#FE4747",
+      },
+    ],
+  },
+];
+
+const initChartGroup = [
+  {
+    data: [0, 0, 0],
+    backgroundColor: ["#6147FE", "#03B74B", "#FF710B"],
+    borderColor: ["#6147FE", "#03B74B", "#FF710B"],
+    borderWidth: 1,
+    label: [
+      {
+        title: "Grup Belum verifikasi",
+        detail: "0 Grup",
+        color: "#6147FE",
+      },
+      {
+        title: "Grup Disetujui",
+        detail: "0 Grup",
+        color: "#03B74B",
+      },
+      {
+        title: "Grup Ditolak",
+        detail: "0 Grup",
+        color: "#FF710B",
+      },
+    ],
+  },
+];
 
 const Dashboard = () => {
-  // Data Dummy untuk chart
-  const dataChart1 = [
-    {
-      data: [20, 40, 40],
-      backgroundColor: ["#FFBF0B", "#03B74B", "#FE4747"],
-      borderColor: ["#FFBF0B", "#03B74B", "#FE4747"],
-      borderWidth: 1,
-      label: [
-        {
-          title: "Pengguna Diblokir",
-          detail: "10 Pengguna",
-          color: "#FFBF0B",
-        },
-        {
-          title: "Pengguna Belum verifikasi",
-          detail: "150 Pengguna",
-          color: "#03B74B",
-        },
-        {
-          title: "Pengguna terverifikasi",
-          detail: "30 Pengguna",
-          color: "#FE4747",
-        },
-      ],
-    },
-  ];
+  const dispatch = useDispatch();
 
-  const dataChart2 = [
-    {
-      data: [20, 40, 40],
-      backgroundColor: ["#FF710B", "#03B74B", "#6147FE"],
-      borderColor: ["#FF710B", "#03B74B", "#6147FE"],
-      borderWidth: 1,
-      label: [
+  const { dataDashboard } = useSelector(
+    (state) => state.dashboard,
+    shallowEqual
+  );
+
+  const [summary, setSummary] = useState();
+  const [chartGroup, setChartGroup] = useState(initChartGroup);
+  const [chartUser, setChartUser] = useState(initChartUser);
+
+  useEffect(() => {
+    dispatch(getDataDashboard());
+  }, []);
+
+  useEffect(() => {
+    if (Object.keys(dataDashboard).length !== 0) {
+      setSummary({
+        user: dataDashboard.header.total_users,
+        group: dataDashboard.header.total_grup,
+        blueCoral: dataDashboard.header.total_loker,
+        myTeam: dataDashboard.header.total_proyek,
+      });
+
+      const { active, waiting, rejected } = dataDashboard.statistik.chart_grup;
+      const totalChart1 =
+        parseInt(active) + parseInt(waiting) + parseInt(rejected);
+      const dataChart1 = [
+        (100 / totalChart1) * waiting,
+        (100 / totalChart1) * active,
+        (100 / totalChart1) * rejected,
+      ];
+      setChartGroup([
         {
-          title: "Grup Disetujui",
-          detail: "10 Pengguna",
-          color: "#FF710B",
+          ...initChartGroup[0],
+          data: dataChart1,
+          label: [
+            {
+              title: "Grup Belum verifikasi",
+              detail: `${waiting} Grup`,
+              color: "#6147FE",
+            },
+            {
+              title: "Grup Disetujui",
+              detail: `${active} Grup`,
+              color: "#03B74B",
+            },
+            {
+              title: "Grup Ditolak",
+              detail: `${rejected} Grup`,
+              color: "#FF710B",
+            },
+          ],
         },
+      ]);
+
+      const { chart_user } = dataDashboard.statistik;
+      const totalChart2 =
+        parseInt(chart_user.active) +
+        parseInt(chart_user.noanctive) +
+        parseInt(chart_user.block);
+      const dataChart2 = [
+        (100 / totalChart2) * chart_user.noanctive,
+        (100 / totalChart2) * chart_user.active,
+        (100 / totalChart2) * chart_user.block,
+      ];
+      setChartUser([
         {
-          title: "Grup Belum verifikasi",
-          detail: "150 Pengguna",
-          color: "#03B74B",
+          ...initChartUser[0],
+          data: dataChart2,
+          label: [
+            {
+              title: "Pengguna Belum Verifikasi",
+              detail: `${chart_user.noanctive} Pengguna`,
+              color: "#FFBF0B",
+            },
+            {
+              title: "Pengguna Terverifikasi",
+              detail: `${chart_user.active} Pengguna`,
+              color: "#03B74B",
+            },
+            {
+              title: "Pengguna Diblokir",
+              detail: `${chart_user.block} Pengguna`,
+              color: "#FE4747",
+            },
+          ],
         },
-        {
-          title: "Grup Ditolak",
-          detail: "30 Pengguna",
-          color: "#6147FE",
-        },
-      ],
-    },
-  ];
+      ]);
+    }
+  }, [dataDashboard]);
+
+  // useEffect(() => {
+  // }, []);
 
   return (
     <PageContainer>
@@ -77,7 +175,7 @@ const Dashboard = () => {
 
         <div style={{ marginTop: "20px" }}>
           {/* Summary */}
-          <Summary />
+          <Summary data={summary} />
 
           {/* Grid Container */}
           <GridContainer>
@@ -92,8 +190,18 @@ const Dashboard = () => {
                   alignItems: "center",
                 }}
               >
-                <Chart data={dataChart1} description="230 Pengguna" />
-                <Chart data={dataChart2} description="230 Grup" />
+                <Chart
+                  data={chartUser}
+                  description={`${
+                    dataDashboard?.statistik?.chart_user?.total_user || 0
+                  } Pengguna`}
+                />
+                <Chart
+                  data={chartGroup}
+                  description={`${
+                    dataDashboard?.statistik?.chart_grup?.total_grup || 0
+                  } Grup`}
+                />
               </div>
             </ChartComponent>
 
@@ -146,7 +254,9 @@ const Dashboard = () => {
                     <img src={survey} alt="" />
                   </ImageContainer>
                   <div>
-                    <TotalProject>123 Project</TotalProject>
+                    <TotalProject>
+                      {dataDashboard?.chart_proyek?.active || 0} Project
+                    </TotalProject>
                     <DescProject>Project Menunggu</DescProject>
                   </div>
                 </ProjectSection>
@@ -155,7 +265,9 @@ const Dashboard = () => {
                     <img src={survey} alt="" />
                   </ImageContainer>
                   <div>
-                    <TotalProject>123 Project</TotalProject>
+                    <TotalProject>
+                      {dataDashboard?.chart_proyek?.rejected || 0} Project
+                    </TotalProject>
                     <DescProject>Project Ditolak</DescProject>
                   </div>
                 </ProjectSection>
@@ -164,7 +276,9 @@ const Dashboard = () => {
                     <img src={survey} alt="" />
                   </ImageContainer>
                   <div>
-                    <TotalProject>123 Project</TotalProject>
+                    <TotalProject>
+                      {dataDashboard?.chart_proyek?.aproved || 0} Project
+                    </TotalProject>
                     <DescProject>Project Disetujui</DescProject>
                   </div>
                 </ProjectSection>
