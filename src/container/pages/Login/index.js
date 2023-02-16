@@ -130,7 +130,6 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Masukkan email"
-              placeholderStyle={{ color: "#D2D0D0" }}
             />
           </div>
           <div>
@@ -172,7 +171,6 @@ const Login = () => {
                   </IconButton>
                 </InputAdornment>
               }
-              placeholderStyle={{ color: "#D2D0D0" }}
             />
           </div>
           <div

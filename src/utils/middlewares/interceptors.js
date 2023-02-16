@@ -51,15 +51,13 @@ export const responseInterceptors = async () => {
         console.warn("Isi error.response : ", error.response);
         // console.warn(error.response, "ini error");
         if (error.response.status === 401) {
-          // handleLogoutMiddleware();
-          // store.dispatch(setPopUpExpired(true));
-          // console.warn("delete access token");
+          localStorage.removeItem("dataUser");
         }
-        if (error.response.status === 503 || error.response.status === 502) {
-          // store.dispatch(
-          //   setPopUpErrorBE({ isError: true, errorCode: error.response.status })
-          // );
-        }
+        // if (error.response.status === 503 || error.response.status === 502) {
+        // store.dispatch(
+        //   setPopUpErrorBE({ isError: true, errorCode: error.response.status })
+        // );
+        // }
         return error.response;
       }
   );
