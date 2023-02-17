@@ -2,9 +2,11 @@ import {
   SET_DASHBOARD_DATA_PROYEK,
   SET_ALL_DATA_PROYEK,
   SET_DETAIL,
-} from "../actions/dataPtoyek";
+  SET_ACTIVE_STEP,
+} from "../actions/dataProyek";
 
 const initialState = {
+  activeStep: "page",
   dashboardProyek: [],
   allData: [],
   detailProyek: [],
@@ -12,6 +14,11 @@ const initialState = {
 
 export const dataProyek = (state = initialState, action) => {
   switch (action.type) {
+    case SET_ACTIVE_STEP:
+      return {
+        ...state,
+        activeStep: action.payload,
+      };
     case SET_DASHBOARD_DATA_PROYEK:
       return {
         ...state,

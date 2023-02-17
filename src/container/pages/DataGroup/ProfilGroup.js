@@ -338,7 +338,7 @@ const ProfilGroup = ({ history }) => {
               />
               <Chart
                 data={dataChart2}
-                description="Total : 100"
+                description="Total : ---Data Masih Kosong---"
                 title="Jenis Kelamin"
               />
               <Chart

@@ -9,7 +9,11 @@ import Button from "../../../components/Button";
 import Chart from "../../../components/Chart";
 import ChartBar from "../../../components/ChartBar";
 import { useDispatch, useSelector } from "react-redux";
-import { getDashboardDataProyek } from "../../../store/actions/dataPtoyek";
+import {
+  getDashboardDataProyek,
+  getDetailDataProyek,
+  getRequestDataProyek,
+} from "../../../store/actions/dataProyek";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
@@ -153,7 +157,7 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
     {
       title: "Aksi",
       width: 100,
-      render: () => (
+      render: (rowData) => (
         <div
           style={{
             display: "flex",
@@ -167,8 +171,10 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
             borderRadius="5px"
             padding="0px 7px 0px 9px"
             onClick={() => {
-              setActiveStep("info");
-              setHistory("home");
+              // setActiveStep("info");
+              // detailHandler(rowData.id_proyek, id_status)
+              actionHandler(rowData.id_proyek, rowData.id_status);
+              setHistory("page");
             }}
           >
             Detail
@@ -211,6 +217,15 @@ const DataProyek = ({ setActiveStep, setHistory }) => {
   useEffect(() => {
     dispatch(getDashboardDataProyek());
   }, [dispatch]);
+
+  const actionHandler = (id_proyek, status) => {
+    if (status === "1" || status === "4") {
+      dispatch(getDetailDataProyek(id_proyek));
+    } else {
+      dispatch(getRequestDataProyek(id_proyek));
+    }
+    setHistory("page");
+  };
 
   return (
     <Container>

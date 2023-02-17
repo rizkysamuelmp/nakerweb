@@ -4,6 +4,7 @@ import {
   serviceGetDashboardGrup,
   serviceGetDetailGrup,
   serviceGetRequestDetailGrup,
+  serviceGetSearchGrup,
 } from "../../utils/api";
 import { setLoading } from "./pageContainer";
 
@@ -61,20 +62,42 @@ export const getDasboardGroup = () => async (dispatch) => {
   }
 };
 
-export const getAllGrup = (page) => async (dispatch) => {
+export const getAllGrup =
+  (page, isStatus, category, privacy) => async (dispatch) => {
+    try {
+      dispatch(setLoading(true));
+      console.log(isStatus);
+      const { status, data } = await serviceGetAllGrup({
+        page: page,
+        limit: 10,
+        status: isStatus.length === 0 ? "" : isStatus[0],
+        category: category[0],
+        privacy:
+          privacy.length === 0 ? "" : privacy[0] > 0 ? `${privacy[0] - 1}` : "",
+      });
+      if (status === 200) {
+        dispatch(setAllGrup(data.data));
+      }
+      dispatch(setLoading(false));
+    } catch (e) {
+      console.warn("Error : ", e);
+      dispatch(setLoading(false));
+    }
+  };
+
+export const getSearchGrup = (keyword, page) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const { status, data } = await serviceGetAllGrup({
-      page: page,
+    const { status, data } = await serviceGetSearchGrup({
+      page,
       limit: 10,
-      status: "",
-      category: "",
-      privacy: "",
+      keyword,
     });
-    if (status === 200) {
-      dispatch(setAllGrup(data.data));
-    }
     dispatch(setLoading(false));
+    dispatch(setAllGrup(data.data));
+    if (status === 200) {
+      // dispatch(setActiveStep("grup"));
+    }
   } catch (e) {
     console.warn("Error : ", e);
     dispatch(setLoading(false));

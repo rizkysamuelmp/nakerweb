@@ -9,11 +9,6 @@ responseInterceptors();
 
 const devURL = "http://admin.dev.kubu.id/api";
 const apiUrl = process.env.NODE_ENV === "production" ? devURL : devURL;
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
 
 // Save Loker
 export const serviceLogin = (payload) => axios.post(`${apiUrl}/login`, payload);

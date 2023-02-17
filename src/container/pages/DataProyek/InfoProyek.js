@@ -12,8 +12,13 @@ import { ReactComponent as IconGroup } from "../../../assets/icon/icon_grup.svg"
 import { ReactComponent as IconUser } from "../../../assets/icon/icon_user.svg";
 import profilePost from "../../../assets/img/profile-post.png";
 import Button from "../../../components/Button";
+import { useSelector } from "react-redux";
 
 const InfoProyek = ({ setActiveStep, history }) => {
+  const { info_proyek, right_page } = useSelector(
+    (state) => state.dataProyek.detailProyek
+  );
+
   return (
     <Container>
       {/* Title */}
@@ -42,7 +47,7 @@ const InfoProyek = ({ setActiveStep, history }) => {
           }}
         >
           <img
-            src={bannerImage}
+            src={info_proyek.cover}
             alt="Notebook"
             style={{
               width: "100%",
@@ -65,7 +70,7 @@ const InfoProyek = ({ setActiveStep, history }) => {
               lineHeight: "18px",
             }}
           >
-            <p>Proyek di buat oleh @arifandi</p>
+            <p>Proyek di buat oleh @{info_proyek.full_name}</p>
           </div>
         </div>
       </RowWrapper>
@@ -86,15 +91,15 @@ const InfoProyek = ({ setActiveStep, history }) => {
           >
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ width: "150px" }}>Nama projek</p>
-              <p>: MONITORING PENYALURAN BLT BBM TAHAP 1</p>
+              <p>: {info_proyek.nama_proyek}</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ width: "150px" }}>Jenis projek</p>
-              <p>: Publik</p>
+              <p>: {info_proyek.privacy === "0" ? "Publik" : "Private"}</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ width: "150px" }}>Tanggal dibuat</p>
-              <p>: 06 Agustus 2022</p>
+              <p>: {info_proyek.create_at.split(" ", 1)}</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ minWidth: "150px" }}>Deskripsi</p>:

@@ -60,7 +60,7 @@ const DetailGroup = ({ history }) => {
           }}
         >
           <img
-            src={bannerImage}
+            src={grup_info.group_cover}
             alt="Notebook"
             style={{
               width: "100%",
@@ -113,11 +113,11 @@ const DetailGroup = ({ history }) => {
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ width: "150px" }}>Jenis grup</p>
-              <p>: {grup_info.group_privacy === "1" ? "Private" : "Public"}</p>
+              <p>: {grup_info.group_privacy === "1" ? "Private" : "Publik"}</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ width: "150px" }}>Tanggal dibuat</p>
-              <p>: {grup_info.create_at}</p>
+              <p>: {grup_info.create_at.split(" ", 1)}</p>
             </div>
             <div style={{ display: "flex", fontWeight: 500 }}>
               <p style={{ minWidth: "150px" }}>Deskripsi</p>:
@@ -267,9 +267,9 @@ const DetailGroup = ({ history }) => {
                   fontStyle: "italic",
                 }}
               >
-                Tanggal bergabung
+                Alamat
               </p>
-              <p>06 Agustus 2021</p>
+              <p>{user_info.address}</p>
             </div>
             <div
               style={{ display: "flex", gap: "4px", flexDirection: "column" }}
@@ -283,16 +283,19 @@ const DetailGroup = ({ history }) => {
                   fontStyle: "italic",
                 }}
               >
-                Warga negara
+                Nomor HP
               </p>
-              <p>Indonesia</p>
+              <p>{"+" + user_info.phone}</p>
             </div>
           </div>
           <div style={{ width: "100%" }}>
             <Button
               full
               color="#039C40"
-              onClick={() => dispatch(setActiveStep("grup"))}
+              onClick={() => {
+                // dispatch(setActiveStep("grup"));
+                console.log("klik");
+              }}
             >
               <p
                 style={{

@@ -24,6 +24,7 @@ import back from "../../../assets/icon/Back.svg";
 
 // Dummy
 import { dataTask } from "./DataDummy";
+import { useSelector } from "react-redux";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -173,6 +174,10 @@ const DetailProyek = ({ setActiveStep }) => {
     },
   ];
 
+  const { info_proyek, riht_page } = useSelector(
+    (state) => state.dataProyek.detailProyek
+  );
+
   const [tabSelect, setTabSelect] = useState(1);
 
   return (
@@ -299,11 +304,11 @@ const DetailProyek = ({ setActiveStep }) => {
                 >
                   <div style={{ display: "flex", fontWeight: 500 }}>
                     <p style={{ width: "150px" }}>Pembuat Proyek</p>
-                    <p>: Muh Arifandi</p>
+                    <p>: {info_proyek.full_name}</p>
                   </div>
                   <div style={{ display: "flex", fontWeight: 500 }}>
                     <p style={{ width: "150px" }}>Step Proyek</p>
-                    <p>: Planing</p>
+                    {/* <p>: {info_proyek.}</p> */}
                   </div>
                   <div style={{ display: "flex", fontWeight: 500 }}>
                     <p style={{ width: "150px" }}>Jenis Proyek</p>

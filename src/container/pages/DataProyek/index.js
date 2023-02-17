@@ -1,7 +1,7 @@
 // Page Data Proyek
 // --------------------------------------------------------
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import PageContainer from "../../../components/PageContainer";
 
@@ -10,26 +10,27 @@ import DataProyek from "./DataProyek";
 import InfoProyek from "./InfoProyek";
 import SemuaProyek from "./SemuaProyek";
 import DetailProyek from "./DetailProyek";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveStep } from "../../../store/actions/dataProyek";
 
 const Page = () => {
-  const [activeStep, setActiveStep] = useState("page");
-  const [history, setHistory] = useState("home");
+  // const [activeStep, setActiveStep] = useState("page");
+  const [history, setHistory] = useState("page");
+
+  const dispatch = useDispatch();
+  const { activeStep } = useSelector((state) => state.dataProyek);
+
+  useEffect(() => {
+    return () => dispatch(setActiveStep("page"));
+  }, [dispatch]);
 
   return (
     <PageContainer>
       <Container>
-        {activeStep === "page" && (
-          <DataProyek setActiveStep={setActiveStep} setHistory={setHistory} />
-        )}
-        {activeStep === "info" && (
-          <InfoProyek setActiveStep={setActiveStep} history={history} />
-        )}
-        {activeStep === "all" && (
-          <SemuaProyek setActiveStep={setActiveStep} setHistory={setHistory} />
-        )}
-        {activeStep === "proyek" && (
-          <DetailProyek setActiveStep={setActiveStep} />
-        )}
+        {activeStep === "page" && <DataProyek setHistory={setHistory} />}
+        {activeStep === "info" && <InfoProyek history={history} />}
+        {activeStep === "all" && <SemuaProyek setHistory={setHistory} />}
+        {activeStep === "proyek" && <DetailProyek history={history} />}
       </Container>
     </PageContainer>
   );
