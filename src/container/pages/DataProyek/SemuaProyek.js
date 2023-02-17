@@ -28,7 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getDetailDataProyek,
   getFilterDataProyek,
-} from "../../../store/actions/dataPtoyek";
+} from "../../../store/actions/dataProyek";
 
 const SemuaProyek = ({ setActiveStep, setHistory }) => {
   const dataHeader = [
@@ -171,7 +171,8 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
             padding="0px 7px 0px 9px"
             onClick={() => {
               setActiveStep("info");
-              dispatch(getDetailDataProyek(rowData.id_proyek));
+              // dispatch(getDetailDataProyek(rowData.id_proyek));
+              acntionHandler(rowData.id_proyek, rowData);
               setHistory("all");
             }}
           >
@@ -200,6 +201,11 @@ const SemuaProyek = ({ setActiveStep, setHistory }) => {
   useEffect(() => {
     dispatch(getFilterDataProyek(gender, kategori, isStatus, pages));
   }, [dispatch, gender, kategori, isStatus, pages]);
+
+  const acntionHandler = (id_proyek, status) => {
+    console.log("id_proyek: ", id_proyek);
+    console.log("status: ", status);
+  };
 
   return (
     <Container>

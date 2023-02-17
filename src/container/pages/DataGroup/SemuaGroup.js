@@ -11,7 +11,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import DropDown from "../../../components/DropDown";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getAllGrup, setActiveStep } from "../../../store/actions/dataGroup";
+import {
+  getAllGrup,
+  getDetailGrup,
+  getRequestGrup,
+  getSearchGrup,
+  setActiveStep,
+} from "../../../store/actions/dataGroup";
 
 // Asset
 import eye from "../../../assets/icon/Eye.svg";
@@ -50,11 +56,11 @@ const SemuaGroup = ({ setHistory }) => {
     },
     {
       title: "Jenis Group",
-      key: "groupType",
+      key: "category_name",
     },
     {
       title: "Pembuat Grup",
-      key: "groupCreator",
+      key: "full_name",
     },
     {
       title: "Anggota",
@@ -67,17 +73,16 @@ const SemuaGroup = ({ setHistory }) => {
       ),
     },
     {
-      title: "Username",
-      key: "username",
-    },
-    {
       title: "Tanggal Dibuat",
-      key: "dateCreated",
+      key: "create_at",
+      center: true,
+      render: (rowData) => <p>{rowData.create_at.split(" ", 1)}</p>,
     },
     {
       title: "Postingan",
       key: "total_post",
       center: true,
+      render: (rowData) => <p>{rowData.total_post + " Post"}</p>,
     },
     {
       title: "Status",
@@ -92,62 +97,53 @@ const SemuaGroup = ({ setHistory }) => {
             justifyContent: "center",
           }}
         >
-          {rowData.group_status === "0" ? (
+          {
             <div
               style={{
-                border: "1px solid #039C40",
-                backgroundColor: "#AEF8AC",
+                border:
+                  rowData.group_status === "1"
+                    ? "1px solid #039C40"
+                    : rowData.group_status === "2"
+                    ? "1px solid #2C4AE9"
+                    : rowData.group_status === "3"
+                    ? "1px solid #C80707"
+                    : "",
+                backgroundColor:
+                  rowData.group_status === "1"
+                    ? "#AEF8AC"
+                    : rowData.group_status === "2"
+                    ? "rgba(181, 190, 233, 0.29)"
+                    : "rgba(245, 150, 150, 0.2)",
                 borderRadius: "30px",
                 padding: "4px 20px",
                 fontFamily: "Inter",
                 fontWeight: 500,
                 fontSize: "13px",
                 lineHeight: "16px",
-                color: "#039C40",
+                color:
+                  rowData.group_status === "1"
+                    ? "#039C40"
+                    : rowData.group_status === "2"
+                    ? "#2C4AE9"
+                    : "#C80707",
               }}
             >
-              Aktif
+              {rowData.group_status === "1"
+                ? "Aktif"
+                : rowData.group_status === "2"
+                ? "Menunggu"
+                : rowData.group_status === "3"
+                ? "Ditolak"
+                : "Dinonaktifkan"}
             </div>
-          ) : rowData.group_status === "1" ? (
-            <div
-              style={{
-                border: "1px solid #C80707",
-                backgroundColor: "#F5969633",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#C80707",
-              }}
-            >
-              Tidak Aktif
-            </div>
-          ) : (
-            <div
-              style={{
-                border: "1px solid #2C4AE9",
-                backgroundColor: "#B5BEE94A",
-                borderRadius: "30px",
-                padding: "4px 20px",
-                fontFamily: "Inter",
-                fontWeight: 500,
-                fontSize: "13px",
-                lineHeight: "16px",
-                color: "#2C4AE9",
-              }}
-            >
-              {rowData.group_status}
-            </div>
-          )}
+          }
         </div>
       ),
     },
     {
       title: "Aksi",
       width: 100,
-      render: () => (
+      render: (rowData) => (
         <div
           style={{
             display: "flex",
@@ -161,8 +157,8 @@ const SemuaGroup = ({ setHistory }) => {
             borderRadius="5px"
             padding="0px 7px 0px 9px"
             onClick={() => {
-              dispatch(setActiveStep("detail"));
-              setHistory("all");
+              // dispatch(setActiveStep("detail"));
+              actionHandler(rowData.group_id, rowData.group_status);
             }}
           >
             Detail
@@ -175,16 +171,54 @@ const SemuaGroup = ({ setHistory }) => {
   ];
 
   // useState
-  const [search, setSearch] = useState("");
   const [menuExport, setMenuExport] = useState(null);
   const [menuFilter, setMenuFilter] = useState(null);
-  const [dropDown, setDropDown] = useState(0);
+
+  // state for filter
+  const [category, setCategory] = useState([]);
+  const [isStatus, setIsStatus] = useState([]);
+  const [privacy, setPrivacy] = useState([]);
+  const [page, setPage] = useState(1);
+
+  // state for search form
+  const [keyword, setKeyword] = useState("");
 
   const { allGroup } = useSelector((state) => state.dataGroup, shallowEqual);
 
   useEffect(() => {
-    dispatch(getAllGrup());
-  }, [dispatch]);
+    if (keyword) {
+      dispatch(getSearchGrup(keyword, page));
+    } else {
+      dispatch(getAllGrup(page, isStatus, category, privacy));
+    }
+  }, [dispatch, page, isStatus, category, privacy, keyword]);
+
+  const actionHandler = (group_id, group_status) => {
+    if (group_status === "1" || group_status === "4") {
+      dispatch(getDetailGrup(group_id));
+    } else {
+      dispatch(getRequestGrup(group_id));
+    }
+    setHistory("all");
+  };
+
+  const searchHandler = (event) => {
+    if (event.key === "Enter") {
+      if (keyword !== "") {
+        dispatch(getSearchGrup(keyword, page));
+      } else {
+        dispatch(getAllGrup());
+      }
+    }
+  };
+
+  // const changePageHandler = (value) => {
+  //   if (keyword) {
+  //     console.log("kosong");
+  //   } else {
+  //     console.log("ada isi");
+  //   }
+  // };
 
   return (
     <Container>
@@ -198,8 +232,9 @@ const SemuaGroup = ({ setHistory }) => {
           {/* Pencarian */}
           <InputText
             type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={keyword}
+            onKeyDown={searchHandler}
+            onChange={(e) => setKeyword(e.target.value)}
             placeholder="pencarian"
             noPadding
             width="175px"
@@ -349,44 +384,60 @@ const SemuaGroup = ({ setHistory }) => {
             <DropdownWrap>
               <p>Pilih jenis grup :</p>
               <DropDown
-                dropdownValue={dropDown}
-                handleChange={(e) => setDropDown([e.target.value])}
+                dropdownValue={privacy}
+                placeHolder="Pilih Jenis Grup"
+                handleChange={(e) => setPrivacy([e.target.value])}
                 listDropDown={[
                   {
-                    label: "Publik",
+                    label: "Semua Jenis Grup",
                     value: 0,
                   },
-                  { label: "Private", value: 1 },
+                  {
+                    label: "Publik",
+                    value: 1,
+                  },
+                  { label: "Private", value: 2 },
                 ]}
               />
             </DropdownWrap>
             <DropdownWrap>
               <p>Pilih Kategori grup :</p>
               <DropDown
-                dropdownValue={dropDown}
-                handleChange={(e) => setDropDown([e.target.value])}
+                placeHolder="Pilih Kategori Grup"
+                dropdownValue={category}
+                handleChange={(e) => setCategory([e.target.value])}
                 listDropDown={[
                   {
-                    label: "Perusahaan",
-                    value: 0,
+                    label: "Semua Kategori",
+                    value: "0",
                   },
-                  { label: "Organisasi", value: 1 },
-                  { label: "Komunitas", value: 2 },
+                  {
+                    label: "Serikat Pekerja",
+                    value: "1",
+                  },
+                  { label: "Perusahaan", value: "2" },
+                  { label: "Komunitas", value: "3" },
                 ]}
               />
             </DropdownWrap>
             <DropdownWrap>
               <p>Pilih status grup :</p>
               <DropDown
-                dropdownValue={dropDown}
-                handleChange={(e) => setDropDown(e.target.value)}
+                dropdownValue={isStatus}
+                handleChange={(e) => setIsStatus(e.target.value)}
+                placeHolder="Pilih Status Grup"
                 listDropDown={[
                   {
-                    label: "Aktif",
-                    value: 0,
+                    label: "Pilih Semua Status",
+                    value: "0",
                   },
-                  { label: "Tidak Aktif", value: 1 },
-                  { label: "Menunggu", value: 2 },
+                  {
+                    label: "Aktif",
+                    value: "1",
+                  },
+                  { label: "Menunggu", value: "2" },
+                  { label: "Tidak Aktif", value: "3" },
+                  { label: "Dinonaktifkan", value: "4" },
                 ]}
               />
             </DropdownWrap>
@@ -405,7 +456,16 @@ const SemuaGroup = ({ setHistory }) => {
           }}
         >
           <Table headerContent={dataHeader} dataContent={allGroup} />
-          <Pagination count={10} currentData={10} totalData={100} page={2} />
+          <Pagination
+            count={10}
+            currentData={10}
+            totalData={100}
+            page={page}
+            onChange={(e, value) => {
+              setPage(value);
+              // changePageHandler(value);
+            }}
+          />
         </div>
       </RowWrapper>
     </Container>

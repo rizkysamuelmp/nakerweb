@@ -1,14 +1,19 @@
 import {
   SET_DASHBOARD_GROUP,
   SET_ALL_GROUP,
-  SET_REQUEST_DETAIL_GROUP,
+  SET_REQUEST_DETAIL_GRUP,
   SET_ACTIVE_STEP,
+  SET_DETAIL_GRUP,
+  SET_HISTORY,
 } from "../actions/dataGroup";
 
 const initialState = {
   dashboardGroup: {},
   allGroup: [],
   activeStep: "page",
+  detailGrup: [],
+  requestDetail: [],
+  setHistory: "",
 };
 
 const dataGroup = (state = initialState, action) => {
@@ -28,10 +33,20 @@ const dataGroup = (state = initialState, action) => {
         ...state,
         allGroup: action.payload,
       };
-    case SET_REQUEST_DETAIL_GROUP:
+    case SET_DETAIL_GRUP:
       return {
         ...state,
         detailGrup: action.payload,
+      };
+    case SET_REQUEST_DETAIL_GRUP:
+      return {
+        ...state,
+        requestDetail: action.payload,
+      };
+    case SET_HISTORY:
+      return {
+        ...state,
+        setHistory: action.payload,
       };
     default:
       return state;
